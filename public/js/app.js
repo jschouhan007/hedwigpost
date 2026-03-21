@@ -1421,14 +1421,6 @@ document.addEventListener('click', (e) => {
     }
 }, true);
 
-// Block the default browser context menu globally for images we just previewed
-document.addEventListener('contextmenu', (e) => {
-    if (window.innerWidth <= 980) {
-        if (e.target.tagName === 'IMG' || (e.target.closest && e.target.closest('a') && e.target.closest('a').querySelector('img'))) {
-            e.preventDefault();
-        }
-    }
-});
 
 function showImagePreview(src) {
     if (previewOverlay) return;
