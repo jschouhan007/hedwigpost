@@ -1423,8 +1423,10 @@ document.addEventListener('click', (e) => {
 
 // Block the default browser context menu globally for images we just previewed
 document.addEventListener('contextmenu', (e) => {
-    if (e.target.tagName === 'IMG' && e.target.dataset && e.target.dataset.preventClick) {
-        e.preventDefault();
+    if (window.innerWidth <= 980) {
+        if (e.target.tagName === 'IMG' || (e.target.closest && e.target.closest('a') && e.target.closest('a').querySelector('img'))) {
+            e.preventDefault();
+        }
     }
 });
 
