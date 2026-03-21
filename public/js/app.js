@@ -1420,11 +1420,21 @@ document.addEventListener('click', (e) => {
         delete e.target.dataset.preventClick;
     }
 }, true);
+// Block context menu ONLY on thumbnail images (not on the card text)
+document.addEventListener('contextmenu', (e) => {
+    if (window.innerWidth <= 980 && e.target && e.target.tagName === 'IMG') {
+        if (!e.target.closest('#custom-preview-overlay')) {
+            e.preventDefault();
+        }
+    }
+});
+
 
 
 function showImagePreview(src) {
     if (previewOverlay) return;
     previewOverlay = document.createElement('div');
+    previewOverlay.id = 'custom-preview-overlay';
     previewOverlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:99999;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);transition:opacity 0.2s;opacity:0;';
     
     const img = document.createElement('img');
