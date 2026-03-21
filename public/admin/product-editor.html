@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/favicon.png?v=1773767918">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Editor — HedwigPost Admin</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="/admin/css/admin.css">
+    <style>
+        .editor-form-group { margin-bottom: 20px; }
+        .editor-form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--a-text-1); font-size: .9rem; }
+        .editor-form-group input[type="text"], 
+        .editor-form-group input[type="number"],
+        .editor-form-group input[type="url"],
+        .editor-form-group textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--a-border);
+            border-radius: 8px;
+            background: var(--a-bg-2);
+            color: var(--a-text-0);
+            font-size: .95rem;
+            outline: none;
+            transition: border-color .2s;
+            font-family: inherit;
+        }
+        .editor-form-group input:focus, .editor-form-group textarea:focus { border-color: var(--a-accent); }
+        .price-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    </style>
+</head>
+
+<body>
+    <div class="admin-layout">
+        <aside class="admin-sidebar" id="adminSidebar">
+            <div class="sidebar-header">
+                <img src="/img/logo.png" alt="HedwigPost" class="logo-icon" width="42" height="42">
+                <div>
+                    <h2>HedwigPost</h2><small>Command Center</small>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="sidebar-nav-label">Content</div>
+                <a href="/admin/dashboard.html"><span class="nav-icon"><svg viewBox="0 0 24 24">
+                            <rect x="3" y="3" width="7" height="7" rx="1" />
+                            <rect x="14" y="3" width="7" height="7" rx="1" />
+                            <rect x="14" y="14" width="7" height="7" rx="1" />
+                            <rect x="3" y="14" width="7" height="7" rx="1" />
+                        </svg></span> Dashboard</a>
+                <a href="/admin/editor.html"><span class="nav-icon"><svg viewBox="0 0 24 24">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                        </svg></span> New Post</a>
+                <a href="/admin/posts.html"><span class="nav-icon"><svg viewBox="0 0 24 24">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                            <polyline points="14 2 14 8 20 8" />
+                        </svg></span> All Posts</a>
+                <a href="/admin/categories.html"><span class="nav-icon"><svg viewBox="0 0 24 24">
+                            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+                        </svg></span> Categories</a>
+                
+                <div class="sidebar-nav-label" style="margin-top:16px;">Affiliate Deals</div>
+                <a href="/admin/product-editor.html" class="active"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg></span> Add Product</a>
+                <a href="/admin/products.html"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0"></path></svg></span> All Products</a>
+                
+                <div class="sidebar-nav-label" style="margin-top:16px;">Engagement</div>
+                <a href="/admin/comments.html"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span> Comments</a>
+                <a href="/admin/automation.html"><span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></span> Automation</a>
+                
+                <div class="sidebar-nav-label">System</div>
+                <a href="/admin/settings.html"><span class="nav-icon"><svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="3" />
+                            <path
+                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                        </svg></span> Settings</a>
+                <div class="divider"></div>
+                <a href="/" target="_blank"><span class="nav-icon"><svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="2" y1="12" x2="22" y2="12" />
+                            <path
+                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                        </svg></span> View Site</a>
+            </nav>
+            <div class="sidebar-footer"><a href="#" onclick="logout()"><span class="nav-icon"><svg viewBox="0 0 24 24">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                            <polyline points="16 17 21 12 16 7" />
+                            <line x1="21" y1="12" x2="9" y2="12" />
+                        </svg></span> Logout</a></div>
+        </aside>
+
+        <main class="admin-main">
+            <div class="admin-header">
+                <h1 id="editorTitle">➕ New Product</h1>
+                <div style="display:flex;gap:10px;align-items:center;">
+                    <a href="/admin/products.html" class="btn btn-ghost">Cancel</a>
+                    <button class="btn btn-primary" onclick="saveProduct()">💾 Save Product</button>
+                    <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">🌙</button>
+                </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 340px;gap:24px;margin-top:24px;">
+                <!-- Main Editor -->
+                <div style="background:var(--a-bg-1);padding:32px;border-radius:12px;border:1px solid var(--a-border);">
+                    <div class="editor-form-group">
+                        <label>Product Name</label>
+                        <input type="text" id="prodName" placeholder="e.g. Apple MacBook Pro M4" oninput="generateSlug()">
+                    </div>
+                    
+                    <div class="editor-form-group">
+                        <label>Description</label>
+                        <textarea id="prodDesc" rows="5" placeholder="Short and catchy description of the product..."></textarea>
+                    </div>
+
+                    <div class="editor-form-group">
+                        <label>Affiliate URL / Click Link</label>
+                        <input type="url" id="prodLink" placeholder="https://amazon.com/dp/B0CX...">
+                    </div>
+
+                    <div class="price-row">
+                        <div class="editor-form-group">
+                            <label>Current Price <span style="font-weight:400;color:var(--a-text-3)">(e.g. $1299 or FREE)</span></label>
+                            <input type="text" id="prodPrice" placeholder="\$1299">
+                        </div>
+                        <div class="editor-form-group">
+                            <label>Original Price <span style="font-weight:400;color:var(--a-text-3)">(Strikethrough)</span></label>
+                            <input type="text" id="prodOrigPrice" placeholder="\$1499">
+                        </div>
+                    </div>
+
+                    <div class="price-row">
+                        <div class="editor-form-group">
+                            <label>Rating (Out of 5)</label>
+                            <input type="number" step="0.1" min="0" max="5" id="prodRating" placeholder="4.8">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar Settings -->
+                <div class="editor-sidebar" style="margin:0;max-width:none">
+                    <div class="seo-panel">
+                        <div class="seo-panel-header"><h3>⚙️ Settings</h3></div>
+                        <div class="seo-panel-body">
+                            <input type="hidden" id="prodId">
+                            <input type="hidden" id="prodSlug">
+
+                            <div class="seo-field">
+                                <label>Category</label>
+                                <select id="prodCategory"></select>
+                            </div>
+
+                            <div class="seo-field">
+                                <label>Custom Badge</label>
+                                <select id="prodBadge">
+                                    <option value="">None</option>
+                                    <option value="Best Pick">Best Pick</option>
+                                    <option value="Top Rated">Top Rated</option>
+                                    <option value="Trending">Trending</option>
+                                    <option value="Limited Offer">Limited Offer</option>
+                                </select>
+                            </div>
+
+                            <div class="seo-field" style="display:flex;align-items:center;gap:8px;">
+                                <input type="checkbox" id="prodFeatured" style="width:16px;height:16px;">
+                                <label for="prodFeatured" style="margin:0;cursor:pointer;">Featured Product ⭐</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="seo-panel">
+                        <div class="seo-panel-header"><h3>🖼️ Product Image</h3></div>
+                        <div class="seo-panel-body">
+                            <button class="btn btn-ghost" onclick="document.getElementById('imageFileInput').click()"
+                                style="width:100%;justify-content:center;">📷 Upload Image</button>
+                            <input type="file" id="imageFileInput" accept="image/*" style="display:none" onchange="uploadImage(event)">
+                            
+                            <div style="margin:12px 0;text-align:center;color:var(--a-text-3);font-size:.8rem;">- OR -</div>
+                            
+                            <input type="url" id="prodImageUrl" placeholder="Paste image URL here..." style="width:100%;padding:8px 12px;border:1px solid var(--a-border);border-radius:6px;background:var(--a-bg-2);color:var(--a-text-0);font-size:.85rem;margin-bottom:12px;outline:none;" oninput="updateImagePreview()">
+                            
+                            <div id="imagePreviewContainer" style="margin-top:12px;background:var(--a-bg-3);border-radius:8px;padding:8px;display:none;">
+                                <img id="imagePreview" style="max-width:100%;border-radius:6px;display:block;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/admin/js/admin.js"></script>
+    <script>
+        let isEditing = false;
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuth();
+            loadDealCategories();
+
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            if (id) {
+                isEditing = true;
+                document.getElementById('editorTitle').textContent = '✏️ Edit Product';
+                loadProduct(id);
+            }
+        });
+
+        async function loadDealCategories() {
+            try {
+                const res = await authFetch('/api/deal-categories');
+                const cats = await res.json();
+                const select = document.getElementById('prodCategory');
+                cats.forEach(c => {
+                    const opt = document.createElement('option');
+                    opt.value = c.slug;
+                    opt.textContent = c.name;
+                    select.appendChild(opt);
+                });
+            } catch (e) { console.error('Error loading deal categories', e); }
+        }
+
+        async function loadProduct(id) {
+            try {
+                const res = await authFetch('/api/products');
+                const products = await res.json();
+                const p = products.find(x => x.id === id);
+                if (!p) { showToast('Product not found', 'error'); return; }
+
+                document.getElementById('prodId').value = p.id;
+                document.getElementById('prodName').value = p.name || '';
+                document.getElementById('prodSlug').value = p.slug || '';
+                document.getElementById('prodDesc').value = p.description || '';
+                document.getElementById('prodLink').value = p.affiliateLink || '';
+                document.getElementById('prodPrice').value = p.price || '';
+                document.getElementById('prodOrigPrice').value = p.originalPrice || '';
+                document.getElementById('prodRating').value = p.rating || '';
+                document.getElementById('prodBadge').value = p.badge || '';
+                document.getElementById('prodFeatured').checked = !!p.featured;
+                document.getElementById('prodImageUrl').value = p.image || '';
+                
+                setTimeout(() => { document.getElementById('prodCategory').value = p.category; }, 200);
+                
+                updateImagePreview();
+            } catch (e) { console.error(e); }
+        }
+
+        function generateSlug() {
+            if (isEditing) return; // Don't auto-change slug on edit
+            const name = document.getElementById('prodName').value;
+            document.getElementById('prodSlug').value = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+        }
+
+        function updateImagePreview() {
+            const url = document.getElementById('prodImageUrl').value;
+            const previewWrap = document.getElementById('imagePreviewContainer');
+            const previewImg = document.getElementById('imagePreview');
+            
+            if (url) {
+                previewImg.src = url;
+                previewWrap.style.display = 'block';
+            } else {
+                previewWrap.style.display = 'none';
+            }
+        }
+
+        async function uploadImage(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const formData = new FormData();
+            formData.append('image', file);
+
+            try {
+                const res = await authFetch('/api/upload', { method: 'POST', body: formData });
+                if (!res.ok) throw new Error('Upload failed');
+                const data = await res.json();
+                
+                document.getElementById('prodImageUrl').value = data.url;
+                updateImagePreview();
+                showToast('Image uploaded successfully ✓');
+            } catch (error) {
+                console.error('Upload Error:', error);
+                showToast('Failed to upload image', 'error');
+            }
+        }
+
+        async function saveProduct() {
+            const id = document.getElementById('prodId').value;
+            const method = id ? 'PUT' : 'POST';
+            const url = id ? `/api/products/${id}` : '/api/products';
+
+            const payload = {
+                name: document.getElementById('prodName').value.trim(),
+                slug: document.getElementById('prodSlug').value.trim(),
+                description: document.getElementById('prodDesc').value.trim(),
+                affiliateLink: document.getElementById('prodLink').value.trim(),
+                price: document.getElementById('prodPrice').value.trim(),
+                originalPrice: document.getElementById('prodOrigPrice').value.trim(),
+                rating: parseFloat(document.getElementById('prodRating').value),
+                category: document.getElementById('prodCategory').value,
+                badge: document.getElementById('prodBadge').value,
+                featured: document.getElementById('prodFeatured').checked,
+                image: document.getElementById('prodImageUrl').value.trim()
+            };
+
+            if (!payload.name || !payload.category || !payload.affiliateLink) {
+                showToast('Name, Category, and Affiliate Link are required', 'error');
+                return;
+            }
+
+            try {
+                const res = await fetch(url, {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ product: payload })
+                });
+
+                if (!res.ok) throw new Error('Save failed');
+                showToast('Product saved successfully! ✓');
+                
+                setTimeout(() => {
+                    window.location.href = '/admin/products.html';
+                }, 1000);
+            } catch (e) {
+                console.error(e);
+                showToast('Failed to save product', 'error');
+            }
+        }
+    </script>
+</body>
+</html>

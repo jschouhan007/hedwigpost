@@ -1,0 +1,37 @@
+[
+  {
+    "id": "cat_tech",
+    "name": "Tech",
+    "slug": "tech",
+    "description": "Technology innovations, software, and gadgets",
+    "postCount": 0
+  },
+  {
+    "id": "cat_news",
+    "name": "News",
+    "slug": "news",
+    "description": "Latest news and current events",
+    "postCount": 0
+  },
+  {
+    "id": "cat_ent",
+    "name": "Entertainment",
+    "slug": "entertainment",
+    "description": "Movies, music, gaming, and pop culture",
+    "postCount": 0
+  },
+  {
+    "id": "cat_howto",
+    "name": "How-To Guides",
+    "slug": "how-to-guides",
+    "description": "Step-by-step tutorials and practical guides",
+    "postCount": 0
+  },
+  {
+    "id": "cat_reviews",
+    "name": "Product Reviews",
+    "slug": "product-reviews",
+    "description": "In-depth reviews of gadgets, software, and tech products",
+    "postCount": 0
+  }
+]

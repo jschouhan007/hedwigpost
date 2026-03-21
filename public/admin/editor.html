@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/favicon.png?v=1773767918">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor — HedwigPost Admin</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/admin/css/admin.css">
+</head>
+
+<body>
+    <div class="admin-layout">
+        <aside class="admin-sidebar" id="adminSidebar">
+            <div class="sidebar-header">
+                <img src="/img/logo.png" alt="HedwigPost" class="logo-icon" width="42" height="42">
+                <div>
+                    <h2>HedwigPost</h2><small>Command Center</small>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="sidebar-nav-label">Content</div>
+                <a href="/admin/dashboard.html"><span class="nav-icon"><svg viewBox="0 0 24 24">
+                            <rect x="3" y="3" width="7" height="7" rx="1" />
+                            <rect x="14" y="3" width="7" height="7" rx="1" />
+                            <rect x="14" y="14" width="7" height="7" rx="1" />
+                            <rect x="3" y="14" width="7" height="7" rx="1" />
+                        </svg></span> Dashboard</a>
+                <a href="/admin/editor.html" class="active"><span class="nav-icon"><svg viewBox="0 0 24 24">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                        </svg></span> New Post</a>
+                <a href="/admin/posts.html"><span class="nav-icon"><svg viewBox="0 0 24 24">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                            <polyline points="14 2 14 8 20 8" />
+                        </svg></span> All Posts</a>
+                <a href="/admin/categories.html"><span class="nav-icon"><svg viewBox="0 0 24 24">
+                            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+                        </svg></span> Categories</a>
+                
+                <div class="sidebar-nav-label" style="margin-top:16px;">Affiliate Deals</div>
+                <a href="/admin/product-editor.html"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg></span> Add Product</a>
+                <a href="/admin/products.html"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0"></path></svg></span> All Products</a>
+                
+                <div class="sidebar-nav-label" style="margin-top:16px;">Engagement</div><a href="/admin/comments.html"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span> Comments</a><a href="/admin/automation.html"><span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></span> Automation</a><div class="sidebar-nav-label">System</div>
+                <a href="/admin/settings.html"><span class="nav-icon"><svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="3" />
+                            <path
+                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                        </svg></span> Settings</a>
+                <div class="divider"></div>
+                <a href="/" target="_blank"><span class="nav-icon"><svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="2" y1="12" x2="22" y2="12" />
+                            <path
+                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                        </svg></span> View Site</a>
+            </nav>
+            <div class="sidebar-footer"><a href="#" onclick="logout()"><span class="nav-icon"><svg viewBox="0 0 24 24">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                            <polyline points="16 17 21 12 16 7" />
+                            <line x1="21" y1="12" x2="9" y2="12" />
+                        </svg></span> Logout</a></div>
+        </aside>
+
+        <main class="admin-main">
+            <div class="admin-header">
+                <h1 id="editorTitle">✏️ New Post</h1>
+                <div style="display:flex;gap:10px;align-items:center;">
+                    <span class="autosave-indicator" id="autosaveStatus"><span class="dot"></span> Auto-saved</span>
+                    <button class="btn btn-ghost" onclick="saveDraft()">💾 Save Draft</button>
+                    <button class="btn btn-primary" onclick="publishPost()">🚀 Publish</button>
+                    <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">🌙</button>
+                </div>
+            </div>
+
+            <div class="editor-layout">
+                <!-- Editor Main -->
+                <div>
+                    <div class="editor-main">
+                        <input type="text" class="editor-title-input" id="postTitle"
+                            placeholder="Enter your post title..." oninput="onTitleChange()">
+
+                        <!-- Toolbar Row 1 -->
+                        <div class="editor-toolbar">
+                            <button class="toolbar-btn" onclick="execCmd('undo')" title="Undo (Ctrl+Z)">↩</button>
+                            <button class="toolbar-btn" onclick="execCmd('redo')" title="Redo (Ctrl+Y)">↪</button>
+                            <div class="toolbar-separator"></div>
+                            <select class="toolbar-select" id="fontFamily" onchange="execFontFamily(this.value)"
+                                title="Font Family">
+                                <option value="">Font</option>
+                                <option value="Inter">Inter</option>
+                                <option value="Georgia">Georgia</option>
+                                <option value="Times New Roman">Times New Roman</option>
+                                <option value="Arial">Arial</option>
+                                <option value="Verdana">Verdana</option>
+                                <option value="Courier New">Courier New</option>
+                                <option value="Trebuchet MS">Trebuchet MS</option>
+                            </select>
+                            <select class="toolbar-select" id="fontSize" onchange="execFontSize(this.value)"
+                                title="Font Size">
+                                <option value="">Size</option>
+                                <option value="1">12px</option>
+                                <option value="2">14px</option>
+                                <option value="3">16px</option>
+                                <option value="4">18px</option>
+                                <option value="5">22px</option>
+                                <option value="6">28px</option>
+                                <option value="7">36px</option>
+                            </select>
+                            <div class="toolbar-separator"></div>
+                            <button class="toolbar-btn" onclick="execCmd('bold')"
+                                title="Bold (Ctrl+B)"><b>B</b></button>
+                            <button class="toolbar-btn" onclick="execCmd('italic')"
+                                title="Italic (Ctrl+I)"><i>I</i></button>
+                            <button class="toolbar-btn" onclick="execCmd('underline')"
+                                title="Underline (Ctrl+U)"><u>U</u></button>
+                            <button class="toolbar-btn" onclick="execCmd('strikeThrough')"
+                                title="Strikethrough"><s>S</s></button>
+                            <div class="toolbar-separator"></div>
+                            <div class="toolbar-color-wrap">
+                                <button class="toolbar-btn" onclick="this.nextElementSibling.click()"
+                                    title="Text Color">A<span class="color-bar" id="textColorBar"></span></button>
+                                <input type="color" id="textColorPicker" value="#ffffff"
+                                    onchange="execTextColor(this.value)"
+                                    style="opacity:0;width:0;height:0;position:absolute">
+                            </div>
+                            <div class="toolbar-color-wrap">
+                                <button class="toolbar-btn" onclick="this.nextElementSibling.click()"
+                                    title="Highlight Color" style="background:var(--a-bg-3);font-size:.7rem">🎨</button>
+                                <input type="color" id="hiliteColorPicker" value="#f59e0b"
+                                    onchange="execHiliteColor(this.value)"
+                                    style="opacity:0;width:0;height:0;position:absolute">
+                            </div>
+                        </div>
+                        <!-- Toolbar Row 2 -->
+                        <div class="editor-toolbar">
+                            <select class="toolbar-select" onchange="execHeading(this.value);this.value=''"
+                                title="Headings">
+                                <option value="">¶ Block</option>
+                                <option value="h1">H1 — Title</option>
+                                <option value="h2">H2 — Section</option>
+                                <option value="h3">H3 — Subsection</option>
+                                <option value="h4">H4 — Detail</option>
+                                <option value="p">Paragraph</option>
+                            </select>
+                            <div class="toolbar-separator"></div>
+                            <button class="toolbar-btn" onclick="execCmd('insertUnorderedList')"
+                                title="Bullet List">⊙</button>
+                            <button class="toolbar-btn" onclick="execCmd('insertOrderedList')"
+                                title="Numbered List">①</button>
+                            <button class="toolbar-btn" onclick="insertBlockquote()" title="Blockquote">❝</button>
+                            <button class="toolbar-btn" onclick="insertCode()" title="Code Block">&lt;/&gt;</button>
+                            <button class="toolbar-btn" onclick="insertHR()" title="Horizontal Rule">―</button>
+                            <button class="toolbar-btn" onclick="insertTable()" title="Insert Table">⊞</button>
+                            <div class="toolbar-separator"></div>
+                            <button class="toolbar-btn" onclick="insertLink()" title="Insert Link">🔗</button>
+                            <button class="toolbar-btn" onclick="openImageUpload()" title="Upload Image">🖼️</button>
+                            <button class="toolbar-btn" onclick="insertImageByUrl()" title="Image by URL">🌐</button>
+                            <button class="toolbar-btn" onclick="insertYouTube()" title="Embed YouTube">▶</button>
+                            <button class="toolbar-btn" onclick="insertTOC()" title="Insert Table of Contents">📑</button>
+                            <div class="toolbar-separator"></div>
+                            <button class="toolbar-btn" onclick="execCmd('justifyLeft')" title="Align Left">⫷</button>
+                            <button class="toolbar-btn" onclick="execCmd('justifyCenter')"
+                                title="Align Center">☰</button>
+                            <button class="toolbar-btn" onclick="execCmd('justifyRight')" title="Align Right">⫸</button>
+                            <button class="toolbar-btn" onclick="execCmd('justifyFull')" title="Justify">☷</button>
+                            <div class="toolbar-separator"></div>
+                            <button class="toolbar-btn" onclick="execCmd('indent')" title="Indent">⇥</button>
+                            <button class="toolbar-btn" onclick="execCmd('outdent')" title="Outdent">⇤</button>
+                            <button class="toolbar-btn" onclick="execCmd('removeFormat')"
+                                title="Clear Formatting">✕</button>
+                            <div class="toolbar-separator"></div>
+                            <button class="toolbar-btn" onclick="toggleFullscreen()" title="Fullscreen"
+                                id="fullscreenBtn">⛶</button>
+                            <button class="toolbar-btn" onclick="togglePreview()" title="Preview"
+                                id="previewBtn">👁️</button>
+                        </div>
+
+                        <!-- Content Editor -->
+                        <div class="editor-content" id="editorContent" contenteditable="true"
+                            oninput="onContentChange()" ondrop="handleEditorDrop(event)"
+                            ondragover="event.preventDefault()"></div>
+
+                        <!-- Preview -->
+                        <div id="previewContent" style="display:none;padding:24px;"></div>
+
+                        <!-- Stats Bar -->
+                        <div class="editor-stats-bar">
+                            <span id="statWords">0 words</span>
+                            <span class="stat-sep"></span>
+                            <span id="statChars">0 characters</span>
+                            <span class="stat-sep"></span>
+                            <span id="statReadTime">0 min read</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SEO Sidebar -->
+                <div class="editor-sidebar">
+                    <!-- Post Settings -->
+                    <div class="seo-panel">
+                        <div class="seo-panel-header">
+                            <h3>⚙️ Post Settings</h3>
+                        </div>
+                        <div class="seo-panel-body">
+                            <div class="seo-field">
+                                <label>URL Slug</label>
+                                <input type="text" id="postSlug" placeholder="auto-generated-from-title"
+                                    oninput="updateSeo()">
+                            </div>
+                            <div class="seo-field">
+                                <label>Category</label>
+                                <select id="postCategory" onchange="updateSeo()"></select>
+                            </div>
+                            <div class="seo-field">
+                                <label>Tags</label>
+                                <div class="tags-input-wrap" id="tagsWrap">
+                                    <input type="text" class="tags-input" id="tagsInput"
+                                        placeholder="Type & press Enter" onkeydown="handleTagInput(event)">
+                                </div>
+                            </div>
+                            <div class="seo-field">
+                                <label>Excerpt</label>
+                                <textarea id="postExcerpt" placeholder="Brief post summary..." rows="3"
+                                    oninput="updateSeo()"></textarea>
+                            </div>
+                            <div class="seo-field">
+                                <label>Featured Image</label>
+                                <button class="btn btn-ghost" onclick="openFeaturedImageUpload()"
+                                    style="width:100%;justify-content:center;">📷 Upload Featured Image</button>
+                                <div id="featuredImagePreview" style="margin-top:8px;"></div>
+                                <input type="hidden" id="featuredImage">
+                                <input type="text" id="featuredImageAlt" placeholder="Image alt text (for SEO)"
+                                    style="margin-top:8px;" oninput="updateSeo()">
+                            </div>
+                            <div class="seo-field">
+                                <label>Meta Title</label>
+                                <input type="text" id="metaTitle" placeholder="SEO title (50-60 chars)"
+                                    oninput="updateSeo()">
+                                <div class="char-count" id="metaTitleCount">0/60</div>
+                            </div>
+                            <div class="seo-field">
+                                <label>Meta Description</label>
+                                <textarea id="metaDescription" placeholder="SEO description (120-160 chars)" rows="3"
+                                    oninput="updateSeo()"></textarea>
+                                <div class="char-count" id="metaDescCount">0/160</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI SEO Score -->
+                    <div class="seo-panel">
+                        <div class="seo-panel-header">
+                            <h3>🤖 AI SEO Score</h3>
+                        </div>
+                        <div class="seo-panel-body">
+                            <div class="seo-score-wrap" id="seoScoreWrap">
+                                <div class="seo-score-circle score-bad" id="seoCircle" style="--score:0">
+                                    <span id="seoScoreValue">0</span>
+                                </div>
+                                <div class="seo-score-label" id="seoScoreLabel">Start writing to see your score</div>
+                            </div>
+                            <div class="seo-field">
+                                <label>Focus Keyword</label>
+                                <input type="text" id="focusKeyword" placeholder="e.g. best ai tools"
+                                    oninput="updateSeo()">
+                            </div>
+                            <div class="seo-field">
+                                <label>Secondary Keywords</label>
+                                <input type="text" id="secondaryKeywords" placeholder="comma, separated"
+                                    oninput="updateSeo()">
+                            </div>
+
+                            <!-- Snippet Preview Sub-Panel -->
+                            <div class="seo-field" style="margin-top:20px;">
+                                <label style="display:flex;align-items:center;gap:6px;">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                    Snippet Preview
+                                </label>
+                                <div id="snippetPreview" style="background:var(--a-bg-1);padding:14px;border-radius:8px;border:1px solid var(--a-border);font-family: Arial, sans-serif;">
+                                    <div style="font-size:12px;color:var(--a-text-1);display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                                        <img src="/img/logo.png" width="16" height="16" style="border-radius:50%;">
+                                        <span>https://hedwigpost.com &gt; blog &gt; <span id="snippetSlug">post</span></span>
+                                    </div>
+                                    <div id="snippetTitle" style="color:#8ab4f8;font-size:18px;line-height:1.2;margin-bottom:4px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Post Title</div>
+                                    <div id="snippetDesc" style="color:var(--a-text-2);font-size:13px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">Post meta description preview will appear here.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Tools -->
+                    <div class="seo-panel">
+                        <div class="seo-panel-header">
+                            <h3>✨ AI Tools</h3>
+                        </div>
+                        <div class="seo-panel-body">
+                            <button class="btn btn-primary" onclick="aiGenerateTitles()"
+                                style="width:100%;justify-content:center;margin-bottom:8px;">🎯 Generate Title
+                                Ideas</button>
+                            <div class="ai-suggestions" id="titleSuggestions"></div>
+
+                            <button class="btn btn-ghost" onclick="aiGenerateMetaDesc()"
+                                style="width:100%;justify-content:center;margin:12px 0 8px;">📝 Generate Meta
+                                Description</button>
+                            <button class="btn btn-ghost" onclick="aiSuggestTags()"
+                                style="width:100%;justify-content:center;">🏷️ Suggest Tags</button>
+                        </div>
+                    </div>
+
+                    <!-- Readability Panel -->
+                    <div class="seo-panel">
+                        <div class="seo-panel-header">
+                            <h3>📖 Readability Assessment</h3>
+                        </div>
+                        <div class="seo-panel-body">
+                            <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;">
+                                <div id="readabilityGradeWrap" style="width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--a-bg-1);border:3px solid var(--a-green);font-weight:700;font-size:1.1rem;color:var(--a-text-0);">
+                                    0
+                                </div>
+                                <div>
+                                    <div id="readabilityLevel" style="font-weight:600;font-size:.9rem;">Waiting...</div>
+                                    <div style="font-size:.75rem;color:var(--a-text-2);">Flesch Kincaid Grade</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Image SEO -->
+                    <div class="seo-panel">
+                        <div class="seo-panel-header">
+                            <h3>🖼️ Image SEO</h3>
+                        </div>
+                        <div class="seo-panel-body">
+                            <p id="imageSeoSummary" style="font-size:.8rem;color:var(--a-text-2);margin-bottom:12px;">Add images to optimize alt tags.</p>
+                            <button id="btnAutoSuggestAlt" class="btn btn-ghost" onclick="triggerAutoSuggestAlt()" style="width:100%;justify-content:center;display:none;">✨ Auto-Suggest Missing Alt</button>
+                        </div>
+                    </div>
+
+                    <!-- Social / Open Graph Preview -->
+                    <div class="seo-panel">
+                        <div class="seo-panel-header">
+                            <h3>🔗 Social Preview</h3>
+                        </div>
+                        <div class="seo-panel-body">
+                            <div id="socialPreview" style="border:1px solid var(--a-border);border-radius:8px;overflow:hidden;margin-bottom:12px;">
+                                <div style="aspect-ratio:1.91/1;background:var(--a-bg-1);display:flex;align-items:center;justify-content:center;">
+                                    <img id="socialPreviewImg" src="/img/logo.png" style="width:100%;height:100%;object-fit:cover;">
+                                </div>
+                                <div style="padding:12px;background:var(--a-bg-3);">
+                                    <div style="font-size:.7rem;color:var(--a-text-2);text-transform:uppercase;margin-bottom:4px;">HedwigPost.com</div>
+                                    <div id="socialPreviewTitle" style="font-weight:600;font-size:.9rem;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Post Title</div>
+                                    <div id="socialPreviewDesc" style="font-size:.8rem;color:var(--a-text-2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">Post Meta Description</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SEO Checklist -->
+                    <div class="seo-panel">
+                        <div class="seo-panel-header">
+                            <h3>📋 SEO Checklist</h3>
+                        </div>
+                        <div class="seo-panel-body">
+                            <ul class="seo-checklist" id="seoChecklist"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Image Upload Modal -->
+    <div class="image-upload-modal" id="imageModal">
+        <div class="image-upload-box">
+            <h3>🖼️ Insert Image</h3>
+            <div class="drop-zone" id="dropZone" onclick="document.getElementById('imageFileInput').click()">
+                <p>📁 Click or drag image here</p>
+                <p style="font-size:0.8rem;color:var(--text-tertiary);margin-top:8px;">Max 5MB · JPG, PNG, GIF, WebP</p>
+            </div>
+            <input type="file" id="imageFileInput" accept="image/*" style="display:none"
+                onchange="handleImageSelect(event)">
+            <img id="imagePreview" class="image-preview">
+            <div class="seo-field" id="altTextWrap" style="display:none;">
+                <label>Alt Text (Required for SEO) 🔍</label>
+                <input type="text" id="imageAltText" placeholder="Describe the image for search engines...">
+                <div class="char-count" style="color:var(--text-tertiary);">🔑 Alt text helps Google understand your
+                    images and improves SEO ranking</div>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:16px;">
+                <button class="btn btn-primary" id="insertImageBtn" onclick="insertImageToEditor()"
+                    style="display:none;">Insert Image</button>
+                <button class="btn btn-ghost" onclick="closeImageModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Featured Image Upload Modal -->
+    <div class="image-upload-modal" id="featuredImageModal">
+        <div class="image-upload-box">
+            <h3>📷 Featured Image</h3>
+            <div class="drop-zone" id="featuredDropZone" onclick="document.getElementById('featuredFileInput').click()">
+                <p>📁 Click or drag image here</p>
+            </div>
+            <input type="file" id="featuredFileInput" accept="image/*" style="display:none"
+                onchange="handleFeaturedImageSelect(event)">
+            <img id="featuredImgPreview" class="image-preview">
+            <div style="display:flex;gap:10px;margin-top:16px;">
+                <button class="btn btn-primary" id="setFeaturedBtn" onclick="setFeaturedImage()"
+                    style="display:none;">Set Featured Image</button>
+                <button class="btn btn-ghost" onclick="closeFeaturedImageModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/admin/js/admin.js"></script>
+    <script src="/admin/js/ai-seo.js"></script>
+    <script>
+        // ===================== STATE =====================
+        let currentPostId = null;
+        let tags = [];
+        let autoSaveTimer = null;
+        let uploadedImageUrl = '';
+        let uploadedFeaturedUrl = '';
+
+        // ===================== INIT =====================
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuth();
+            loadCategories();
+
+            // Check if editing existing post
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('id')) {
+                currentPostId = params.get('id');
+                document.getElementById('editorTitle').textContent = '✏️ Edit Post';
+                loadPost(currentPostId);
+            }
+
+            // Auto-save every 30 seconds
+            autoSaveTimer = setInterval(() => {
+                if (document.getElementById('postTitle').value || document.getElementById('editorContent').innerHTML.trim()) {
+                    saveDraftSilent();
+                }
+            }, 30000);
+
+            // Setup drag and drop
+            setupDragDrop('dropZone', 'imageFileInput');
+            setupDragDrop('featuredDropZone', 'featuredFileInput');
+        });
+
+        // ===================== LOAD POST =====================
+        async function loadPost(id) {
+            try {
+                const res = await authFetch('/api/posts');
+                const data = await res.json();
+                const post = data.posts.find(p => p.id === id);
+                if (!post) { showToast('Post not found', 'error'); return; }
+
+                document.getElementById('postTitle').value = post.title;
+                document.getElementById('editorContent').innerHTML = post.content;
+                document.getElementById('postSlug').value = post.slug;
+                document.getElementById('postExcerpt').value = post.excerpt || '';
+                document.getElementById('focusKeyword').value = '';
+                document.getElementById('metaTitle').value = post.metaTitle || '';
+                document.getElementById('metaDescription').value = post.metaDescription || '';
+                document.getElementById('featuredImage').value = post.featuredImage || '';
+                document.getElementById('featuredImageAlt').value = post.featuredImageAlt || '';
+
+                if (post.featuredImage) {
+                    document.getElementById('featuredImagePreview').innerHTML = `<img src="${post.featuredImage}" style="max-width:100%;border-radius:8px;">`;
+                }
+
+                // Set category after loaded
+                setTimeout(() => {
+                    document.getElementById('postCategory').value = post.category;
+                }, 500);
+
+                // Set tags
+                tags = post.tags || [];
+                renderTags();
+                updateSeo();
+            } catch (e) { console.error(e); }
+        }
+
+        // ===================== CATEGORIES =====================
+        async function loadCategories() {
+            const res = await authFetch('/api/categories');
+            const cats = await res.json();
+            const select = document.getElementById('postCategory');
+            select.innerHTML = cats.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+        }
+
+        // ===================== EDITOR COMMANDS =====================
+        function execCmd(cmd) {
+            document.execCommand(cmd, false, null);
+            document.getElementById('editorContent').focus();
+        }
+
+        function execHeading(tag) {
+            if (!tag) return;
+            document.execCommand('formatBlock', false, tag);
+            document.getElementById('editorContent').focus();
+        }
+
+        function execFontFamily(font) {
+            if (!font) return;
+            document.execCommand('fontName', false, font);
+            document.getElementById('editorContent').focus();
+        }
+
+        function execFontSize(size) {
+            if (!size) return;
+            document.execCommand('fontSize', false, size);
+            document.getElementById('editorContent').focus();
+        }
+
+        function execTextColor(color) {
+            document.execCommand('foreColor', false, color);
+            document.getElementById('textColorBar').style.background = color;
+            document.getElementById('editorContent').focus();
+        }
+
+        function execHiliteColor(color) {
+            document.execCommand('hiliteColor', false, color);
+            document.getElementById('editorContent').focus();
+        }
+
+        function insertBlockquote() {
+            document.execCommand('formatBlock', false, 'blockquote');
+            document.getElementById('editorContent').focus();
+        }
+
+        function insertLink() {
+            const sel = window.getSelection();
+            const selectedText = sel.toString();
+            // Save selection range so we can restore it after the modal
+            const range = sel.rangeCount > 0 ? sel.getRangeAt(0) : null;
+
+            const modal = document.createElement('div');
+            modal.className = 'editor-modal-overlay';
+            modal.innerHTML = `
+                <div class="editor-modal">
+                    <h3 style="margin-bottom:16px;font-size:1rem;">🔗 Insert Link</h3>
+                    <label style="font-size:.8rem;color:var(--a-text-2);display:block;margin-bottom:4px;">URL</label>
+                    <input type="url" id="linkUrl" placeholder="https://example.com" style="width:100%;padding:10px 12px;border:1px solid var(--a-border);border-radius:8px;background:var(--a-bg-3);color:var(--a-text-0);font-size:.9rem;margin-bottom:12px;outline:none;">
+                    <label style="font-size:.8rem;color:var(--a-text-2);display:block;margin-bottom:4px;">Display Text</label>
+                    <input type="text" id="linkText" placeholder="Click here" value="${selectedText}" style="width:100%;padding:10px 12px;border:1px solid var(--a-border);border-radius:8px;background:var(--a-bg-3);color:var(--a-text-0);font-size:.9rem;margin-bottom:6px;outline:none;">
+                    <label style="font-size:.75rem;color:var(--a-text-3);display:flex;align-items:center;gap:6px;margin-bottom:16px;">
+                        <input type="checkbox" id="linkNewTab" checked> Open in new tab
+                    </label>
+                    <div style="display:flex;gap:8px;justify-content:flex-end;">
+                        <button onclick="this.closest('.editor-modal-overlay').remove()" style="padding:8px 16px;border:1px solid var(--a-border);border-radius:8px;background:transparent;color:var(--a-text-1);cursor:pointer;">Cancel</button>
+                        <button id="linkInsertBtn" style="padding:8px 20px;border:none;border-radius:8px;background:var(--a-accent);color:#fff;cursor:pointer;font-weight:600;">Insert</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            document.getElementById('linkUrl').focus();
+
+            document.getElementById('linkInsertBtn').onclick = () => {
+                const url = document.getElementById('linkUrl').value.trim();
+                const text = document.getElementById('linkText').value.trim() || url;
+                const newTab = document.getElementById('linkNewTab').checked;
+                modal.remove();
+                if (!url) return;
+
+                // Restore selection
+                if (range) { sel.removeAllRanges(); sel.addRange(range); }
+                const target = newTab ? ' target="_blank" rel="noopener noreferrer"' : '';
+                document.execCommand('insertHTML', false, `<a href="${url}"${target} style="color:var(--accent);text-decoration:underline;">${text}</a>`);
+                document.getElementById('editorContent').focus();
+            };
+
+            // Enter key submits
+            modal.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') document.getElementById('linkInsertBtn').click();
+                if (e.key === 'Escape') modal.remove();
+            });
+        }
+
+        function insertImageByUrl() {
+            const modal = document.createElement('div');
+            modal.className = 'editor-modal-overlay';
+            modal.innerHTML = `
+                <div class="editor-modal">
+                    <h3 style="margin-bottom:16px;font-size:1rem;">🌐 Image by URL</h3>
+                    <label style="font-size:.8rem;color:var(--a-text-2);display:block;margin-bottom:4px;">Image URL</label>
+                    <input type="url" id="imgUrlInput" placeholder="https://example.com/photo.jpg" style="width:100%;padding:10px 12px;border:1px solid var(--a-border);border-radius:8px;background:var(--a-bg-3);color:var(--a-text-0);font-size:.9rem;margin-bottom:12px;outline:none;">
+                    <label style="font-size:.8rem;color:var(--a-text-2);display:block;margin-bottom:4px;">Alt Text (for SEO)</label>
+                    <input type="text" id="imgAltInput" placeholder="Describe the image" style="width:100%;padding:10px 12px;border:1px solid var(--a-border);border-radius:8px;background:var(--a-bg-3);color:var(--a-text-0);font-size:.9rem;margin-bottom:16px;outline:none;">
+                    <div style="display:flex;gap:8px;justify-content:flex-end;">
+                        <button onclick="this.closest('.editor-modal-overlay').remove()" style="padding:8px 16px;border:1px solid var(--a-border);border-radius:8px;background:transparent;color:var(--a-text-1);cursor:pointer;">Cancel</button>
+                        <button id="imgUrlInsertBtn" style="padding:8px 20px;border:none;border-radius:8px;background:var(--a-accent);color:#fff;cursor:pointer;font-weight:600;">Insert</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            document.getElementById('imgUrlInput').focus();
+
+            document.getElementById('imgUrlInsertBtn').onclick = () => {
+                const url = document.getElementById('imgUrlInput').value.trim();
+                const alt = document.getElementById('imgAltInput').value.trim() || 'Image';
+                modal.remove();
+                if (!url) return;
+                document.execCommand('insertHTML', false, `<img src="${url}" alt="${alt}" style="max-width:100%;border-radius:8px;margin:12px 0;cursor:pointer;" class="editor-img">`);
+                onContentChange();
+            };
+
+            modal.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') document.getElementById('imgUrlInsertBtn').click();
+                if (e.key === 'Escape') modal.remove();
+            });
+        }
+
+        function insertYouTube() {
+            const modal = document.createElement('div');
+            modal.className = 'editor-modal-overlay';
+            modal.innerHTML = `
+                <div class="editor-modal">
+                    <h3 style="margin-bottom:16px;font-size:1rem;">▶ Embed YouTube Video</h3>
+                    <label style="font-size:.8rem;color:var(--a-text-2);display:block;margin-bottom:4px;">YouTube URL</label>
+                    <input type="url" id="ytUrlInput" placeholder="https://www.youtube.com/watch?v=..." style="width:100%;padding:10px 12px;border:1px solid var(--a-border);border-radius:8px;background:var(--a-bg-3);color:var(--a-text-0);font-size:.9rem;margin-bottom:6px;outline:none;">
+                    <p style="font-size:.72rem;color:var(--a-text-3);margin-bottom:16px;">Supports youtube.com/watch, youtu.be, and youtube.com/embed links</p>
+                    <div style="display:flex;gap:8px;justify-content:flex-end;">
+                        <button onclick="this.closest('.editor-modal-overlay').remove()" style="padding:8px 16px;border:1px solid var(--a-border);border-radius:8px;background:transparent;color:var(--a-text-1);cursor:pointer;">Cancel</button>
+                        <button id="ytInsertBtn" style="padding:8px 20px;border:none;border-radius:8px;background:#ff0000;color:#fff;cursor:pointer;font-weight:600;">Embed</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            document.getElementById('ytUrlInput').focus();
+
+            document.getElementById('ytInsertBtn').onclick = () => {
+                const url = document.getElementById('ytUrlInput').value.trim();
+                modal.remove();
+                if (!url) return;
+
+                // Extract video ID from various YouTube URL formats
+                let videoId = null;
+                const patterns = [
+                    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/,
+                    /youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/
+                ];
+                for (const p of patterns) {
+                    const m = url.match(p);
+                    if (m) { videoId = m[1]; break; }
+                }
+
+                if (!videoId) {
+                    showToast('Invalid YouTube URL', 'error');
+                    return;
+                }
+
+                const wrapper = document.createElement('div');
+                wrapper.style.cssText = 'position:relative;padding-bottom:56.25%;height:0;overflow:hidden;max-width:100%;margin:20px 0;border-radius:12px;';
+                wrapper.className = 'yt-embed-wrap';
+                const iframe = document.createElement('iframe');
+                iframe.src = `https://www.youtube.com/embed/${videoId}`;
+                iframe.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:12px;';
+                iframe.setAttribute('allowfullscreen', '');
+                iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+                wrapper.appendChild(iframe);
+
+                const editor = document.getElementById('editorContent');
+                const sel = window.getSelection();
+                if (sel.rangeCount > 0 && editor.contains(sel.anchorNode)) {
+                    const range = sel.getRangeAt(0);
+                    range.collapse(false);
+                    range.insertNode(document.createElement('br'));
+                    range.insertNode(wrapper);
+                } else {
+                    editor.appendChild(wrapper);
+                    editor.appendChild(document.createElement('br'));
+                }
+                onContentChange();
+                showToast('YouTube video embedded ✓');
+            };
+
+            modal.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') document.getElementById('ytInsertBtn').click();
+                if (e.key === 'Escape') modal.remove();
+            });
+        }
+
+        function insertCode() {
+            const sel = window.getSelection();
+            if (sel.toString()) {
+                document.execCommand('insertHTML', false, `<pre><code>${sel.toString()}</code></pre>`);
+            } else {
+                document.execCommand('insertHTML', false, '<pre><code>// code here</code></pre>');
+            }
+        }
+
+        function insertHR() {
+            document.execCommand('insertHTML', false, '<hr style="border:none;border-top:2px solid var(--a-border);margin:20px 0;">');
+            document.getElementById('editorContent').focus();
+        }
+
+        function insertTOC() {
+            const editor = document.getElementById('editorContent');
+            const headings = editor.querySelectorAll('h2, h3');
+            
+            if (headings.length === 0) {
+                showToast('Add some H2/H3 headings first, then insert TOC', 'error');
+                return;
+            }
+
+            // Remove existing TOC if any
+            const existingToc = editor.querySelector('.toc');
+            if (existingToc) existingToc.remove();
+
+            // Build TOC HTML
+            let tocItems = '';
+            let h2Count = 0;
+            headings.forEach((h, i) => {
+                const id = 'toc-' + h.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+$/, '');
+                h.id = id;
+                const text = h.textContent.trim();
+                if (h.tagName === 'H2') {
+                    h2Count++;
+                    tocItems += `<li><a href="#${id}" style="color:var(--a-text-1);text-decoration:none;font-weight:600;">${text}</a></li>`;
+                } else {
+                    tocItems += `<li style="margin-left:18px;"><a href="#${id}" style="color:var(--a-text-2);text-decoration:none;font-size:.8rem;">${text}</a></li>`;
+                }
+            });
+
+            const tocHtml = `
+                <div class="toc" contenteditable="false" style="background:var(--a-bg-2);border:none;border-left:3px solid var(--a-accent);padding:16px 18px;margin:18px 0;">
+                    <div style="font-size:.82rem;font-weight:700;margin-bottom:10px;color:var(--a-text-0);text-transform:uppercase;letter-spacing:.06em;">📋 Table of Contents</div>
+                    <ol style="list-style:decimal;padding-left:18px;display:flex;flex-direction:column;gap:6px;margin:0;">
+                        ${tocItems}
+                    </ol>
+                </div>
+                <p><br></p>
+            `;
+
+            // Insert at cursor position or at the top of content
+            const sel = window.getSelection();
+            if (sel.rangeCount > 0 && editor.contains(sel.anchorNode)) {
+                document.execCommand('insertHTML', false, tocHtml);
+            } else {
+                editor.insertAdjacentHTML('afterbegin', tocHtml);
+            }
+            onContentChange();
+            showToast(`Table of Contents inserted with ${headings.length} items ✓`);
+        }
+
+        function insertTable() {
+            const modal = document.createElement('div');
+            modal.className = 'editor-modal-overlay';
+            modal.innerHTML = `
+                <div class="editor-modal">
+                    <h3 style="margin-bottom:16px;font-size:1rem;">📊 Insert Table</h3>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+                        <div>
+                            <label style="font-size:.8rem;color:var(--a-text-2);display:block;margin-bottom:4px;">Rows</label>
+                            <input type="number" id="tableRows" value="3" min="1" max="20" style="width:100%;padding:10px 12px;border:1px solid var(--a-border);border-radius:8px;background:var(--a-bg-3);color:var(--a-text-0);font-size:.9rem;outline:none;">
+                        </div>
+                        <div>
+                            <label style="font-size:.8rem;color:var(--a-text-2);display:block;margin-bottom:4px;">Columns</label>
+                            <input type="number" id="tableCols" value="3" min="1" max="10" style="width:100%;padding:10px 12px;border:1px solid var(--a-border);border-radius:8px;background:var(--a-bg-3);color:var(--a-text-0);font-size:.9rem;outline:none;">
+                        </div>
+                    </div>
+                    <label style="font-size:.75rem;color:var(--a-text-3);display:flex;align-items:center;gap:6px;margin-bottom:16px;">
+                        <input type="checkbox" id="tableHeader" checked> Include header row
+                    </label>
+                    <div style="display:flex;gap:8px;justify-content:flex-end;">
+                        <button onclick="this.closest('.editor-modal-overlay').remove()" style="padding:8px 16px;border:1px solid var(--a-border);border-radius:8px;background:transparent;color:var(--a-text-1);cursor:pointer;">Cancel</button>
+                        <button id="tableInsertBtn" style="padding:8px 20px;border:none;border-radius:8px;background:var(--a-accent);color:#fff;cursor:pointer;font-weight:600;">Insert Table</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            document.getElementById('tableRows').focus();
+
+            document.getElementById('tableInsertBtn').onclick = () => {
+                const rows = parseInt(document.getElementById('tableRows').value) || 3;
+                const cols = parseInt(document.getElementById('tableCols').value) || 3;
+                const hasHeader = document.getElementById('tableHeader').checked;
+                modal.remove();
+
+                let html = '<table style="width:100%;border-collapse:collapse;margin:16px 0;border:1px solid var(--a-border);">';
+                if (hasHeader) {
+                    html += '<thead><tr>';
+                    for (let c = 0; c < cols; c++) html += '<th style="border:1px solid var(--a-border);padding:10px 14px;background:rgba(139,92,246,.1);font-weight:700;text-align:left;">Header</th>';
+                    html += '</tr></thead>';
+                }
+                html += '<tbody>';
+                const bodyRows = hasHeader ? rows - 1 : rows;
+                for (let r = 0; r < bodyRows; r++) {
+                    const bg = r % 2 === 1 ? ' style="background:rgba(139,92,246,.03);"' : '';
+                    html += `<tr${bg}>`;
+                    for (let c = 0; c < cols; c++) html += '<td style="border:1px solid var(--a-border);padding:10px 14px;">Cell</td>';
+                    html += '</tr>';
+                }
+                html += '</tbody></table><p><br></p>';
+                document.execCommand('insertHTML', false, html);
+                onContentChange();
+            };
+
+            modal.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') document.getElementById('tableInsertBtn').click();
+                if (e.key === 'Escape') modal.remove();
+            });
+        }
+
+        // ===================== FULLSCREEN =====================
+        function toggleFullscreen() {
+            const layout = document.querySelector('.admin-layout');
+            const sidebar = document.getElementById('adminSidebar');
+            const main = document.querySelector('.admin-main');
+            const btn = document.getElementById('fullscreenBtn');
+            layout.classList.toggle('editor-fullscreen');
+            if (layout.classList.contains('editor-fullscreen')) {
+                sidebar.style.display = 'none';
+                main.style.marginLeft = '0';
+                btn.textContent = '✕';
+                btn.classList.add('active');
+            } else {
+                sidebar.style.display = '';
+                main.style.marginLeft = '';
+                btn.textContent = '⛶';
+                btn.classList.remove('active');
+            }
+        }
+
+        // ===================== EDITOR IMAGE HANDLING =====================
+        function handleEditorDrop(e) {
+            const files = e.dataTransfer.files;
+            if (files.length && files[0].type.startsWith('image/')) {
+                e.preventDefault();
+                const formData = new FormData();
+                formData.append('image', files[0]);
+                authFetch('/api/upload', { method: 'POST', body: formData })
+                    .then(r => r.json())
+                    .then(data => {
+                        const img = `<img src="${data.url}" alt="Image" style="max-width:100%;border-radius:8px;margin:12px 0;cursor:pointer;" class="editor-img">`;
+                        document.execCommand('insertHTML', false, img);
+                        onContentChange();
+                        showToast('Image dropped & uploaded ✓');
+                    })
+                    .catch(() => showToast('Upload failed', 'error'));
+            }
+        }
+
+        // ============ UNIFIED MEDIA SELECTION ============
+        let selectedMedia = null; // the currently selected img or yt-embed-wrap
+
+        function clearMediaSelection() {
+            document.querySelectorAll('.media-toolbar').forEach(t => t.remove());
+            document.querySelectorAll('.media-resize-wrap').forEach(w => {
+                const child = w.querySelector('img');
+                if (child) { w.parentNode.insertBefore(child, w); }
+                w.remove();
+            });
+            if (selectedMedia) {
+                selectedMedia.style.outline = '';
+                selectedMedia = null;
+            }
+        }
+
+        // Click handler — select images or YouTube embeds
+        document.addEventListener('click', (e) => {
+            const editor = document.getElementById('editorContent');
+            if (!editor) return;
+
+            // Check if clicking on a YouTube embed
+            const ytWrap = e.target.closest('.yt-embed-wrap');
+            if (ytWrap && editor.contains(ytWrap)) {
+                e.preventDefault();
+                e.stopPropagation();
+                clearMediaSelection();
+                selectYouTubeEmbed(ytWrap);
+                return;
+            }
+
+            // Check if clicking on an image
+            if (e.target.tagName === 'IMG' && editor.contains(e.target)) {
+                clearMediaSelection();
+                selectEditorImage(e.target);
+                return;
+            }
+
+            // Clicked something else — clear
+            if (!e.target.closest('.media-toolbar') && !e.target.closest('.media-resize-wrap')) {
+                clearMediaSelection();
+            }
+        });
+
+        // ============ MOVE MEDIA UP/DOWN ============
+        function moveMediaUp(el) {
+            const block = el.closest('.media-resize-wrap') || el.closest('.yt-embed-wrap') || el;
+            const prev = block.previousElementSibling;
+            if (prev) {
+                block.parentNode.insertBefore(block, prev);
+                onContentChange();
+            }
+        }
+
+        function moveMediaDown(el) {
+            const block = el.closest('.media-resize-wrap') || el.closest('.yt-embed-wrap') || el;
+            const next = block.nextElementSibling;
+            if (next) {
+                block.parentNode.insertBefore(next, block);
+                onContentChange();
+            }
+        }
+
+        function deleteMedia(el) {
+            const block = el.closest('.media-resize-wrap') || el.closest('.yt-embed-wrap') || el;
+            const toolbar = block.nextElementSibling;
+            if (toolbar && toolbar.classList.contains('media-toolbar')) toolbar.remove();
+            block.remove();
+            selectedMedia = null;
+            onContentChange();
+        }
+
+        // ============ YOUTUBE EMBED SELECTION ============
+        function selectYouTubeEmbed(wrap) {
+            selectedMedia = wrap;
+            wrap.style.outline = '2px solid var(--a-accent)';
+            wrap.style.outlineOffset = '4px';
+
+            const tb = document.createElement('div');
+            tb.className = 'media-toolbar';
+            tb.innerHTML = `
+                <button onclick="moveMediaUp(this.parentNode.previousElementSibling)" title="Move Up">⬆</button>
+                <button onclick="moveMediaDown(this.parentNode.previousElementSibling)" title="Move Down">⬇</button>
+                <span class="tb-sep"></span>
+                <button onclick="deleteMedia(this.parentNode.previousElementSibling)" title="Delete" style="color:var(--a-red)">✕</button>
+            `;
+            wrap.parentNode.insertBefore(tb, wrap.nextSibling);
+        }
+
+        // ============ IMAGE SELECTION WITH FULL CONTROLS ============
+        function selectEditorImage(img) {
+            selectedMedia = img;
+            img.style.outline = '2px solid var(--a-accent)';
+
+            // Create resize wrapper
+            const wrap = document.createElement('div');
+            wrap.className = 'media-resize-wrap';
+            wrap.style.cssText = 'position:relative;display:inline-block;max-width:100%;';
+            img.parentNode.insertBefore(wrap, img);
+            wrap.appendChild(img);
+
+            // 8 resize handles: 4 corners + 4 edges
+            const handles = [
+                { pos: 'nw', cursor: 'nwse-resize' },
+                { pos: 'n', cursor: 'ns-resize' },
+                { pos: 'ne', cursor: 'nesw-resize' },
+                { pos: 'e', cursor: 'ew-resize' },
+                { pos: 'se', cursor: 'nwse-resize' },
+                { pos: 's', cursor: 'ns-resize' },
+                { pos: 'sw', cursor: 'nesw-resize' },
+                { pos: 'w', cursor: 'ew-resize' },
+            ];
+            handles.forEach(({ pos, cursor }) => {
+                const h = document.createElement('div');
+                h.className = 'resize-handle resize-' + pos;
+                h.style.cursor = cursor;
+                h.addEventListener('mousedown', (e) => startResize(e, img, pos));
+                wrap.appendChild(h);
+            });
+
+            // Rotation handle
+            const rotHandle = document.createElement('div');
+            rotHandle.className = 'rotate-handle';
+            rotHandle.title = 'Drag to rotate';
+            rotHandle.addEventListener('mousedown', (e) => startRotate(e, img));
+            wrap.appendChild(rotHandle);
+
+            // Floating toolbar
+            const tb = document.createElement('div');
+            tb.className = 'media-toolbar';
+            tb.innerHTML = `
+                <button onclick="moveMediaUp(this.parentNode.previousElementSibling.querySelector('img'))" title="Move Up">⬆</button>
+                <button onclick="moveMediaDown(this.parentNode.previousElementSibling.querySelector('img'))" title="Move Down">⬇</button>
+                <span class="tb-sep"></span>
+                <button onclick="setImgSize(this,'25%')" title="25%">S</button>
+                <button onclick="setImgSize(this,'50%')" title="50%">M</button>
+                <button onclick="setImgSize(this,'75%')" title="75%">L</button>
+                <button onclick="setImgSize(this,'100%')" title="100%">F</button>
+                <span class="tb-sep"></span>
+                <button onclick="alignMedia(this,'center')" title="Center">⟐</button>
+                <button onclick="alignMedia(this,'left')" title="Float Left">⫷</button>
+                <button onclick="alignMedia(this,'right')" title="Float Right">⫸</button>
+                <span class="tb-sep"></span>
+                <button onclick="resetRotation(this)" title="Reset Rotation">↻</button>
+                <button onclick="editImgAlt(this)" title="Alt Text">Alt</button>
+                <button onclick="deleteMedia(this.parentNode.previousElementSibling.querySelector('img'))" title="Delete" style="color:var(--a-red)">✕</button>
+            `;
+            wrap.parentNode.insertBefore(tb, wrap.nextSibling);
+        }
+
+        // ============ RESIZE SYSTEM (FREE DIRECTIONAL) ============
+        let resizeState = null;
+
+        function startResize(e, img, handlePos) {
+            e.preventDefault();
+            e.stopPropagation();
+            resizeState = {
+                img,
+                handlePos,
+                startX: e.clientX,
+                startY: e.clientY,
+                startW: img.offsetWidth,
+                startH: img.offsetHeight,
+            };
+            document.addEventListener('mousemove', onResize);
+            document.addEventListener('mouseup', endResize);
+        }
+
+        function onResize(e) {
+            if (!resizeState) return;
+            const { img, handlePos, startX, startY, startW, startH } = resizeState;
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
+            const ratio = startH / startW;
+
+            let newW = startW, newH = startH;
+
+            if (handlePos.includes('e')) newW = Math.max(40, startW + dx);
+            if (handlePos.includes('w')) newW = Math.max(40, startW - dx);
+            if (handlePos.includes('s')) newH = Math.max(40, startH + dy);
+            if (handlePos.includes('n')) newH = Math.max(40, startH - dy);
+
+            // Corner handles: allow free resize (shift for proportional)
+            if (handlePos.length === 2 && !e.shiftKey) {
+                // Free resize — both dimensions change
+            } else if (handlePos.length === 2 && e.shiftKey) {
+                // Proportional resize when holding shift
+                newH = newW * ratio;
+            } else if (handlePos === 'n' || handlePos === 's') {
+                // Vertical only
+                newW = startW; // keep width
+            } else if (handlePos === 'e' || handlePos === 'w') {
+                // Horizontal only
+                newH = startH; // keep height
+            }
+
+            img.style.width = newW + 'px';
+            img.style.height = newH + 'px';
+        }
+
+        function endResize() {
+            resizeState = null;
+            document.removeEventListener('mousemove', onResize);
+            document.removeEventListener('mouseup', endResize);
+            onContentChange();
+        }
+
+        // ============ ROTATION SYSTEM ============
+        let rotateState = null;
+
+        function startRotate(e, img) {
+            e.preventDefault();
+            e.stopPropagation();
+            const rect = img.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            const startAngle = Math.atan2(e.clientY - cy, e.clientX - cx);
+            const currentRotation = getCurrentRotation(img);
+            rotateState = { img, cx, cy, startAngle, startRotation: currentRotation };
+            document.addEventListener('mousemove', onRotate);
+            document.addEventListener('mouseup', endRotate);
+        }
+
+        function getCurrentRotation(el) {
+            const transform = el.style.transform || '';
+            const match = transform.match(/rotate\(([-\d.]+)deg\)/);
+            return match ? parseFloat(match[1]) : 0;
+        }
+
+        function onRotate(e) {
+            if (!rotateState) return;
+            const { img, cx, cy, startAngle, startRotation } = rotateState;
+            const angle = Math.atan2(e.clientY - cy, e.clientX - cx);
+            let deg = startRotation + (angle - startAngle) * (180 / Math.PI);
+            // Snap to 0, 90, 180, 270 within 5 degrees
+            [0, 90, 180, 270, -90, -180, -270].forEach(snap => {
+                if (Math.abs(deg - snap) < 5) deg = snap;
+            });
+            img.style.transform = `rotate(${Math.round(deg)}deg)`;
+        }
+
+        function endRotate() {
+            rotateState = null;
+            document.removeEventListener('mousemove', onRotate);
+            document.removeEventListener('mouseup', endRotate);
+            onContentChange();
+        }
+
+        function resetRotation(btn) {
+            const wrap = btn.closest('.media-toolbar')?.previousElementSibling;
+            const img = wrap?.querySelector('img');
+            if (img) { img.style.transform = ''; onContentChange(); }
+        }
+
+        // ============ TOOLBAR ACTIONS ============
+        function setImgSize(btn, w) {
+            const wrap = btn.closest('.media-toolbar')?.previousElementSibling;
+            const img = wrap?.querySelector('img');
+            if (img) { img.style.width = w; img.style.height = 'auto'; onContentChange(); }
+        }
+
+        function alignMedia(btn, alignment) {
+            const wrap = btn.closest('.media-toolbar')?.previousElementSibling;
+            const img = wrap?.querySelector('img');
+            if (!img) return;
+            if (alignment === 'center') {
+                img.style.float = 'none'; img.style.display = 'block';
+                img.style.marginLeft = 'auto'; img.style.marginRight = 'auto';
+            } else if (alignment === 'left') {
+                img.style.float = 'left'; img.style.display = '';
+                img.style.marginLeft = ''; img.style.marginRight = '16px';
+            } else {
+                img.style.float = 'right'; img.style.display = '';
+                img.style.marginRight = ''; img.style.marginLeft = '16px';
+            }
+            onContentChange();
+        }
+
+        function editImgAlt(btn) {
+            const wrap = btn.closest('.media-toolbar')?.previousElementSibling;
+            const img = wrap?.querySelector('img');
+            if (img) {
+                const alt = prompt('Image alt text:', img.alt || '');
+                if (alt !== null) img.alt = alt;
+            }
+        }
+
+        // ============ DRAG TO REPOSITION (IMAGES + YOUTUBE) ============
+        (function () {
+            const editor = document.getElementById('editorContent');
+            let dragEl = null, dragPlaceholder = null;
+
+            editor.addEventListener('dragstart', (e) => {
+                const ytWrap = e.target.closest('.yt-embed-wrap');
+                if (e.target.tagName === 'IMG' || ytWrap) {
+                    dragEl = ytWrap || e.target;
+                    e.dataTransfer.effectAllowed = 'move';
+                    e.dataTransfer.setData('text/plain', 'media-reorder');
+                    setTimeout(() => {
+                        dragPlaceholder = document.createElement('div');
+                        dragPlaceholder.className = 'img-drag-placeholder';
+                        dragPlaceholder.style.cssText = 'height:4px;background:var(--a-accent);border-radius:2px;margin:8px 0;';
+                        dragEl.style.opacity = '0.3';
+                    }, 0);
+                }
+            });
+
+            editor.addEventListener('dragover', (e) => {
+                if (!dragEl) return;
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'move';
+                const target = document.elementFromPoint(e.clientX, e.clientY);
+                if (target && editor.contains(target) && target !== dragPlaceholder && target !== dragEl) {
+                    const block = target.closest('p, div, h1, h2, h3, h4, blockquote, pre, ul, ol, table, hr, img') || target;
+                    if (editor.contains(block) && !dragEl.contains(block)) {
+                        const rect = block.getBoundingClientRect();
+                        const mid = rect.top + rect.height / 2;
+                        if (dragPlaceholder.parentNode) dragPlaceholder.remove();
+                        if (e.clientY < mid) block.parentNode.insertBefore(dragPlaceholder, block);
+                        else block.parentNode.insertBefore(dragPlaceholder, block.nextSibling);
+                    }
+                }
+            });
+
+            editor.addEventListener('drop', (e) => {
+                if (!dragEl || e.dataTransfer.getData('text/plain') !== 'media-reorder') return;
+                e.preventDefault();
+                dragEl.style.opacity = '1';
+                const moveEl = dragEl.closest('.media-resize-wrap') || dragEl;
+                if (dragPlaceholder?.parentNode) {
+                    dragPlaceholder.parentNode.insertBefore(moveEl, dragPlaceholder);
+                    dragPlaceholder.remove();
+                }
+                dragEl = null; dragPlaceholder = null;
+                onContentChange();
+            });
+
+            editor.addEventListener('dragend', () => {
+                if (dragEl) dragEl.style.opacity = '1';
+                if (dragPlaceholder?.parentNode) dragPlaceholder.remove();
+                dragEl = null; dragPlaceholder = null;
+            });
+        })();
+
+        // ===================== KEYBOARD SHORTCUTS =====================
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                if (e.key === 's') { e.preventDefault(); saveDraft(); }
+            }
+            if (e.key === 'Escape') clearMediaSelection();
+            if (e.key === 'Delete' && selectedMedia) {
+                deleteMedia(selectedMedia);
+            }
+        });
+
+        // ===================== STATS =====================
+        function updateStats() {
+            const text = (document.getElementById('editorContent').innerText || '').trim();
+            const words = text ? text.split(/\s+/).filter(w => w).length : 0;
+            const chars = text.length;
+            const readTime = Math.max(1, Math.round(words / 200));
+            document.getElementById('statWords').textContent = words + ' word' + (words !== 1 ? 's' : '');
+            document.getElementById('statChars').textContent = chars + ' character' + (chars !== 1 ? 's' : '');
+            document.getElementById('statReadTime').textContent = readTime + ' min read';
+        }
+
+        // ===================== IMAGE UPLOAD =====================
+        function openImageUpload() {
+            document.getElementById('imageModal').classList.add('active');
+            uploadedImageUrl = '';
+        }
+
+        function closeImageModal() {
+            document.getElementById('imageModal').classList.remove('active');
+            document.getElementById('imagePreview').style.display = 'none';
+            document.getElementById('altTextWrap').style.display = 'none';
+            document.getElementById('insertImageBtn').style.display = 'none';
+            document.getElementById('imageFileInput').value = '';
+            document.getElementById('imageAltText').value = '';
+        }
+
+        async function handleImageSelect(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Preview
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                document.getElementById('imagePreview').src = ev.target.result;
+                document.getElementById('imagePreview').style.display = 'block';
+                document.getElementById('altTextWrap').style.display = 'block';
+                document.getElementById('insertImageBtn').style.display = 'inline-flex';
+            };
+            reader.readAsDataURL(file);
+
+            // Upload
+            const formData = new FormData();
+            formData.append('image', file);
+            try {
+                const res = await authFetch('/api/upload', { method: 'POST', body: formData });
+                const data = await res.json();
+                uploadedImageUrl = data.url;
+            } catch (e) { showToast('Upload failed', 'error'); }
+        }
+
+        function insertImageToEditor() {
+            const alt = document.getElementById('imageAltText').value || 'Image';
+            if (uploadedImageUrl) {
+                document.getElementById('editorContent').focus();
+                document.execCommand('insertHTML', false, `<img src="${uploadedImageUrl}" alt="${alt}" style="max-width:100%;border-radius:8px;margin:12px 0;">`);
+                closeImageModal();
+                onContentChange();
+                showToast('Image inserted with alt text ✓');
+            }
+        }
+
+        // ===================== FEATURED IMAGE =====================
+        function openFeaturedImageUpload() {
+            document.getElementById('featuredImageModal').classList.add('active');
+        }
+
+        function closeFeaturedImageModal() {
+            document.getElementById('featuredImageModal').classList.remove('active');
+            document.getElementById('featuredImgPreview').style.display = 'none';
+            document.getElementById('setFeaturedBtn').style.display = 'none';
+            document.getElementById('featuredFileInput').value = '';
+        }
+
+        async function handleFeaturedImageSelect(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                document.getElementById('featuredImgPreview').src = ev.target.result;
+                document.getElementById('featuredImgPreview').style.display = 'block';
+                document.getElementById('setFeaturedBtn').style.display = 'inline-flex';
+            };
+            reader.readAsDataURL(file);
+            const formData = new FormData();
+            formData.append('image', file);
+            try {
+                const res = await authFetch('/api/upload', { method: 'POST', body: formData });
+                const data = await res.json();
+                uploadedFeaturedUrl = data.url;
+            } catch (e) { showToast('Upload failed', 'error'); }
+        }
+
+        function setFeaturedImage() {
+            if (uploadedFeaturedUrl) {
+                document.getElementById('featuredImage').value = uploadedFeaturedUrl;
+                document.getElementById('featuredImagePreview').innerHTML = `<img src="${uploadedFeaturedUrl}" style="max-width:100%;border-radius:8px;">`;
+                closeFeaturedImageModal();
+                showToast('Featured image set ✓');
+            }
+        }
+
+        // ===================== DRAG & DROP =====================
+        function setupDragDrop(zoneId, inputId) {
+            const zone = document.getElementById(zoneId);
+            if (!zone) return;
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(ev => {
+                zone.addEventListener(ev, (e) => { e.preventDefault(); e.stopPropagation(); });
+            });
+            zone.addEventListener('dragenter', () => zone.classList.add('dragover'));
+            zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+            zone.addEventListener('drop', (e) => {
+                zone.classList.remove('dragover');
+                const input = document.getElementById(inputId);
+                input.files = e.dataTransfer.files;
+                input.dispatchEvent(new Event('change'));
+            });
+        }
+
+        // ===================== TAGS =====================
+        function handleTagInput(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const val = e.target.value.trim();
+                if (val && !tags.includes(val)) {
+                    tags.push(val);
+                    renderTags();
+                    updateSeo();
+                }
+                e.target.value = '';
+            }
+        }
+
+        function renderTags() {
+            const wrap = document.getElementById('tagsWrap');
+            const input = document.getElementById('tagsInput');
+            wrap.querySelectorAll('.tag-chip').forEach(el => el.remove());
+            tags.forEach((tag, i) => {
+                const chip = document.createElement('span');
+                chip.className = 'tag-chip';
+                chip.innerHTML = `${tag} <button onclick="removeTag(${i})">✕</button>`;
+                wrap.insertBefore(chip, input);
+            });
+        }
+
+        function removeTag(i) {
+            tags.splice(i, 1);
+            renderTags();
+        }
+
+        // ===================== EVENTS =====================
+        function onTitleChange() {
+            const title = document.getElementById('postTitle').value;
+            if (!currentPostId) {
+                document.getElementById('postSlug').value = slugify(title);
+            }
+            if (!document.getElementById('metaTitle').value) {
+                document.getElementById('metaTitle').value = title + ' | HedwigPost';
+            }
+            updateSeo();
+        }
+
+        function onContentChange() {
+            updateSeo();
+            updateStats();
+        }
+
+        // ===================== SEO UPDATE =====================
+        function updateSeo() {
+            const data = {
+                title: document.getElementById('postTitle').value,
+                content: document.getElementById('editorContent').innerHTML,
+                metaDescription: document.getElementById('metaDescription').value,
+                focusKeyword: document.getElementById('focusKeyword').value,
+                secondaryKeywords: document.getElementById('secondaryKeywords').value,
+                slug: document.getElementById('postSlug').value
+            };
+
+            const result = AiSeo.calculateScore(data);
+
+            // Update score circle
+            const circle = document.getElementById('seoCircle');
+            const scoreVal = document.getElementById('seoScoreValue');
+            const scoreLabel = document.getElementById('seoScoreLabel');
+
+            scoreVal.textContent = result.score;
+            circle.style.setProperty('--score', result.score);
+            circle.className = 'seo-score-circle ' + (result.score >= 80 ? 'score-good' : result.score >= 50 ? 'score-ok' : 'score-bad');
+            scoreLabel.textContent = result.score >= 80 ? '✅ Great SEO!' : result.score >= 50 ? '⚠️ Needs Improvement' : '❌ Poor SEO';
+
+            // Update checklist
+            const checklist = document.getElementById('seoChecklist');
+            checklist.innerHTML = result.checks.map(c =>
+                `<li><span class="${c.pass ? 'check' : 'cross'}">${c.pass ? '✅' : '❌'}</span> ${c.msg}</li>`
+            ).join('');
+
+            // Snippet Preview Update
+            const finalSlug = data.slug || 'untitled';
+            const finalTitle = data.title || 'Post Title';
+            document.getElementById('snippetSlug').textContent = finalSlug;
+            document.getElementById('snippetTitle').textContent = finalTitle;
+            document.getElementById('snippetDesc').textContent = data.metaDescription || 'Post meta description preview will appear here.';
+
+            // Readability Panel Update
+            const rGrade = document.getElementById('readabilityGradeWrap');
+            rGrade.textContent = result.readability.grade.toFixed(1);
+            rGrade.style.borderColor = result.readability.grade <= 8 ? 'var(--a-green)' : (result.readability.grade <= 12 ? 'var(--a-accent)' : 'var(--a-red)');
+            document.getElementById('readabilityLevel').textContent = result.readability.level;
+
+            // Image SEO Panel Update
+            const imgBtn = document.getElementById('btnAutoSuggestAlt');
+            const imgSum = document.getElementById('imageSeoSummary');
+            if (result.imagesTotal === 0) {
+                imgSum.textContent = 'Add images to optimize alt tags.';
+                imgBtn.style.display = 'none';
+            } else if (result.imagesWithoutAltCount > 0) {
+                imgSum.textContent = `Found ${result.imagesWithoutAltCount} image(s) missing alt text.`;
+                imgBtn.style.display = 'inline-flex';
+            } else {
+                imgSum.textContent = `All ${result.imagesTotal} images have alt tags! ✅`;
+                imgBtn.style.display = 'none';
+            }
+
+            // Social Preview Update
+            const socialSettings = AiSeo.generateSocialTags(finalTitle, data.metaDescription || '', document.getElementById('featuredImage').value, finalSlug);
+            const socialImg = document.getElementById('socialPreviewImg');
+            socialImg.src = socialSettings.ogImage;
+            socialImg.style.display = socialSettings.ogImage ? 'block' : 'none';
+            document.getElementById('socialPreviewTitle').textContent = socialSettings.ogTitle || 'Post Title';
+            document.getElementById('socialPreviewDesc').textContent = socialSettings.ogDesc || 'Post Meta Description';
+
+            // Char counts
+            document.getElementById('metaTitleCount').textContent = `${(document.getElementById('metaTitle').value || '').length}/60`;
+            document.getElementById('metaDescCount').textContent = `${(document.getElementById('metaDescription').value || '').length}/160`;
+        }
+
+        async function triggerAutoSuggestAlt() {
+            // Find images missing alt text
+            const editor = document.getElementById('editorContent');
+            const images = editor.querySelectorAll('img');
+            let updatedCount = 0;
+            
+            for(let i=0; i<images.length; i++) {
+                if (!images[i].alt || images[i].alt.trim() === '') {
+                    // Try to extract some context (text around the image)
+                    let parentText = '';
+                    if (images[i].parentNode) {
+                        parentText = AiSeo.stripHtml(images[i].parentNode.innerHTML).trim();
+                    }
+                    const newAlt = AiSeo.autoSuggestAltText(parentText, images[i].src);
+                    images[i].alt = newAlt;
+                    updatedCount++;
+                }
+            }
+            if (updatedCount > 0) {
+                showToast(`Auto-suggested alt text for ${updatedCount} images! ✨`);
+                onContentChange(); // refresh UI
+            }
+        }
+
+        // ===================== AI TOOLS =====================
+        function aiGenerateTitles() {
+            const content = document.getElementById('editorContent').innerHTML;
+            const keyword = document.getElementById('focusKeyword').value;
+            const titles = AiSeo.generateTitles(content, keyword);
+
+            const container = document.getElementById('titleSuggestions');
+            container.innerHTML = titles.map(t => `
+            <div class="ai-suggestion" onclick="document.getElementById('postTitle').value='${t.replace(/'/g, "\\'")}';onTitleChange();">
+                <span style="flex:1;">${t}</span>
+                <button class="ai-btn">Use</button>
+            </div>
+        `).join('');
+            showToast('Title suggestions generated ✨');
+        }
+
+        function aiGenerateMetaDesc() {
+            const title = document.getElementById('postTitle').value;
+            const content = document.getElementById('editorContent').innerHTML;
+            const desc = AiSeo.generateMetaDescription(title, content);
+            document.getElementById('metaDescription').value = desc;
+            updateSeo();
+            showToast('Meta description generated ✨');
+        }
+
+        function aiSuggestTags() {
+            const content = document.getElementById('editorContent').innerHTML;
+            const category = document.getElementById('postCategory').value;
+            const suggested = AiSeo.suggestTags(content, category);
+            tags = [...new Set([...tags, ...suggested])];
+            renderTags();
+            updateSeo();
+            showToast('Tags suggested ✨');
+        }
+
+        // ===================== PREVIEW =====================
+        function togglePreview() {
+            const editor = document.getElementById('editorContent');
+            const preview = document.getElementById('previewContent');
+            const btn = document.getElementById('previewBtn');
+
+            if (preview.style.display === 'none') {
+                preview.innerHTML = `<div class="post-content">${editor.innerHTML}</div>`;
+                preview.style.display = 'block';
+                editor.style.display = 'none';
+                btn.classList.add('active');
+            } else {
+                preview.style.display = 'none';
+                editor.style.display = 'block';
+                btn.classList.remove('active');
+            }
+        }
+
+        // ===================== SAVE / PUBLISH =====================
+        function getCleanContent() {
+            // Clone editor to strip out editor-only artifacts before saving
+            const editor = document.getElementById('editorContent');
+            const clone = editor.cloneNode(true);
+            // Remove resize wrappers — unwrap images back to normal
+            clone.querySelectorAll('.media-resize-wrap, .img-resize-wrap').forEach(wrap => {
+                const img = wrap.querySelector('img');
+                if (img) {
+                    img.style.outline = '';
+                    wrap.parentNode.insertBefore(img, wrap);
+                }
+                wrap.remove();
+            });
+            // Remove toolbars, handles, placeholders, guides
+            clone.querySelectorAll('.media-toolbar, .img-float-toolbar, .resize-handle, .rotate-handle, .img-center-guide, .img-drag-placeholder').forEach(el => el.remove());
+            return clone.innerHTML;
+        }
+
+        function getPostData(status) {
+            return {
+                title: document.getElementById('postTitle').value || 'Untitled',
+                slug: document.getElementById('postSlug').value || slugify(document.getElementById('postTitle').value || 'untitled'),
+                content: getCleanContent(),
+                excerpt: document.getElementById('postExcerpt').value,
+                category: document.getElementById('postCategory').value,
+                tags: tags,
+                author: 'HedwigPost Team',
+                featuredImage: document.getElementById('featuredImage').value,
+                featuredImageAlt: document.getElementById('featuredImageAlt').value,
+                metaTitle: document.getElementById('metaTitle').value || document.getElementById('postTitle').value,
+                metaDescription: document.getElementById('metaDescription').value,
+                status: status,
+                seoScore: parseInt(document.getElementById('seoScoreValue').textContent) || 0
+            };
+        }
+
+        async function saveDraft() {
+            const data = getPostData('draft');
+            try {
+                let response;
+                if (currentPostId) {
+                    response = await authFetch(`/api/posts/${currentPostId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+                } else {
+                    response = await authFetch('/api/posts', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+                    const post = await response.json();
+                    currentPostId = post.id;
+                    history.replaceState(null, '', `/admin/editor.html?id=${post.id}`);
+                }
+                if (!response.ok) throw new Error(`Server error: ${response.status}`);
+                showToast('Draft saved ✓');
+                updateAutosaveStatus();
+            } catch (e) {
+                console.error('Save failed:', e);
+                showToast('Save failed: ' + e.message, 'error');
+            }
+        }
+
+        async function saveDraftSilent() {
+            const data = getPostData(currentPostId ? undefined : 'draft');
+            try {
+                if (currentPostId) {
+                    await authFetch(`/api/posts/${currentPostId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+                } else {
+                    const res = await authFetch('/api/posts', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+                    const post = await res.json();
+                    currentPostId = post.id;
+                    history.replaceState(null, '', `/admin/editor.html?id=${post.id}`);
+                }
+                updateAutosaveStatus();
+            } catch (e) { console.error('Autosave failed:', e); }
+        }
+
+        async function publishPost() {
+            const seoScore = parseInt(document.getElementById('seoScoreValue').textContent) || 0;
+            if (seoScore < 50) {
+                showToast(`SEO score is ${seoScore}/100 — consider improving it later`, 'warning');
+            }
+            const data = getPostData('published');
+            data.publishDate = new Date().toISOString();
+            try {
+                let response;
+                if (currentPostId) {
+                    response = await authFetch(`/api/posts/${currentPostId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+                } else {
+                    response = await authFetch('/api/posts', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+                    const post = await response.json();
+                    currentPostId = post.id;
+                }
+                if (!response.ok) throw new Error(`Server error: ${response.status}`);
+                showToast('Post published! 🚀');
+                setTimeout(() => window.location.href = '/admin/posts.html', 1500);
+            } catch (e) {
+                console.error('Publish failed:', e);
+                showToast('Publish failed: ' + e.message, 'error');
+            }
+        }
+
+        function updateAutosaveStatus() {
+            const el = document.getElementById('autosaveStatus');
+            if (el) el.innerHTML = `<span class="dot"></span> Saved at ${new Date().toLocaleTimeString()}`;
+        }
+    </script>
+</body>
+
+</html>

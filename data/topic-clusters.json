@@ -1,0 +1,354 @@
+{
+  "artificial-intelligence": {
+    "name": "Artificial Intelligence",
+    "pillarTitle": "The Complete Guide to Artificial Intelligence",
+    "pillarSlug": "the-complete-guide-to-artificial-intelligence",
+    "pillarPostId": "1773762876706",
+    "posts": [
+      {
+        "id": "post1",
+        "title": "10 Best AI Tools That Will Transform Your Productivity in 2026",
+        "slug": "best-ai-tools-productivity-2026",
+        "category": "AI & Machine Learning"
+      },
+      {
+        "id": "post3",
+        "title": "ChatGPT vs Google Gemini: The Ultimate AI Comparison You Need to Read",
+        "slug": "chatgpt-vs-google-gemini-comparison",
+        "category": "AI & Machine Learning"
+      },
+      {
+        "id": "1772950615258",
+        "title": "What is Artificial Intelligence? Complete Beginner Guide (2026)",
+        "slug": "what-is-artificial-intelligence-complete-beginner-guide-2026",
+        "category": "AI & Machine Learning"
+      },
+      {
+        "id": "1772953739977",
+        "title": "Untitled",
+        "slug": "untitled",
+        "category": "AI & Machine Learning"
+      },
+      {
+        "id": "1772987516047",
+        "title": "Publish Test Post",
+        "slug": "publish-test-post",
+        "category": "AI & Machine Learning"
+      },
+      {
+        "id": "1772987723336",
+        "title": "Publish Test Post Final",
+        "slug": "publish-test-post-final",
+        "category": "AI & Machine Learning"
+      },
+      {
+        "id": "1773284496743",
+        "title": "Hahuhc",
+        "slug": "hahuhc",
+        "category": "AI & Machine Learning"
+      },
+      {
+        "id": "1773339248007",
+        "title": "hjhdh",
+        "slug": "hjhdh",
+        "category": "AI & Machine Learning"
+      },
+      {
+        "id": "1773761748196",
+        "title": "The Ultimate Guide to Artificial Intelligence Tools in 2026 (14 Expert Tips)",
+        "slug": "the-ultimate-guide-to-artificial-intelligence-tools-in-2026-14-expert-tips",
+        "category": "AI & Machine Learning",
+        "keyword": "artificial intelligence tools"
+      },
+      {
+        "id": "1773761916271",
+        "title": "Chatgpt Vs Google Gemini for Beginners: 9 Steps to Get Started in 2026",
+        "slug": "chatgpt-vs-google-gemini-for-beginners-9-steps-to-get-started-in-2026",
+        "category": "Reviews",
+        "keyword": "chatgpt vs google gemini"
+      },
+      {
+        "id": "1773761916283",
+        "title": "Top 8 Chatgpt Vs Claude You Need to Know in 2026",
+        "slug": "top-8-chatgpt-vs-claude-you-need-to-know-in-2026",
+        "category": "Reviews",
+        "keyword": "chatgpt vs claude"
+      }
+    ],
+    "subclusters": {
+      "ai-tools": {
+        "name": "AI Tools",
+        "posts": [
+          "post1",
+          "post3"
+        ]
+      },
+      "machine-learning": {
+        "name": "Machine Learning",
+        "posts": [
+          "1772950615258",
+          "1773761748196"
+        ]
+      },
+      "chatgpt": {
+        "name": "ChatGPT",
+        "posts": [
+          "1773761916271",
+          "1773761916283"
+        ]
+      },
+      "ai-in-business": {
+        "name": "AI in Business",
+        "posts": []
+      },
+      "ai-ethics": {
+        "name": "AI Ethics",
+        "posts": []
+      }
+    }
+  },
+  "web-development": {
+    "name": "Web Development",
+    "pillarTitle": "The Ultimate Web Development Guide",
+    "pillarSlug": "the-ultimate-web-development-guide",
+    "pillarPostId": null,
+    "posts": [
+      {
+        "id": "1773761916295",
+        "title": "The Ultimate Guide to React Vs Vue in 2026 (5 Expert Tips)",
+        "slug": "the-ultimate-guide-to-react-vs-vue-in-2026-5-expert-tips",
+        "category": "Reviews",
+        "keyword": "react vs vue"
+      },
+      {
+        "id": "1773761916308",
+        "title": "The 2026 Guide to React Vs Angular: 8 Actionable Insights",
+        "slug": "the-2026-guide-to-react-vs-angular-8-actionable-insights",
+        "category": "Reviews",
+        "keyword": "react vs angular"
+      }
+    ],
+    "subclusters": {
+      "frontend": {
+        "name": "Frontend",
+        "posts": []
+      },
+      "backend": {
+        "name": "Backend",
+        "posts": []
+      },
+      "full-stack": {
+        "name": "Full Stack",
+        "posts": []
+      },
+      "javascript-frameworks": {
+        "name": "JavaScript Frameworks",
+        "posts": []
+      },
+      "web-performance": {
+        "name": "Web Performance",
+        "posts": []
+      }
+    }
+  },
+  "cybersecurity": {
+    "name": "Cybersecurity",
+    "pillarTitle": "The Complete Cybersecurity Guide",
+    "pillarSlug": "the-complete-cybersecurity-guide",
+    "pillarPostId": null,
+    "posts": [
+      {
+        "id": "post4",
+        "title": "Complete Guide to Cybersecurity for Beginners: Protect Your Digital Life",
+        "slug": "cybersecurity-beginners-guide",
+        "category": "Cybersecurity"
+      }
+    ],
+    "subclusters": {
+      "network-security": {
+        "name": "Network Security",
+        "posts": []
+      },
+      "privacy": {
+        "name": "Privacy",
+        "posts": [
+          "post4"
+        ]
+      },
+      "ethical-hacking": {
+        "name": "Ethical Hacking",
+        "posts": []
+      },
+      "security-tools": {
+        "name": "Security Tools",
+        "posts": []
+      },
+      "threat-prevention": {
+        "name": "Threat Prevention",
+        "posts": []
+      }
+    }
+  },
+  "programming": {
+    "name": "Programming",
+    "pillarTitle": "The Complete Programming Guide",
+    "pillarSlug": "the-complete-programming-guide",
+    "pillarPostId": null,
+    "posts": [
+      {
+        "id": "post5",
+        "title": "Top 10 Free Coding Resources to Learn Programming in 2026",
+        "slug": "free-coding-resources-learn-programming-2026",
+        "category": "Programming"
+      },
+      {
+        "id": "1773761916323",
+        "title": "13 Common Python Vs Javascript Mistakes to Avoid in 2026",
+        "slug": "13-common-python-vs-javascript-mistakes-to-avoid-in-2026",
+        "category": "Reviews",
+        "keyword": "python vs javascript"
+      }
+    ],
+    "subclusters": {
+      "python": {
+        "name": "Python",
+        "posts": [
+          "post5",
+          "1773761916323"
+        ]
+      },
+      "java": {
+        "name": "Java",
+        "posts": []
+      },
+      "devops": {
+        "name": "DevOps",
+        "posts": []
+      },
+      "algorithms": {
+        "name": "Algorithms",
+        "posts": []
+      },
+      "best-practices": {
+        "name": "Best Practices",
+        "posts": []
+      }
+    }
+  },
+  "cloud-computing": {
+    "name": "Cloud Computing",
+    "pillarTitle": "The Complete Cloud Computing Guide",
+    "pillarSlug": "the-complete-cloud-computing-guide",
+    "pillarPostId": null,
+    "posts": [],
+    "subclusters": {
+      "aws": {
+        "name": "AWS",
+        "posts": []
+      },
+      "azure": {
+        "name": "Azure",
+        "posts": []
+      },
+      "devops": {
+        "name": "DevOps",
+        "posts": []
+      },
+      "serverless": {
+        "name": "Serverless",
+        "posts": []
+      },
+      "cloud-migration": {
+        "name": "Cloud Migration",
+        "posts": []
+      }
+    }
+  },
+  "data-science": {
+    "name": "Data Science",
+    "pillarTitle": "The Complete Data Science Guide",
+    "pillarSlug": "the-complete-data-science-guide",
+    "pillarPostId": null,
+    "posts": [],
+    "subclusters": {
+      "data-analysis": {
+        "name": "Data Analysis",
+        "posts": []
+      },
+      "machine-learning": {
+        "name": "Machine Learning",
+        "posts": []
+      },
+      "visualization": {
+        "name": "Visualization",
+        "posts": []
+      },
+      "sql": {
+        "name": "SQL",
+        "posts": []
+      },
+      "big-data": {
+        "name": "Big Data",
+        "posts": []
+      }
+    }
+  },
+  "social-media": {
+    "name": "Social Media",
+    "pillarTitle": "The Complete Social Media Marketing Guide",
+    "pillarSlug": "the-complete-social-media-marketing-guide",
+    "pillarPostId": null,
+    "posts": [],
+    "subclusters": {
+      "instagram": {
+        "name": "Instagram",
+        "posts": []
+      },
+      "linkedin": {
+        "name": "LinkedIn",
+        "posts": []
+      },
+      "youtube": {
+        "name": "YouTube",
+        "posts": []
+      },
+      "growth-hacking": {
+        "name": "Growth Hacking",
+        "posts": []
+      },
+      "content-strategy": {
+        "name": "Content Strategy",
+        "posts": []
+      }
+    }
+  },
+  "seo": {
+    "name": "SEO",
+    "pillarTitle": "The Complete SEO Guide",
+    "pillarSlug": "the-complete-seo-guide",
+    "pillarPostId": null,
+    "posts": [],
+    "subclusters": {
+      "on-page-seo": {
+        "name": "On-Page SEO",
+        "posts": []
+      },
+      "technical-seo": {
+        "name": "Technical SEO",
+        "posts": []
+      },
+      "link-building": {
+        "name": "Link Building",
+        "posts": []
+      },
+      "content-seo": {
+        "name": "Content SEO",
+        "posts": []
+      },
+      "local-seo": {
+        "name": "Local SEO",
+        "posts": []
+      }
+    }
+  }
+}

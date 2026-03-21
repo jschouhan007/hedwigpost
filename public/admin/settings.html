@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/favicon.png?v=1773767918">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings — HedwigPost Admin</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="/admin/css/admin.css">
+</head>
+
+<body>
+    <div class="admin-layout">
+        <aside class="admin-sidebar" id="adminSidebar">
+            <div class="sidebar-header">
+                <img src="/img/logo.png" alt="HedwigPost" class="logo-icon" width="42" height="42">
+                <div>
+                    <h2>HedwigPost</h2><small>Command Center</small>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="sidebar-nav-label">Content</div>
+                <a href="/admin/dashboard.html"><span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></span> Dashboard</a>
+                <a href="/admin/editor.html"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span> New Post</a>
+                <a href="/admin/posts.html"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span> All Posts</a>
+                <a href="/admin/categories.html"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></span> Categories</a>
+                
+                <div class="sidebar-nav-label" style="margin-top:16px;">Affiliate Deals</div>
+                <a href="/admin/product-editor.html"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg></span> Add Product</a>
+                <a href="/admin/products.html"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0"></path></svg></span> All Products</a>
+                
+                <div class="sidebar-nav-label" style="margin-top:16px;">Engagement</div>
+                <a href="/admin/comments.html"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span> Comments</a>
+                <a href="/admin/automation.html"><span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></span> Automation</a>
+                <div class="sidebar-nav-label">System</div>
+                <a href="/admin/settings.html" class="active"><span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span> Settings</a>
+                <div class="divider"></div>
+                <a href="/" target="_blank"><span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span> View Site</a>
+            </nav>
+            <div class="sidebar-footer"><a href="#" onclick="logout()"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span> Logout</a></div>
+        </aside>
+
+        <main class="admin-main">
+            <div class="admin-header">
+                <h1>⚙️ Settings</h1>
+                <div style="display:flex;gap:10px;">
+                    <button class="btn btn-primary" onclick="saveSettings()">💾 Save All Settings</button>
+                    <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">🌙</button>
+                </div>
+            </div>
+
+            <!-- Settings Tabs -->
+            <div style="display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap;">
+                <button class="btn btn-ghost settings-tab active" onclick="showTab('general')" id="tab-general">🌐 General</button>
+                <button class="btn btn-ghost settings-tab" onclick="showTab('author')" id="tab-author">👤 Author</button>
+                <button class="btn btn-ghost settings-tab" onclick="showTab('social')" id="tab-social">🔗 Social</button>
+                <button class="btn btn-ghost settings-tab" onclick="showTab('analytics')" id="tab-analytics">📊 Analytics</button>
+                <button class="btn btn-ghost settings-tab" onclick="showTab('features')" id="tab-features">🎛️ Features</button>
+                <button class="btn btn-ghost settings-tab" onclick="showTab('sidebar')" id="tab-sidebar">📌 Sidebar Links</button>
+                <button class="btn btn-ghost settings-tab" onclick="showTab('appearance')" id="tab-appearance">🎨 Appearance</button>
+                <button class="btn btn-ghost settings-tab" onclick="showTab('security')" id="tab-security">🔒 Security</button>
+            </div>
+
+            <!-- General Tab -->
+            <div class="settings-panel" id="panel-general">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:900px;">
+                    <div class="admin-form">
+                        <h3 style="margin-bottom:16px;">🌐 General</h3>
+                        <div class="form-row"><label>Blog Name</label><input type="text" id="blogName"></div>
+                        <div class="form-row"><label>Tagline</label><input type="text" id="tagline"></div>
+                        <div class="form-row"><label>Site URL</label><input type="url" id="siteUrl" placeholder="https://hedwigpost.com"></div>
+                        <div class="form-row"><label>Posts Per Page</label><input type="number" id="postsPerPage" min="1" max="20"></div>
+                    </div>
+                    <div class="admin-form">
+                        <h3 style="margin-bottom:16px;">📝 Footer</h3>
+                        <div class="form-row"><label>Footer Text</label><input type="text" id="footerText" placeholder="© 2026 HedwigPost. All rights reserved."></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Author Tab -->
+            <div class="settings-panel" id="panel-author" style="display:none;">
+                <div class="admin-form" style="max-width:500px;">
+                    <h3 style="margin-bottom:16px;">👤 Author</h3>
+                    <div class="form-row"><label>Author Name</label><input type="text" id="authorName"></div>
+                    <div class="form-row"><label>Author Bio</label><textarea id="authorBio" rows="4" style="width:100%;padding:10px;border:1px solid var(--a-border);border-radius:8px;background:var(--a-bg-3);color:var(--a-text-0);font-family:inherit;resize:vertical;"></textarea></div>
+                </div>
+            </div>
+
+            <!-- Social Tab -->
+            <div class="settings-panel" id="panel-social" style="display:none;">
+                <div class="admin-form" style="max-width:500px;">
+                    <h3 style="margin-bottom:16px;">🔗 Social Links</h3>
+                    <div class="form-row"><label>Twitter/X URL</label><input type="url" id="socialTwitter" placeholder="https://x.com/HedwigPost"></div>
+                    <div class="form-row"><label>YouTube URL</label><input type="url" id="socialYoutube" placeholder="https://youtube.com/HedwigPost"></div>
+                    <div class="form-row"><label>Instagram URL</label><input type="url" id="socialInstagram" placeholder="https://instagram.com/HedwigPost"></div>
+                    <div class="form-row"><label>LinkedIn URL</label><input type="url" id="socialLinkedin" placeholder="https://linkedin.com/company/hedwigpost"></div>
+                    <div class="form-row"><label>GitHub URL</label><input type="url" id="socialGithub" placeholder="https://github.com/HedwigPost"></div>
+                    <div class="form-row"><label>Pinterest URL</label><input type="url" id="socialPinterest" placeholder="https://pinterest.com/HedwigPost"></div>
+                </div>
+            </div>
+
+            <!-- Analytics Tab -->
+            <div class="settings-panel" id="panel-analytics" style="display:none;">
+                <div class="admin-form" style="max-width:500px;">
+                    <h3 style="margin-bottom:16px;">📊 Analytics & Ads</h3>
+                    <div class="form-row"><label>Google Analytics ID</label><input type="text" id="analyticsId" placeholder="G-XXXXXXXXXX"></div>
+                    <div class="form-row"><label>Search Console Verification</label><input type="text" id="searchConsoleId" placeholder="verification meta tag content"></div>
+                    <div class="form-row"><label>AdSense Publisher ID</label><input type="text" id="adsenseId" placeholder="ca-pub-XXXXXXXXXX"></div>
+                </div>
+            </div>
+
+            <!-- Features Tab -->
+            <div class="settings-panel" id="panel-features" style="display:none;">
+                <div class="admin-form" style="max-width:500px;">
+                    <h3 style="margin-bottom:16px;">🎛️ Feature Toggles</h3>
+                    <div class="form-row" style="display:flex;align-items:center;justify-content:space-between;">
+                        <label style="margin-bottom:0">Enable Comments</label>
+                        <label class="toggle-switch"><input type="checkbox" id="enableComments"><span class="toggle-slider"></span></label>
+                    </div>
+                    <div class="form-row" style="display:flex;align-items:center;justify-content:space-between;">
+                        <label style="margin-bottom:0">Enable Newsletter</label>
+                        <label class="toggle-switch"><input type="checkbox" id="enableNewsletter"><span class="toggle-slider"></span></label>
+                    </div>
+                    <div class="form-row" style="display:flex;align-items:center;justify-content:space-between;">
+                        <label style="margin-bottom:0">Enable Cookie Banner</label>
+                        <label class="toggle-switch"><input type="checkbox" id="enableCookieBanner"><span class="toggle-slider"></span></label>
+                    </div>
+                    <div class="form-row" style="display:flex;align-items:center;justify-content:space-between;">
+                        <label style="margin-bottom:0">Enable News Ticker</label>
+                        <label class="toggle-switch"><input type="checkbox" id="enableNewsTicker"><span class="toggle-slider"></span></label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar Links Tab -->
+            <div class="settings-panel" id="panel-sidebar" style="display:none;">
+                <div class="admin-form" style="max-width:600px;">
+                    <h3 style="margin-bottom:16px;">📌 Sidebar Links</h3>
+                    <p style="font-size:.82rem;color:var(--a-text-3);margin-bottom:16px;">Add, edit, or remove buttons/links in the sidebar of your website. These appear in the sidebar widget area.</p>
+                    <div id="sidebarLinksList"></div>
+                    <div style="margin-top:16px;padding:16px;border:1px dashed var(--a-border);border-radius:12px;">
+                        <h4 style="font-size:.9rem;margin-bottom:12px;">➕ Add New Link</h4>
+                        <div style="display:grid;grid-template-columns:50px 1fr 1fr;gap:10px;align-items:end;">
+                            <div class="form-row" style="margin-bottom:0"><label style="font-size:.72rem;">Icon</label><input type="text" id="newLinkIcon" value="🔗" style="text-align:center;font-size:1.2rem;"></div>
+                            <div class="form-row" style="margin-bottom:0"><label style="font-size:.72rem;">Label</label><input type="text" id="newLinkLabel" placeholder="Reddit"></div>
+                            <div class="form-row" style="margin-bottom:0"><label style="font-size:.72rem;">URL</label><input type="text" id="newLinkUrl" placeholder="https://reddit.com/r/..."></div>
+                        </div>
+                        <div style="display:flex;gap:10px;margin-top:10px;align-items:center;">
+                            <label style="font-size:.78rem;color:var(--a-text-2);display:flex;align-items:center;gap:6px;">
+                                <input type="checkbox" id="newLinkNewTab" checked> Open in new tab
+                            </label>
+                            <button class="btn btn-primary btn-sm" onclick="addSidebarLink()" style="margin-left:auto;">Add Link</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Appearance Tab -->
+            <div class="settings-panel" id="panel-appearance" style="display:none;">
+                <div class="admin-form" style="max-width:600px;">
+                    <h3 style="margin-bottom:16px;">🎨 Appearance & Custom Code</h3>
+                    <div class="form-row"><label>Custom CSS</label>
+                        <textarea id="customCSS" rows="6" placeholder="/* Custom CSS styles */" style="width:100%;padding:10px;border:1px solid var(--a-border);border-radius:8px;background:var(--a-bg-3);color:var(--a-text-0);font-family:var(--font-mono);font-size:.82rem;resize:vertical;"></textarea>
+                        <small style="color:var(--a-text-3);font-size:.72rem;">CSS will be injected into every public page</small>
+                    </div>
+                    <div class="form-row"><label>Custom Head Code</label>
+                        <textarea id="customHeadCode" rows="4" placeholder="<!-- Custom scripts, meta tags, etc. -->" style="width:100%;padding:10px;border:1px solid var(--a-border);border-radius:8px;background:var(--a-bg-3);color:var(--a-text-0);font-family:var(--font-mono);font-size:.82rem;resize:vertical;"></textarea>
+                        <small style="color:var(--a-text-3);font-size:.72rem;">HTML/JS injected before &lt;/head&gt; on all public pages</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Tab -->
+            <div class="settings-panel" id="panel-security" style="display:none;">
+                <div class="admin-form" style="max-width:400px;">
+                    <h3 style="margin-bottom:16px;">🔒 Security</h3>
+                    <div class="form-row">
+                        <label>Admin Password</label>
+                        <input type="password" id="adminPassword" placeholder="Enter new password">
+                        <small style="color:var(--a-text-3);font-size:0.78rem;">Leave blank to keep current password</small>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/admin/js/admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => { checkAuth(); loadSettings(); loadSidebarLinks(); });
+
+        function showTab(tab) {
+            document.querySelectorAll('.settings-panel').forEach(p => p.style.display = 'none');
+            document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById('panel-' + tab).style.display = 'block';
+            document.getElementById('tab-' + tab).classList.add('active');
+        }
+
+        async function loadSettings() {
+            const res = await authFetch('/api/settings');
+            const s = await res.json();
+            document.getElementById('blogName').value = s.blogName || '';
+            document.getElementById('tagline').value = s.tagline || '';
+            document.getElementById('siteUrl').value = s.siteUrl || '';
+            document.getElementById('postsPerPage').value = s.postsPerPage || 6;
+            document.getElementById('footerText').value = s.footerText || '';
+            document.getElementById('authorName').value = s.authorName || '';
+            document.getElementById('authorBio').value = s.authorBio || '';
+            document.getElementById('socialTwitter').value = (s.socialLinks || {}).twitter || '';
+            document.getElementById('socialYoutube').value = (s.socialLinks || {}).youtube || '';
+            document.getElementById('socialInstagram').value = (s.socialLinks || {}).instagram || '';
+            document.getElementById('socialLinkedin').value = (s.socialLinks || {}).linkedin || '';
+            document.getElementById('socialGithub').value = (s.socialLinks || {}).github || '';
+            document.getElementById('socialPinterest').value = (s.socialLinks || {}).pinterest || '';
+            document.getElementById('analyticsId').value = s.analyticsId || '';
+            document.getElementById('searchConsoleId').value = s.searchConsoleVerification || '';
+            document.getElementById('adsenseId').value = s.adsenseId || '';
+            document.getElementById('enableComments').checked = s.enableComments !== false;
+            document.getElementById('enableNewsletter').checked = s.enableNewsletter !== false;
+            document.getElementById('enableCookieBanner').checked = s.enableCookieBanner !== false;
+            document.getElementById('enableNewsTicker').checked = s.enableNewsTicker !== false;
+            document.getElementById('customCSS').value = s.customCSS || '';
+            document.getElementById('customHeadCode').value = s.customHeadCode || '';
+        }
+
+        async function saveSettings() {
+            const data = {
+                blogName: document.getElementById('blogName').value,
+                tagline: document.getElementById('tagline').value,
+                siteUrl: document.getElementById('siteUrl').value,
+                postsPerPage: parseInt(document.getElementById('postsPerPage').value) || 6,
+                footerText: document.getElementById('footerText').value,
+                authorName: document.getElementById('authorName').value,
+                authorBio: document.getElementById('authorBio').value,
+                socialLinks: {
+                    twitter: document.getElementById('socialTwitter').value,
+                    youtube: document.getElementById('socialYoutube').value,
+                    instagram: document.getElementById('socialInstagram').value,
+                    linkedin: document.getElementById('socialLinkedin').value,
+                    github: document.getElementById('socialGithub').value,
+                    pinterest: document.getElementById('socialPinterest').value
+                },
+                analyticsId: document.getElementById('analyticsId').value,
+                searchConsoleVerification: document.getElementById('searchConsoleId').value,
+                adsenseId: document.getElementById('adsenseId').value,
+                enableComments: document.getElementById('enableComments').checked,
+                enableNewsletter: document.getElementById('enableNewsletter').checked,
+                enableCookieBanner: document.getElementById('enableCookieBanner').checked,
+                enableNewsTicker: document.getElementById('enableNewsTicker').checked,
+                customCSS: document.getElementById('customCSS').value,
+                customHeadCode: document.getElementById('customHeadCode').value
+            };
+            const pw = document.getElementById('adminPassword').value;
+            if (pw) data.adminPassword = pw;
+
+            await authFetch('/api/settings', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            showToast('Settings saved ✓');
+        }
+
+        // Sidebar Links Management
+        async function loadSidebarLinks() {
+            const res = await authFetch('/api/sidebar-links');
+            const links = await res.json();
+            const container = document.getElementById('sidebarLinksList');
+            if (links.length === 0) {
+                container.innerHTML = '<p style="color:var(--a-text-3);font-size:.85rem;padding:12px 0;">No sidebar links yet. Add one below.</p>';
+                return;
+            }
+            container.innerHTML = links.map((l, i) => `
+                <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--a-border);border-radius:8px;margin-bottom:8px;background:var(--a-bg-2);">
+                    <span style="font-size:1.2rem;">${l.icon}</span>
+                    <div style="flex:1">
+                        <div style="font-weight:600;font-size:.85rem;color:var(--a-text-0)">${l.label}</div>
+                        <div style="font-size:.72rem;color:var(--a-text-3);font-family:var(--font-mono)">${l.url}</div>
+                    </div>
+                    <button class="action-btn" onclick="moveSidebarLink(${i},-1)" title="Move Up" ${i === 0 ? 'disabled' : ''}>⬆</button>
+                    <button class="action-btn" onclick="moveSidebarLink(${i},1)" title="Move Down" ${i === links.length - 1 ? 'disabled' : ''}>⬇</button>
+                    <button class="action-btn delete" onclick="deleteSidebarLink('${l.id}')">🗑</button>
+                </div>
+            `).join('');
+        }
+
+        async function addSidebarLink() {
+            const label = document.getElementById('newLinkLabel').value.trim();
+            const url = document.getElementById('newLinkUrl').value.trim();
+            const icon = document.getElementById('newLinkIcon').value.trim() || '🔗';
+            const openNewTab = document.getElementById('newLinkNewTab').checked;
+            if (!label || !url) { showToast('Label and URL required', 'error'); return; }
+            await authFetch('/api/sidebar-links', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ label, url, icon, openNewTab })
+            });
+            document.getElementById('newLinkLabel').value = '';
+            document.getElementById('newLinkUrl').value = '';
+            showToast('Link added ✓');
+            loadSidebarLinks();
+        }
+
+        async function deleteSidebarLink(id) {
+            if (!confirm('Remove this sidebar link?')) return;
+            await authFetch(`/api/sidebar-links/${id}`, { method: 'DELETE' });
+            showToast('Link removed');
+            loadSidebarLinks();
+        }
+
+        async function moveSidebarLink(currentIdx, direction) {
+            const res = await authFetch('/api/sidebar-links');
+            const links = await res.json();
+            const newIdx = currentIdx + direction;
+            if (newIdx < 0 || newIdx >= links.length) return;
+            const ids = links.map(l => l.id);
+            [ids[currentIdx], ids[newIdx]] = [ids[newIdx], ids[currentIdx]];
+            await authFetch('/api/sidebar-links-reorder', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ orderedIds: ids })
+            });
+            loadSidebarLinks();
+        }
+    </script>
+
+    <style>
+        .settings-tab { font-size: .82rem !important; padding: 8px 14px !important; border-radius: 8px !important; }
+        .settings-tab.active { background: var(--a-accent) !important; color: #fff !important; }
+        .toggle-switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .toggle-slider { position: absolute; cursor: pointer; inset: 0; background: var(--a-bg-3); border-radius: 24px; border: 1px solid var(--a-border); transition: .3s; }
+        .toggle-slider:before { content: ""; position: absolute; height: 18px; width: 18px; left: 2px; bottom: 2px; background: var(--a-text-3); border-radius: 50%; transition: .3s; }
+        .toggle-switch input:checked + .toggle-slider { background: var(--a-accent); border-color: var(--a-accent); }
+        .toggle-switch input:checked + .toggle-slider:before { transform: translateX(20px); background: #fff; }
+    </style>
+</body>
+</html>

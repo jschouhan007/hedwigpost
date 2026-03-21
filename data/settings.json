@@ -1,0 +1,27 @@
+{
+  "blogName": "HedwigPost",
+  "tagline": "\"Where Curiosity Finds Its Content.\"",
+  "siteUrl": "https://hedwigpost.page/",
+  "authorName": "HedwigPost Team",
+  "authorBio": "HedwigPost is powered by a multi-disciplinary team of expert writers and subject-matter enthusiasts dedicated to providing high-quality, comprehensive content. Covering everything from finance and technology to lifestyle and health, our team thrives on research-backed writing and diverse expertise.\nOur mission is to filter the noise and deliver actionable insights, in-depth guides, and trending stories to our readers. We believe in authenticity, thorough analysis, and engaging storytelling to ensure that no matter the category, you receive top-tier content.",
+  "authorAvatar": "",
+  "socialLinks": {
+    "twitter": "https://x.com/hedwig_post",
+    "youtube": "",
+    "instagram": "https://www.instagram.com/hedwig__post?igsh=MXNldGJ3anBtMzZnaQ==",
+    "linkedin": "",
+    "github": ""
+  },
+  "analyticsId": "G-FDBJ2VJG0K",
+  "searchConsoleVerification": "4RhHGinIbFt_vAx_ox7KcaOIUJTPIOYTcHVPkazL-Cs",
+  "adsenseId": "ca-pub-2612722399801075",
+  "adminPassword": "nb123",
+  "postsPerPage": 10,
+  "enableComments": true,
+  "enableNewsletter": true,
+  "enableCookieBanner": true,
+  "enableNewsTicker": true,
+  "footerText": "© 2026 HedwigPost. All rights reserved.",
+  "customCSS": "",
+  "customHeadCode": ""
+}

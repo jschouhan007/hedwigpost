@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/favicon.png?v=1773767918">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us — HedwigPost</title>
+    <meta name="description"
+        content="Get in touch with the HedwigPost team. We'd love to hear from you — questions, suggestions, feedback, or collaboration opportunities.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://hedwigpost.page/contact">
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2612722399801075" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="reading-progress" id="readingProgress"></div>
+    <header class="header" id="header">
+        <nav class="nav"><a href="/" class="logo">
+                <img src="/img/logo.png" alt="HedwigPost" class="logo-icon" width="46" height="46"><span>HedwigPost</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="/">Home</a></li>
+                <li><a href="/blogs">All Posts</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact" class="active">Contact</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="search-btn" id="searchBtn" aria-label="Search">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </button>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg viewBox="0 0 24 24" id="themeIcon">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <button class="hamburger" id="hamburger"
+                    aria-label="Menu"><span></span><span></span><span></span></button>
+            </div>
+        </nav>
+    </header>
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-box">
+            <div class="search-input-wrap">
+                <span class="icon">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"
+                        stroke-linecap="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </span>
+                <input type="text" id="searchInput" placeholder="Search articles..." autocomplete="off">
+                <button onclick="closeSearch()"
+                    style="background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-3)">✕</button>
+            </div>
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </div>
+
+    <div class="static-page">
+        <h1>Contact Us</h1>
+        <p class="subtitle">We'd love to hear from you! Fill out the form below and we'll get back to you as soon as
+            possible.</p>
+
+        <form class="contact-form"
+            onsubmit="event.preventDefault(); alert('Thank you for your message! We\'ll get back to you within 24-48 hours.'); this.reset();">
+            <div class="form-group">
+                <label for="name">Full Name *</label>
+                <input type="text" id="name" name="name" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" name="email" placeholder="your@email.com" required>
+            </div>
+            <div class="form-group">
+                <label for="subject">Subject *</label>
+                <input type="text" id="subject" name="subject" placeholder="What's this about?" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message *</label>
+                <textarea id="message" name="message" placeholder="Tell us what's on your mind..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Send Message →</button>
+        </form>
+
+        <h2 style="margin-top:48px;">Other Ways to Reach Us</h2>
+        <ul>
+            <li><strong>Email:</strong> contact@hedwigpost.page</li>
+            <li><strong>Twitter:</strong> @HedwigPost</li>
+            <li><strong>Response Time:</strong> We typically respond within 24-48 hours</li>
+        </ul>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="/" class="logo">
+                    <img src="/img/logo.png" alt="HedwigPost" class="logo-icon" width="36" height="36">
+                    <span>HedwigPost</span>
+                </a>
+                <p>HedwigPost is your go-to destination for honest product reviews, expert how-to guides, breaking news, and in-depth tech coverage. We help everyday readers make smarter decisions — whether you're researching your next purchase, learning a new skill, or staying ahead of the latest trends in technology and entertainment.</p>
+                <form class="newsletter-form" style="margin-top:14px;" onsubmit="return handleNewsletter(event)">
+                    <input type="email" placeholder="your@email.com" required style="padding:8px 12px;font-size:.82rem;">
+                    <button type="submit" class="btn btn-primary" style="padding:8px 14px;font-size:.82rem;">Subscribe</button>
+                </form>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <p style="font-size:.75rem;color:var(--text-2);margin-bottom:10px;">Navigate HedwigPost — find what you're looking for in seconds.</p>
+                <ul>
+                    <li><a href="/" title="Your daily feed of the latest articles, top reviews, and trending guides.">Home</a></li>
+                    <li><a href="/blogs" title="Browse every article ever published on HedwigPost.">All Posts</a></li>
+                    <li><a href="/about" title="Learn who we are and what drives us.">About Us</a></li>
+                    <li><a href="/contact" title="Get in touch — we respond within 48 hours.">Contact</a></li>
+                    <li><a href="/archive" title="Every article searchable by month and year.">Archive</a></li>
+                    <li><a href="/sitemap-page" title="A complete map of every page on HedwigPost.">Sitemap</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Categories</h4>
+                <p style="font-size:.75rem;color:var(--text-2);margin-bottom:10px;">Explore topics that matter — from cutting-edge tech to entertainment and beyond.</p>
+                <ul id="footerCategories"></ul>
+            </div>
+            <div class="footer-col">
+                <h4>More</h4>
+                <p style="font-size:.75rem;color:var(--text-2);margin-bottom:10px;">Legal, advertising, and additional information about HedwigPost.</p>
+                <ul>
+                    <li><a href="/privacy" title="How we collect, use, and protect your personal information.">Privacy Policy</a></li>
+                    <li><a href="/terms" title="Terms and conditions governing your use of HedwigPost.">Terms of Service</a></li>
+                    <li><a href="/disclaimer" title="Disclosures about affiliate partnerships and editorial independence.">Disclaimer</a></li>
+                    <li><a href="/cookie-policy" title="How we use cookies and similar technologies.">Cookie Policy</a></li>
+                    <li><a href="/advertise" title="Reach our engaged audience — explore advertising opportunities.">Advertise</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; <span class="auto-year">2026</span> HedwigPost &middot; All Rights Reserved &middot; hedwigpost.page</span>
+            <p style="font-size:.72rem;color:var(--text-3);margin-top:6px;">Content on this site is for informational purposes only. Some posts contain affiliate links — we may earn a commission at no extra cost to you. See our <a href="/disclaimer" style="color:var(--primary);">Disclaimer</a> for full details.</p>
+            <div class="footer-social">
+                <a href="https://x.com/hedwig_post" target="_blank" rel="noopener" aria-label="X">𝕏</a>
+                
+                
+            \n                <a href="https://pin.it/tI1FKML9O" target="_blank" rel="noopener" aria-label="Pinterest">P</a>\n            </div>
+        </div>
+    </footer>
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-content">
+            <p>We use cookies. <a href="/privacy">Learn more</a></p>
+            <div class="cookie-btns"><button class="btn btn-primary" onclick="acceptCookies()"
+                    style="padding:8px 20px;">Accept</button><button class="btn btn-ghost" onclick="declineCookies()"
+                    style="padding:8px 20px;">Decline</button></div>
+        </div>
+    </div>
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+    <script src="/js/app.js"></script>
+</body>
+
+</html>

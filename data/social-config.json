@@ -1,0 +1,17 @@
+{
+  "enabled": false,
+  "platforms": {
+    "twitter": { "enabled": false, "apiKey": "", "apiSecret": "", "accessToken": "", "accessSecret": "" },
+    "linkedin": { "enabled": false, "accessToken": "", "organizationId": "" },
+    "facebook": { "enabled": false, "pageToken": "", "pageId": "" },
+    "pinterest": { "enabled": false, "accessToken": "", "boardId": "" }
+  },
+  "postingSchedule": {
+    "postsPerDay": 4,
+    "intervalHours": 6,
+    "bestTimes": ["09:00", "12:00", "15:00", "18:00"]
+  },
+  "viralOptimization": true,
+  "autoHashtags": true,
+  "maxHashtags": 8
+}

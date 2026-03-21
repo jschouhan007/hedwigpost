@@ -1,0 +1,21 @@
+{
+  "enabled": false,
+  "postsPerDay": 3,
+  "publishIntervalHours": 8,
+  "categories": [
+    "AI & Machine Learning",
+    "Programming",
+    "Cybersecurity",
+    "How-To Guides",
+    "Reviews",
+    "Tips & Tricks",
+    "Social Media"
+  ],
+  "enableKeywordDiscovery": true,
+  "enableContentRefresh": true,
+  "refreshIntervalDays": 10,
+  "internalLinksPerPost": 7,
+  "minWordCount": 1500,
+  "maxWordCount": 3000,
+  "autoPublish": true
+}

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/favicon.png?v=1773767918">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading... | HedwigPost</title>
+    <meta name="description" content="">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="HedwigPost">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- Performance: Font Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/rss+xml" title="HedwigPost RSS Feed" href="/rss.xml">
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Code Syntax Highlighting (Prism.js) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#8b5cf6">
+    <!-- Sticky TOC + Code Block Styles -->
+    <style>
+        .toc { position:sticky; top:80px; z-index:10; background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:16px 20px; margin-bottom:24px; max-height:70vh; overflow-y:auto; transition:all .3s ease; }
+        .toc .toc-title { cursor:pointer; user-select:none; display:flex; justify-content:space-between; align-items:center; }
+        .toc .toc-title::after { content:'▼'; font-size:.7em; transition:transform .3s; }
+        .toc.collapsed .toc-title::after { transform:rotate(-90deg); }
+        .toc.collapsed ol { display:none; }
+        .toc ol { margin-top:10px; }
+        .toc ol li { margin-bottom:6px; }
+        .toc ol a { color:var(--text-2); text-decoration:none; font-size:.88rem; transition:color .2s; }
+        .toc ol a:hover, .toc ol a.active { color:var(--accent); font-weight:600; }
+        pre[class*=language-] { border-radius:10px !important; margin:1.5em 0 !important; font-size:.88rem !important; }
+        code[class*=language-] { font-family:'JetBrains Mono',monospace !important; }
+        .post-content pre { position:relative; }
+        .post-content pre .copy-btn { position:absolute; top:8px; right:8px; background:rgba(255,255,255,.1); border:none; color:#ccc; padding:4px 10px; border-radius:6px; cursor:pointer; font-size:.75rem; opacity:0; transition:opacity .2s; }
+        .post-content pre:hover .copy-btn { opacity:1; }
+        .pillar-link { background:rgba(139,92,246,.08); border:1px solid rgba(139,92,246,.2); border-radius:8px; padding:14px; margin:16px 0; }
+    </style>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2612722399801075" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="reading-progress" id="readingProgress"></div>
+
+    <header class="header" id="header">
+        <nav class="nav">
+            <a href="/" class="logo">
+                <img src="/img/logo.png" alt="HedwigPost" class="logo-icon" width="36"
+                    height="36"><span>HedwigPost</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="/">Home</a></li>
+                <li><a href="/blogs">All Posts</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="search-btn" id="searchBtn" aria-label="Search">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </button>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg viewBox="0 0 24 24" id="themeIcon">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <button class="hamburger" id="hamburger"
+                    aria-label="Menu"><span></span><span></span><span></span></button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-box">
+            <div class="search-input-wrap">
+                <span class="icon">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"
+                        stroke-linecap="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </span>
+                <input type="text" id="searchInput" placeholder="Search articles..." autocomplete="off">
+                <button onclick="closeSearch()"
+                    style="background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-3)">✕</button>
+            </div>
+            <div class="search-results" id="searchResults"></div>
+        </div>
+    </div>
+
+    <div class="post-layout-wrapper">
+        <!-- LEFT RAIL: Ads + Share -->
+        <aside class="post-left-rail" id="postLeftRail">
+            <div class="left-rail-ad ad-slot">
+                <p>Ad</p>
+            </div>
+            <div class="floating-share" id="floatingShare">
+                <a href="#" onclick="window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent(location.href)+'&text='+encodeURIComponent(document.title),'_blank','width=600,height=400');return false;" aria-label="Share on Twitter">𝕏</a>
+                
+                
+                <a href="https://pin.it/tI1FKML9O" target="_blank" rel="noopener" aria-label="Pinterest">P</a>
+                <button onclick="copyLink()" aria-label="Copy Link">🔗</button>
+                <button onclick="printArticle()" aria-label="Print">🖨️</button>
+                <button onclick="nativeShare()" aria-label="Share">📤</button>
+            </div>
+            <div class="left-rail-ad ad-slot" style="margin-top:20px;">
+                <p>Ad</p>
+            </div>
+        </aside>
+
+        <!-- CENTER: Article Content -->
+        <article class="post-page" id="postArticle">
+            <!-- Breadcrumb -->
+            <nav id="breadcrumb" class="breadcrumb-nav"></nav>
+
+            <!-- Post Header -->
+            <div class="post-header" id="postHeader">
+                <div style="padding:40px;text-align:center;">
+                    <div class="skeleton" style="width:100px;height:24px;margin:0 auto 20px;"></div>
+                    <div class="skeleton" style="width:80%;height:40px;margin:0 auto 12px;"></div>
+                    <div class="skeleton" style="width:60%;height:20px;margin:0 auto;"></div>
+                </div>
+            </div>
+
+            <!-- Featured Image -->
+            <div class="post-featured-image" id="postImage" style="display:none;"></div>
+
+            <!-- Post Body -->
+            <div class="post-body">
+                <!-- Table of Contents -->
+                <div id="postToc"></div>
+
+                <!-- Content -->
+                <div class="post-content" id="postContent">
+                    <div class="skeleton" style="height:20px;margin-bottom:16px;"></div>
+                    <div class="skeleton" style="height:20px;width:90%;margin-bottom:16px;"></div>
+                    <div class="skeleton" style="height:20px;width:75%;margin-bottom:16px;"></div>
+                </div>
+
+                <!-- Post Toolbar -->
+                <div class="post-toolbar">
+                    <button onclick="printArticle()">🖨️ Print Article</button>
+                    <button onclick="copyLink()">🔗 Copy Link</button>
+                    <button onclick="nativeShare()">📤 Share</button>
+                </div>
+
+                <!-- Tags -->
+                <div id="postTags"></div>
+
+                <!-- Share -->
+                <div class="share-bar" id="shareBar"></div>
+
+                <!-- Author -->
+                <div id="authorBox"></div>
+
+                <!-- Newsletter Mid-Post CTA -->
+                <div class="newsletter-cta-mid">
+                    <h3>📧 Enjoyed this article?</h3>
+                    <p>Get the latest tech articles delivered to your inbox every week.</p>
+                    <form onsubmit="event.preventDefault(); handleExitNewsletter(this);">
+                        <input type="email" placeholder="your@email.com" required>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+
+                <!-- Comments -->
+                <div class="comments-section" id="commentsSection">
+                    <h3>💬 Comments <span id="commentCount" style="font-size:.85rem;color:var(--text-3);font-weight:400;"></span></h3>
+                    
+                    <!-- Existing Comments -->
+                    <div id="commentsList" style="margin-bottom:24px;"></div>
+                    
+                    <!-- Comment Form -->
+                    <div class="comment-form-wrap">
+                        <h4 style="font-size:1rem;margin-bottom:12px;">Leave a Comment</h4>
+                        <form class="comment-form" id="commentForm" onsubmit="return submitComment(event)">
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                                <input type="text" id="commentName" placeholder="Your Name *" required style="padding:10px 14px;border:1px solid var(--line);background:var(--bg-page);color:var(--text-dark);font-size:.9rem;">
+                                <input type="email" id="commentEmail" placeholder="Email (optional)" style="padding:10px 14px;border:1px solid var(--line);background:var(--bg-page);color:var(--text-dark);font-size:.9rem;">
+                            </div>
+                            <textarea id="commentText" placeholder="Share your thoughts..." required style="width:100%;padding:12px 14px;border:1px solid var(--line);background:var(--bg-page);color:var(--text-dark);font-size:.9rem;min-height:100px;resize:vertical;margin-top:12px;font-family:inherit;"></textarea>
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;">
+                                <small style="color:var(--text-muted);font-size:.78rem;">Comments are reviewed before publishing</small>
+                                <button type="submit" class="btn btn-primary" id="commentSubmitBtn" style="width:fit-content;">Post Comment</button>
+                            </div>
+                        </form>
+                        <div id="commentMsg" style="display:none;margin-top:12px;padding:12px 16px;font-size:.85rem;"></div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- RIGHT SIDEBAR -->
+        <aside class="post-right-sidebar" id="postRightSidebar">
+            <!-- Related Articles -->
+            <div class="sidebar-widget" id="sidebarRelated">
+                <h4 class="widget-title">Related Articles</h4>
+                <div id="sidebarRelatedPosts"></div>
+            </div>
+
+            <!-- Ad Slot -->
+            <div class="ad-slot">
+                <p>Advertisement</p>
+            </div>
+
+            <!-- Trending Posts -->
+            <div class="sidebar-widget" id="sidebarTrending">
+                <h4 class="widget-title">🔥 Trending</h4>
+                <div id="sidebarTrendingPosts"></div>
+            </div>
+
+            <!-- Featured Article -->
+            <div class="sidebar-widget" id="sidebarFeatured">
+                <h4 class="widget-title">⭐ Editor's Pick</h4>
+                <div id="sidebarFeaturedPost"></div>
+            </div>
+
+            <!-- Ad Slot -->
+            <div class="ad-slot">
+                <p>Advertisement</p>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="sidebar-widget">
+                <h4 class="widget-title">📧 Newsletter</h4>
+                <p style="font-size:.82rem;color:var(--text-secondary);margin-bottom:10px;">Get weekly tech insights delivered to your inbox.</p>
+                <form class="newsletter-form" onsubmit="event.preventDefault(); handleExitNewsletter(this);">
+                    <input type="email" placeholder="your@email.com" required>
+                    <button type="submit" class="btn btn-primary" style="width:100%;">Subscribe</button>
+                </form>
+            </div>
+
+            <!-- More from HedwigPost -->
+            <div class="sidebar-widget" id="sidebarMorePosts">
+                <h4 class="widget-title">📰 More from HedwigPost</h4>
+                <div id="sidebarLatestPosts"></div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Hidden relatedPosts for backward compat -->
+    <div id="relatedPosts" style="display:none;"></div>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="/" class="logo">
+                    <img src="/img/logo.png" alt="HedwigPost" class="logo-icon" width="36" height="36">
+                    <span>HedwigPost</span>
+                </a>
+                <p>HedwigPost is your go-to destination for honest product reviews, expert how-to guides, breaking news, and in-depth tech coverage. We help everyday readers make smarter decisions — whether you're researching your next purchase, learning a new skill, or staying ahead of the latest trends in technology and entertainment.</p>
+                <form class="newsletter-form" style="margin-top:14px;" onsubmit="return handleNewsletter(event)">
+                    <input type="email" placeholder="your@email.com" required style="padding:8px 12px;font-size:.82rem;">
+                    <button type="submit" class="btn btn-primary" style="padding:8px 14px;font-size:.82rem;">Subscribe</button>
+                </form>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <p style="font-size:.75rem;color:var(--text-2);margin-bottom:10px;">Navigate HedwigPost — find what you're looking for in seconds.</p>
+                <ul>
+                    <li><a href="/" title="Your daily feed of the latest articles, top reviews, and trending guides.">Home</a></li>
+                    <li><a href="/blogs" title="Browse every article ever published on HedwigPost.">All Posts</a></li>
+                    <li><a href="/about" title="Learn who we are and what drives us.">About Us</a></li>
+                    <li><a href="/contact" title="Get in touch — we respond within 48 hours.">Contact</a></li>
+                    <li><a href="/archive" title="Every article searchable by month and year.">Archive</a></li>
+                    <li><a href="/sitemap-page" title="A complete map of every page on HedwigPost.">Sitemap</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Categories</h4>
+                <p style="font-size:.75rem;color:var(--text-2);margin-bottom:10px;">Explore topics that matter — from cutting-edge tech to entertainment and beyond.</p>
+                <ul id="footerCategories"></ul>
+            </div>
+            <div class="footer-col">
+                <h4>More</h4>
+                <p style="font-size:.75rem;color:var(--text-2);margin-bottom:10px;">Legal, advertising, and additional information about HedwigPost.</p>
+                <ul>
+                    <li><a href="/privacy" title="How we collect, use, and protect your personal information.">Privacy Policy</a></li>
+                    <li><a href="/terms" title="Terms and conditions governing your use of HedwigPost.">Terms of Service</a></li>
+                    <li><a href="/disclaimer" title="Disclosures about affiliate partnerships and editorial independence.">Disclaimer</a></li>
+                    <li><a href="/cookie-policy" title="How we use cookies and similar technologies.">Cookie Policy</a></li>
+                    <li><a href="/advertise" title="Reach our engaged audience — explore advertising opportunities.">Advertise</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; <span class="auto-year">2026</span> HedwigPost &middot; All Rights Reserved &middot; hedwigpost.page</span>
+            <p style="font-size:.72rem;color:var(--text-3);margin-top:6px;">Content on this site is for informational purposes only. Some posts contain affiliate links — we may earn a commission at no extra cost to you. See our <a href="/disclaimer" style="color:var(--primary);">Disclaimer</a> for full details.</p>
+            <div class="footer-social">
+                <a href="https://x.com/hedwig_post" target="_blank" rel="noopener" aria-label="X">𝕏</a>
+                
+                
+            \n                <a href="https://pin.it/tI1FKML9O" target="_blank" rel="noopener" aria-label="Pinterest">P</a>\n            </div>
+        </div>
+    </footer>
+
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-content">
+            <p>We use cookies to enhance your experience. <a href="/cookie-policy">Learn more</a></p>
+            <div class="cookie-btns">
+                <button class="btn btn-primary" onclick="acceptCookies()" style="padding:8px 20px;">Accept</button>
+                <button class="btn btn-ghost" onclick="declineCookies()" style="padding:8px 20px;">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+    <script src="/js/app.js"></script>
+    <!-- Code Highlighting -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-typescript.min.js" defer></script>
+    <script>
+        // Load comments for the current post
+        async function loadPostComments() {
+            const slug = window.location.pathname.split('/post/')[1];
+            if (!slug) return;
+            try {
+                const res = await fetch(`/api/comments/${slug}`);
+                const data = await res.json();
+                const list = document.getElementById('commentsList');
+                const count = document.getElementById('commentCount');
+                if (count) count.textContent = data.total > 0 ? `(${data.total})` : '';
+                
+                if (data.comments.length === 0) {
+                    list.innerHTML = '<p style="color:var(--text-3);font-size:.9rem;padding:16px 0;">No comments yet. Be the first to share your thoughts!</p>';
+                    return;
+                }
+                
+                list.innerHTML = data.comments.map(c => `
+                    <div style="padding:16px;border:1px solid var(--border);border-radius:12px;margin-bottom:12px;background:var(--bg-card);">
+                        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#8b5cf6,#06b6d4);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.85rem;">${c.name.charAt(0).toUpperCase()}</div>
+                            <div>
+                                <div style="font-weight:600;font-size:.9rem;color:var(--text-0);">${escapeHtml(c.name)}</div>
+                                <div style="font-size:.75rem;color:var(--text-3);font-family:var(--font-mono);">${new Date(c.createdAt).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' })}</div>
+                            </div>
+                        </div>
+                        <p style="font-size:.9rem;color:var(--text-1);line-height:1.6;margin:0;">${escapeHtml(c.comment)}</p>
+                    </div>
+                `).join('');
+            } catch (e) { console.error('Load comments error:', e); }
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        async function submitComment(e) {
+            e.preventDefault();
+            const slug = window.location.pathname.split('/post/')[1];
+            const name = document.getElementById('commentName').value.trim();
+            const email = document.getElementById('commentEmail').value.trim();
+            const comment = document.getElementById('commentText').value.trim();
+            const btn = document.getElementById('commentSubmitBtn');
+            const msg = document.getElementById('commentMsg');
+            
+            btn.disabled = true;
+            btn.textContent = 'Submitting...';
+            
+            try {
+                const res = await fetch('/api/comments', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, comment, postSlug: slug })
+                });
+                const data = await res.json();
+                
+                msg.style.display = 'block';
+                if (res.ok) {
+                    msg.style.background = 'rgba(16,185,129,.12)';
+                    msg.style.color = '#10b981';
+                    msg.style.border = '1px solid rgba(16,185,129,.25)';
+                    msg.textContent = '✅ ' + (data.message || 'Comment submitted for review!');
+                    document.getElementById('commentForm').reset();
+                } else {
+                    msg.style.background = 'rgba(239,68,68,.1)';
+                    msg.style.color = '#ef4444';
+                    msg.style.border = '1px solid rgba(239,68,68,.2)';
+                    msg.textContent = '❌ ' + (data.error || 'Failed to submit comment.');
+                }
+                setTimeout(() => { msg.style.display = 'none'; }, 5000);
+            } catch (err) {
+                msg.style.display = 'block';
+                msg.style.background = 'rgba(239,68,68,.1)';
+                msg.style.color = '#ef4444';
+                msg.textContent = '❌ Network error. Please try again.';
+            }
+            btn.disabled = false;
+            btn.textContent = 'Post Comment';
+            return false;
+        }
+
+        // Load comments after post loads
+        const origLoadPost = window.loadPostPage;
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(loadPostComments, 1000);
+        });
+    </script>
+</body>
+
+</html>

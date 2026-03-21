@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/favicon.png?v=1773767918">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Posts — HedwigPost Admin</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="/admin/css/admin.css">
+</head>
+
+<body>
+    <div class="admin-layout">
+        <aside class="admin-sidebar" id="adminSidebar">
+            <div class="sidebar-header">
+                <img src="/img/logo.png" alt="HedwigPost" class="logo-icon" width="42" height="42">
+                <div>
+                    <h2>HedwigPost</h2><small>Command Center</small>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="sidebar-nav-label">Content</div>
+                <a href="/admin/dashboard.html"><span class="nav-icon"><svg viewBox="0 0 24 24">
+                            <rect x="3" y="3" width="7" height="7" rx="1" />
+                            <rect x="14" y="3" width="7" height="7" rx="1" />
+                            <rect x="14" y="14" width="7" height="7" rx="1" />
+                            <rect x="3" y="14" width="7" height="7" rx="1" />
+                        </svg></span> Dashboard</a>
+                <a href="/admin/editor.html"><span class="nav-icon"><svg viewBox="0 0 24 24">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                        </svg></span> New Post</a>
+                <a href="/admin/posts.html" class="active"><span class="nav-icon"><svg viewBox="0 0 24 24">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                            <polyline points="14 2 14 8 20 8" />
+                        </svg></span> All Posts</a>
+                <a href="/admin/categories.html"><span class="nav-icon"><svg viewBox="0 0 24 24">
+                            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+                        </svg></span> Categories</a>
+                
+                <div class="sidebar-nav-label" style="margin-top:16px;">Affiliate Deals</div>
+                <a href="/admin/product-editor.html"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg></span> Add Product</a>
+                <a href="/admin/products.html"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0"></path></svg></span> All Products</a>
+                
+                <div class="sidebar-nav-label" style="margin-top:16px;">Engagement</div><a href="/admin/comments.html"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span> Comments</a><a href="/admin/automation.html"><span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></span> Automation</a><div class="sidebar-nav-label">System</div>
+                <a href="/admin/settings.html"><span class="nav-icon"><svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="3" />
+                            <path
+                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                        </svg></span> Settings</a>
+                <div class="divider"></div>
+                <a href="/" target="_blank"><span class="nav-icon"><svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="2" y1="12" x2="22" y2="12" />
+                            <path
+                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                        </svg></span> View Site</a>
+            </nav>
+            <div class="sidebar-footer"><a href="#" onclick="logout()"><span class="nav-icon"><svg viewBox="0 0 24 24">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                            <polyline points="16 17 21 12 16 7" />
+                            <line x1="21" y1="12" x2="9" y2="12" />
+                        </svg></span> Logout</a></div>
+        </aside>
+
+        <main class="admin-main">
+            <div class="admin-header">
+                <h1><span class="header-icon"><svg viewBox="0 0 24 24">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                            <polyline points="14 2 14 8 20 8" />
+                        </svg></span> All Posts</h1>
+                <div class="admin-header-right">
+                    <a href="/admin/editor.html" class="btn btn-primary btn-sm"><svg viewBox="0 0 24 24">
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                        </svg> New Post</a>
+                    <button class="header-btn" onclick="toggleTheme()" id="themeToggle"><svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="5" />
+                            <line x1="12" y1="1" x2="12" y2="3" />
+                            <line x1="12" y1="21" x2="12" y2="23" />
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                            <line x1="1" y1="12" x2="3" y2="12" />
+                            <line x1="21" y1="12" x2="23" y2="12" />
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                        </svg></button>
+                </div>
+            </div>
+
+            <div class="admin-body">
+                <!-- Bulk Actions & Filters -->
+                <div
+                    style="display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;align-items:center;justify-content:space-between">
+                    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+                        <div style="position:relative">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--a-text-3)"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                style="position:absolute;left:12px;top:50%;transform:translateY(-50%)">
+                                <circle cx="11" cy="11" r="8" />
+                                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                            </svg>
+                            <input type="text" id="searchPosts" placeholder="Search posts..."
+                                style="padding:9px 14px 9px 36px;border:1px solid var(--a-border);border-radius:var(--admin-radius);background:var(--a-bg-2);color:var(--a-text-0);font-family:var(--font-body);font-size:.86rem;width:260px;outline:none;transition:border-color .2s"
+                                onfocus="this.style.borderColor='var(--a-accent)'"
+                                onblur="this.style.borderColor='var(--a-border)'" oninput="loadPosts()">
+                        </div>
+                        <select id="filterStatus" onchange="loadPosts()"
+                            style="padding:9px 14px;border:1px solid var(--a-border);border-radius:var(--admin-radius);background:var(--a-bg-2);color:var(--a-text-0);font-family:var(--font-body);font-size:.86rem;outline:none;cursor:pointer">
+                            <option value="">All Status</option>
+                            <option value="published">Published</option>
+                            <option value="draft">Draft</option>
+                        </select>
+                    </div>
+                    <div id="bulkActionsBar" style="display:none;gap:8px;align-items:center">
+                        <span style="font-size:.82rem;color:var(--a-text-2);font-family:var(--font-mono)"
+                            id="selectedCount">0 selected</span>
+                        <button class="btn btn-danger btn-sm" onclick="bulkDelete()">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polyline points="3 6 5 6 21 6" />
+                                <path
+                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                            </svg>
+                            Delete Selected
+                        </button>
+                    </div>
+                </div>
+
+                <div class="admin-table-wrap">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th style="width:30px"><input type="checkbox" id="selectAll"
+                                        onchange="toggleSelectAll()" style="cursor:pointer"></th>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>SEO Score</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="postsTable"></tbody>
+                    </table>
+                </div>
+                <div class="pagination" id="postsPagination" style="margin-top:20px;"></div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/admin/js/admin.js"></script>
+    <script>
+        let currentPage = 1;
+        let selectedPosts = new Set();
+
+        document.addEventListener('DOMContentLoaded', () => { checkAuth(); loadPosts(); });
+
+        async function loadPosts(page = 1) {
+            currentPage = page;
+            selectedPosts.clear();
+            updateBulkBar();
+            const search = document.getElementById('searchPosts').value;
+            const status = document.getElementById('filterStatus').value;
+            let url = `/api/posts?page=${page}&limit=10`;
+            if (search) url += `&search=${encodeURIComponent(search)}`;
+            if (status) url += `&status=${status}`;
+
+            const res = await fetch(url);
+            const data = await res.json();
+
+            document.getElementById('postsTable').innerHTML = data.posts.map(p => `
+            <tr>
+                <td><input type="checkbox" class="post-checkbox" value="${p.id}" onchange="togglePostSelect('${p.id}', this.checked)" style="cursor:pointer"></td>
+                <td><strong style="cursor:pointer;color:var(--a-text-0)" onclick="window.location.href='/admin/editor.html?id=${p.id}'">${truncate(p.title, 48)}</strong></td>
+                <td style="font-size:.82rem;color:var(--a-text-2)">${p.category}</td>
+                <td><span class="status-badge ${p.status}">${p.status}</span></td>
+                <td style="font-family:var(--font-mono);font-size:.78rem;color:var(--a-text-3)">${formatDate(p.publishDate)}</td>
+                <td><span style="color:${p.seoScore >= 80 ? 'var(--a-green)' : p.seoScore >= 50 ? 'var(--a-yellow)' : 'var(--a-red)'};font-weight:700;font-family:var(--font-mono)">${p.seoScore}%</span></td>
+                <td class="action-btns">
+                    <button class="action-btn" onclick="window.location.href='/admin/editor.html?id=${p.id}'">Edit</button>
+                    <button class="action-btn" onclick="window.open('/post/${p.slug}','_blank')">View</button>
+                    <button class="action-btn delete" onclick="deletePost('${p.id}')">Delete</button>
+                </td>
+            </tr>
+        `).join('') || '<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--a-text-3)">No posts found</td></tr>';
+
+            // Pagination
+            const pag = document.getElementById('postsPagination');
+            if (data.totalPages > 1) {
+                let html = '';
+                for (let i = 1; i <= data.totalPages; i++) {
+                    html += `<button class="${i === currentPage ? 'active' : ''}" onclick="loadPosts(${i})">${i}</button>`;
+                }
+                pag.innerHTML = html;
+            } else { pag.innerHTML = ''; }
+        }
+
+        function togglePostSelect(id, checked) {
+            checked ? selectedPosts.add(id) : selectedPosts.delete(id);
+            updateBulkBar();
+        }
+
+        function toggleSelectAll() {
+            const checked = document.getElementById('selectAll').checked;
+            document.querySelectorAll('.post-checkbox').forEach(cb => {
+                cb.checked = checked;
+                checked ? selectedPosts.add(cb.value) : selectedPosts.delete(cb.value);
+            });
+            updateBulkBar();
+        }
+
+        function updateBulkBar() {
+            const bar = document.getElementById('bulkActionsBar');
+            if (selectedPosts.size > 0) {
+                bar.style.display = 'flex';
+                document.getElementById('selectedCount').textContent = `${selectedPosts.size} selected`;
+            } else {
+                bar.style.display = 'none';
+            }
+        }
+
+        function showConfirmModal(message, onConfirm) {
+            const overlay = document.createElement('div');
+            overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:10000;';
+            overlay.innerHTML = `
+                <div style="background:var(--a-bg-1);border:1px solid var(--a-border-hover);border-radius:14px;padding:28px;width:400px;max-width:90vw;box-shadow:0 20px 40px rgba(0,0,0,.4);">
+                    <h3 style="margin-bottom:12px;font-size:1rem;">⚠️ Confirm</h3>
+                    <p style="color:var(--a-text-2);font-size:.9rem;margin-bottom:20px;">${message}</p>
+                    <div style="display:flex;gap:8px;justify-content:flex-end;">
+                        <button id="confirmCancel" style="padding:8px 16px;border:1px solid var(--a-border);border-radius:8px;background:transparent;color:var(--a-text-1);cursor:pointer;">Cancel</button>
+                        <button id="confirmOk" style="padding:8px 20px;border:none;border-radius:8px;background:var(--a-red,#ef4444);color:#fff;cursor:pointer;font-weight:600;">Delete</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+            overlay.querySelector('#confirmCancel').onclick = () => overlay.remove();
+            overlay.querySelector('#confirmOk').onclick = () => { overlay.remove(); onConfirm(); };
+            overlay.addEventListener('keydown', e => {
+                if (e.key === 'Escape') overlay.remove();
+                if (e.key === 'Enter') { overlay.remove(); onConfirm(); }
+            });
+        }
+
+        async function bulkDelete() {
+            showConfirmModal(`Delete ${selectedPosts.size} post(s) permanently?`, async () => {
+                try {
+                    for (const id of selectedPosts) {
+                        await authFetch(`/api/posts/${id}`, { method: 'DELETE' });
+                    }
+                    showToast(`${selectedPosts.size} posts deleted`);
+                    selectedPosts.clear();
+                    loadPosts(currentPage);
+                } catch (e) {
+                    console.error('Bulk delete failed:', e);
+                    showToast('Delete failed: ' + e.message, 'error');
+                }
+            });
+        }
+
+        async function deletePost(id) {
+            showConfirmModal('Delete this post permanently? This cannot be undone.', async () => {
+                try {
+                    const res = await authFetch(`/api/posts/${id}`, { method: 'DELETE' });
+                    if (!res.ok) throw new Error(`Server error: ${res.status}`);
+                    showToast('Post deleted ✓');
+                    loadPosts(currentPage);
+                } catch (e) {
+                    console.error('Delete failed:', e);
+                    showToast('Delete failed: ' + e.message, 'error');
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

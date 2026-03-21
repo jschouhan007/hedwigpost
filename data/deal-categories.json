@@ -1,0 +1,34 @@
+[
+  {
+    "slug": "ai-tools",
+    "name": "AI Tools",
+    "metaTitle": "Best AI Tools 2026 — Curated & Reviewed by HedwigPost",
+    "metaDescription": "Discover the best AI tools for productivity, writing, coding, and creativity in 2026. Handpicked recommendations with honest reviews.",
+    "introHTML": "<p>Artificial Intelligence tools are transforming how we work, create, and communicate. We've tested dozens of AI products to bring you only the ones worth your time and money. From content generators to coding assistants, here are our top picks for 2026.</p>",
+    "keywords": ["ai tools", "best ai tools 2026", "ai software", "artificial intelligence tools"]
+  },
+  {
+    "slug": "laptops",
+    "name": "Laptops",
+    "metaTitle": "Best Laptops 2026 — Top Picks for Every Budget | HedwigPost",
+    "metaDescription": "Find the perfect laptop in 2026. Our expert picks cover ultrabooks, gaming laptops, budget options, and workstation powerhouses.",
+    "introHTML": "<p>Whether you're a student, professional, or gamer, choosing the right laptop can be overwhelming. We've narrowed down the best laptops across every price point and use case so you can make a confident purchase.</p>",
+    "keywords": ["best laptops 2026", "laptop reviews", "gaming laptop", "ultrabook"]
+  },
+  {
+    "slug": "software",
+    "name": "Software",
+    "metaTitle": "Best Software & Apps 2026 — Must-Have Tools | HedwigPost",
+    "metaDescription": "Essential software and apps for productivity, security, and creativity in 2026. Expert reviews and exclusive deals.",
+    "introHTML": "<p>The right software stack can supercharge your productivity and protect your digital life. From project management to VPNs, these are the tools we personally use and recommend in 2026.</p>",
+    "keywords": ["best software 2026", "productivity apps", "vpn", "project management tools"]
+  },
+  {
+    "slug": "gadgets",
+    "name": "Gadgets",
+    "metaTitle": "Best Gadgets & Tech 2026 — Trending Picks | HedwigPost",
+    "metaDescription": "Explore the hottest gadgets and tech accessories in 2026. Phones, headphones, wearables, and more — reviewed by experts.",
+    "introHTML": "<p>From flagship smartphones to cutting-edge wearables, the gadget landscape in 2026 is more exciting than ever. Here are the devices that deliver real value and stand out from the crowd.</p>",
+    "keywords": ["best gadgets 2026", "tech gadgets", "smartphones", "headphones", "wearables"]
+  }
+]

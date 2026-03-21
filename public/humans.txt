@@ -1,0 +1,15 @@
+/* TEAM */
+Site: HedwigPost
+Contact: hello@HedwigPost.com
+Twitter: @HedwigPost
+Location: India
+
+/* SITE */
+Last update: 2026/03/12
+Standards: HTML5, CSS3, JavaScript ES6+
+Platform: Node.js + Express
+Components: Vanilla JS, Custom CSS
+Software: Visual Studio Code
+
+/* THANKS */
+Built with passion for technology and knowledge sharing.

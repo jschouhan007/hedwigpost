@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/favicon.png?v=1773767918">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Automation — HedwigPost Admin</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="/admin/css/admin.css">
+    <style>
+        .auto-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; margin-bottom: 20px; }
+        .auto-stat { background: var(--a-card); border: 1px solid var(--a-border); border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 6px; }
+        .auto-stat .stat-label { font-size: .78rem; color: var(--a-text-3); text-transform: uppercase; letter-spacing: .5px; }
+        .auto-stat .stat-val { font-size: 1.6rem; font-weight: 800; font-family: var(--font-mono); color: var(--a-text-0); }
+        .auto-stat .stat-sub { font-size: .72rem; color: var(--a-text-3); }
+        .auto-stat.running { border-color: var(--a-green); box-shadow: 0 0 12px rgba(16,185,129,.15); }
+        .auto-stat.stopped { border-color: var(--a-red); }
+
+        .auto-section { background: var(--a-card); border: 1px solid var(--a-border); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+        .auto-section h3 { font-size: 1rem; font-weight: 700; margin: 0 0 14px 0; display: flex; align-items: center; gap: 8px; color: var(--a-text-0); }
+        .auto-section h3 svg { width: 18px; height: 18px; stroke: var(--a-accent); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+        .auto-controls { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; align-items: center; }
+        .auto-controls input, .auto-controls select {
+            padding: 8px 12px; border-radius: 8px; border: 1px solid var(--a-border);
+            background: var(--a-bg); color: var(--a-text-0); font-size: .85rem; min-width: 120px;
+        }
+        .auto-controls input:focus, .auto-controls select:focus { outline: none; border-color: var(--a-accent); }
+
+        .btn-auto {
+            padding: 8px 16px; border-radius: 8px; font-size: .82rem; font-weight: 600; cursor: pointer;
+            border: none; display: inline-flex; align-items: center; gap: 6px; transition: all .2s;
+        }
+        .btn-auto svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .btn-start { background: linear-gradient(135deg, #10b981, #059669); color: #fff; }
+        .btn-start:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(16,185,129,.3); }
+        .btn-stop { background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff; }
+        .btn-stop:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(239,68,68,.3); }
+        .btn-generate { background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: #fff; }
+        .btn-generate:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(139,92,246,.3); }
+        .btn-discover { background: linear-gradient(135deg, #06b6d4, #0891b2); color: #fff; }
+        .btn-discover:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(6,182,212,.3); }
+        .btn-refresh { background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; }
+        .btn-refresh:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(245,158,11,.3); }
+        .btn-auto:disabled { opacity: .5; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+
+        .keyword-list { max-height: 320px; overflow-y: auto; }
+        .keyword-item {
+            display: flex; justify-content: space-between; align-items: center; padding: 8px 12px;
+            border-bottom: 1px solid var(--a-border); font-size: .82rem;
+        }
+        .keyword-item:last-child { border-bottom: none; }
+        .keyword-item .kw-text { color: var(--a-text-0); font-weight: 500; flex: 1; }
+        .keyword-item .kw-cat { color: var(--a-accent); font-size: .72rem; margin: 0 10px; white-space: nowrap; }
+        .keyword-item .kw-score {
+            font-family: var(--font-mono); font-size: .75rem; font-weight: 700; padding: 2px 8px;
+            border-radius: 6px; background: rgba(139,92,246,.15); color: var(--a-accent);
+        }
+
+        .log-list { max-height: 400px; overflow-y: auto; }
+        .log-item {
+            display: flex; gap: 10px; padding: 8px 12px; border-bottom: 1px solid var(--a-border);
+            font-size: .78rem; align-items: flex-start;
+        }
+        .log-item:last-child { border-bottom: none; }
+        .log-time { color: var(--a-text-3); font-family: var(--font-mono); font-size: .72rem; white-space: nowrap; min-width: 140px; }
+        .log-action {
+            padding: 2px 8px; border-radius: 4px; font-size: .7rem; font-weight: 700; text-transform: uppercase;
+            white-space: nowrap;
+        }
+        .log-action.published { background: rgba(16,185,129,.15); color: var(--a-green); }
+        .log-action.error { background: rgba(239,68,68,.15); color: var(--a-red); }
+        .log-action.started, .log-action.scheduler-started { background: rgba(6,182,212,.15); color: #06b6d4; }
+        .log-action.stopped, .log-action.scheduler-stopped { background: rgba(245,158,11,.15); color: #f59e0b; }
+        .log-action.skipped { background: rgba(148,163,184,.15); color: var(--a-text-3); }
+        .log-action.content-refresh { background: rgba(139,92,246,.15); color: var(--a-accent); }
+        .log-detail { color: var(--a-text-1); flex: 1; }
+
+        .template-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-bottom: 14px; }
+        .template-card {
+            background: var(--a-bg); border: 1px solid var(--a-border); border-radius: 10px;
+            padding: 14px; cursor: pointer; transition: all .2s;
+        }
+        .template-card:hover, .template-card.selected { border-color: var(--a-accent); background: rgba(139,92,246,.05); }
+        .template-card .tc-name { font-size: .85rem; font-weight: 700; color: var(--a-text-0); margin-bottom: 4px; }
+        .template-card .tc-desc { font-size: .72rem; color: var(--a-text-3); }
+
+        .config-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+        .config-item { display: flex; flex-direction: column; gap: 4px; }
+        .config-item label { font-size: .78rem; font-weight: 600; color: var(--a-text-1); }
+        .config-item input, .config-item select {
+            padding: 8px 12px; border-radius: 8px; border: 1px solid var(--a-border);
+            background: var(--a-bg); color: var(--a-text-0); font-size: .85rem;
+        }
+
+        .toast {
+            position: fixed; bottom: 24px; right: 24px; padding: 12px 20px; border-radius: 10px;
+            font-size: .85rem; font-weight: 600; z-index: 9999; animation: slideIn .3s ease;
+            box-shadow: 0 8px 24px rgba(0,0,0,.3);
+        }
+        .toast.success { background: var(--a-green); color: #fff; }
+        .toast.error { background: var(--a-red); color: #fff; }
+        .toast.info { background: var(--a-accent); color: #fff; }
+        @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        .stale-list { max-height: 280px; overflow-y: auto; }
+        .stale-item {
+            display: flex; justify-content: space-between; align-items: center; padding: 8px 12px;
+            border-bottom: 1px solid var(--a-border); font-size: .82rem;
+        }
+        .stale-item .stale-title { color: var(--a-text-0); font-weight: 500; flex: 1; }
+        .stale-item .stale-days { color: var(--a-red); font-family: var(--font-mono); font-size: .75rem; margin: 0 10px; }
+
+        .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,.3); border-top-color: #fff; border-radius: 50%; animation: spin .6s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" id="adminSidebar">
+            <div class="sidebar-header">
+                <img src="/img/logo.png" alt="HedwigPost" class="logo-icon" width="42" height="42">
+                <div>
+                    <h2>HedwigPost</h2>
+                    <small>Command Center</small>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="sidebar-nav-label">Content</div>
+                <a href="/admin/dashboard.html"><span class="nav-icon"><svg viewBox="0 0 24 24">
+                            <rect x="3" y="3" width="7" height="7" rx="1" />
+                            <rect x="14" y="3" width="7" height="7" rx="1" />
+                            <rect x="14" y="14" width="7" height="7" rx="1" />
+                            <rect x="3" y="14" width="7" height="7" rx="1" />
+                        </svg></span> Dashboard</a>
+                <a href="/admin/editor.html"><span class="nav-icon"><svg viewBox="0 0 24 24">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                        </svg></span> New Post</a>
+                <a href="/admin/posts.html"><span class="nav-icon"><svg viewBox="0 0 24 24">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                            <polyline points="14 2 14 8 20 8" />
+                        </svg></span> All Posts</a>
+                <a href="/admin/categories.html"><span class="nav-icon"><svg viewBox="0 0 24 24">
+                            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+                        </svg></span> Categories</a>
+                
+                <div class="sidebar-nav-label" style="margin-top:16px;">Affiliate Deals</div>
+                <a href="/admin/product-editor.html"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg></span> Add Product</a>
+                <a href="/admin/products.html"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0"></path></svg></span> All Products</a>
+                
+                <div class="sidebar-nav-label" style="margin-top:16px;">Engagement</div>
+                <a href="/admin/comments.html"><span class="nav-icon"><svg viewBox="0 0 24 24">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                        </svg></span> Comments</a>
+                <a href="/admin/automation.html" class="active"><span class="nav-icon"><svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                        </svg></span> Automation</a>
+
+                <div class="sidebar-nav-label">System</div>
+                <a href="/admin/settings.html"><span class="nav-icon"><svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="3" />
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9" />
+                        </svg></span> Settings</a>
+                <div class="divider"></div>
+                <a href="/" target="_blank"><span class="nav-icon"><svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="2" y1="12" x2="22" y2="12" />
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                        </svg></span> View Site</a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="#" onclick="logout()"><span class="nav-icon"><svg viewBox="0 0 24 24">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                            <polyline points="16 17 21 12 16 7" />
+                            <line x1="21" y1="12" x2="9" y2="12" />
+                        </svg></span> Logout</a>
+            </div>
+        </aside>
+
+        <!-- Main -->
+        <main class="admin-main">
+            <div class="admin-header">
+                <h1><span class="header-icon"><svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                        </svg></span> Content Automation</h1>
+                <div class="admin-header-right">
+                    <button class="header-btn" onclick="toggleTheme()" id="themeToggle"><svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="5" /><line x1="12" y1="1" x2="12" y2="3" />
+                            <line x1="12" y1="21" x2="12" y2="23" /><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" /><line x1="1" y1="12" x2="3" y2="12" />
+                            <line x1="21" y1="12" x2="23" y2="12" /><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                        </svg></button>
+                </div>
+            </div>
+
+            <div class="admin-body">
+                <!-- Stats -->
+                <div class="auto-grid" id="statsGrid">
+                    <div class="auto-stat" id="statusCard">
+                        <div class="stat-label">Engine Status</div>
+                        <div class="stat-val" id="engineStatus">—</div>
+                        <div class="stat-sub" id="engineSub">Loading...</div>
+                    </div>
+                    <div class="auto-stat">
+                        <div class="stat-label">Generated Today</div>
+                        <div class="stat-val" id="statToday">—</div>
+                        <div class="stat-sub" id="statTodaySub"></div>
+                    </div>
+                    <div class="auto-stat">
+                        <div class="stat-label">This Week</div>
+                        <div class="stat-val" id="statWeek">—</div>
+                    </div>
+                    <div class="auto-stat">
+                        <div class="stat-label">This Month</div>
+                        <div class="stat-val" id="statMonth">—</div>
+                    </div>
+                    <div class="auto-stat">
+                        <div class="stat-label">Total Auto-Generated</div>
+                        <div class="stat-val" id="statTotalAuto">—</div>
+                    </div>
+                    <div class="auto-stat">
+                        <div class="stat-label">Stale Content</div>
+                        <div class="stat-val" id="statStale">—</div>
+                        <div class="stat-sub">Needs refresh</div>
+                    </div>
+                </div>
+
+                <!-- Scheduler Control -->
+                <div class="auto-section">
+                    <h3><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg> Scheduler Control</h3>
+                    <div class="auto-controls">
+                        <button class="btn-auto btn-start" id="btnStart" onclick="startScheduler()">
+                            <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg> Start Engine
+                        </button>
+                        <button class="btn-auto btn-stop" id="btnStop" onclick="stopScheduler()">
+                            <svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></svg> Stop Engine
+                        </button>
+                        <span style="color:var(--a-text-3);font-size:.78rem;margin-left:8px" id="nextRunLabel"></span>
+                    </div>
+                </div>
+
+                <!-- Quick Generate -->
+                <div class="auto-section">
+                    <h3><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Quick Generate</h3>
+                    <div class="auto-controls">
+                        <input type="text" id="genKeyword" placeholder="Keyword (optional)">
+                        <select id="genCategory">
+                            <option value="">Any Category</option>
+                        </select>
+                        <button class="btn-auto btn-generate" id="btnGenOne" onclick="generateOne()">
+                            <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Generate 1 Article
+                        </button>
+                    </div>
+                    <div class="auto-controls">
+                        <input type="number" id="bulkCount" value="5" min="1" max="50" style="width:80px">
+                        <button class="btn-auto btn-generate" id="btnBulk" onclick="generateBulk()">
+                            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Bulk Generate
+                        </button>
+                        <span style="color:var(--a-text-3);font-size:.75rem" id="genResult"></span>
+                    </div>
+                </div>
+
+                <!-- Template Engine -->
+                <div class="auto-section">
+                    <h3><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg> Programmatic SEO Templates</h3>
+                    <div class="template-cards" id="templateCards"></div>
+                    <div class="auto-controls">
+                        <input type="number" id="tplCount" value="10" min="1" max="100" style="width:80px">
+                        <button class="btn-auto btn-generate" id="btnTplGen" onclick="generateFromTemplate()">
+                            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Generate from Template
+                        </button>
+                        <span style="color:var(--a-text-3);font-size:.75rem" id="tplResult"></span>
+                    </div>
+                </div>
+
+                <!-- Keyword Discovery -->
+                <div class="auto-section">
+                    <h3><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Keyword Discovery</h3>
+                    <div class="auto-controls">
+                        <select id="kwCategory">
+                            <option value="">All Categories</option>
+                        </select>
+                        <button class="btn-auto btn-discover" id="btnDiscover" onclick="discoverKeywords()">
+                            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Discover Keywords
+                        </button>
+                    </div>
+                    <div class="keyword-list" id="keywordList">
+                        <div style="text-align:center;padding:30px;color:var(--a-text-3);font-size:.85rem">Click "Discover Keywords" to fetch trending keywords</div>
+                    </div>
+                </div>
+
+                <!-- Content Refresh -->
+                <div class="auto-section">
+                    <h3><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Content Refresh</h3>
+                    <div class="auto-controls">
+                        <button class="btn-auto btn-refresh" id="btnRefresh" onclick="refreshContent()">
+                            <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10"/></svg> Refresh All Stale Content
+                        </button>
+                        <button class="btn-auto btn-discover" onclick="relinkPosts()">
+                            <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Re-link All Posts
+                        </button>
+                    </div>
+                    <div class="stale-list" id="staleList">
+                        <div style="text-align:center;padding:20px;color:var(--a-text-3);font-size:.85rem">Loading stale content...</div>
+                    </div>
+                </div>
+
+                <!-- Activity Log -->
+                <div class="auto-section">
+                    <h3><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Activity Log</h3>
+                    <div class="log-list" id="logList">
+                        <div style="text-align:center;padding:30px;color:var(--a-text-3);font-size:.85rem">Loading...</div>
+                    </div>
+                </div>
+
+                <!-- Configuration -->
+                <div class="auto-section">
+                    <h3><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4"/></svg> Configuration</h3>
+                    <div class="config-grid" id="configGrid"></div>
+                    <div style="margin-top:14px">
+                        <button class="btn-auto btn-generate" onclick="saveConfig()">
+                            <svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg> Save Configuration
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/admin/js/admin.js"></script>
+    <script>
+        let selectedTemplate = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuth();
+            loadAll();
+        });
+
+        async function loadAll() {
+            await Promise.all([loadStatus(), loadTemplates(), loadCategories(), loadStale(), loadLog(), loadConfig()]);
+        }
+
+        // ─── Toast ──────────────────────────────────────────────────
+        function showToast(msg, type = 'success') {
+            const t = document.createElement('div');
+            t.className = `toast ${type}`;
+            t.textContent = msg;
+            document.body.appendChild(t);
+            setTimeout(() => t.remove(), 3500);
+        }
+
+        // ─── Status ─────────────────────────────────────────────────
+        async function loadStatus() {
+            try {
+                const res = await authFetch('/api/automation/status');
+                const data = await res.json();
+                const card = document.getElementById('statusCard');
+                const running = data.running;
+                card.className = `auto-stat ${running ? 'running' : 'stopped'}`;
+                document.getElementById('engineStatus').textContent = running ? '● RUNNING' : '○ STOPPED';
+                document.getElementById('engineStatus').style.color = running ? 'var(--a-green)' : 'var(--a-red)';
+                document.getElementById('engineSub').textContent = running && data.startedAt
+                    ? `Since ${new Date(data.startedAt).toLocaleString()}`
+                    : 'Start the engine to auto-generate articles';
+                document.getElementById('statToday').textContent = data.stats?.generatedToday || 0;
+                document.getElementById('statTodaySub').textContent = `Limit: ${data.config?.postsPerDay || 3}/day`;
+                document.getElementById('statWeek').textContent = data.stats?.generatedThisWeek || 0;
+                document.getElementById('statMonth').textContent = data.stats?.generatedThisMonth || 0;
+                document.getElementById('statTotalAuto').textContent = data.stats?.totalAutoGenerated || 0;
+                document.getElementById('statStale').textContent = data.stats?.staleContent || 0;
+                document.getElementById('btnStart').disabled = running;
+                document.getElementById('btnStop').disabled = !running;
+                document.getElementById('nextRunLabel').textContent = data.nextRun
+                    ? `Next run: ${new Date(data.nextRun).toLocaleString()}`
+                    : '';
+            } catch (e) { console.error('Status error:', e); }
+        }
+
+        // ─── Scheduler ──────────────────────────────────────────────
+        async function startScheduler() {
+            document.getElementById('btnStart').disabled = true;
+            document.getElementById('btnStart').innerHTML = '<span class="spinner"></span> Starting...';
+            try {
+                await authFetch('/api/automation/start', { method: 'POST' });
+                showToast('Automation engine started!');
+            } catch (e) { showToast('Failed to start engine', 'error'); }
+            setTimeout(loadAll, 1500);
+        }
+
+        async function stopScheduler() {
+            try {
+                await authFetch('/api/automation/stop', { method: 'POST' });
+                showToast('Automation engine stopped', 'info');
+            } catch (e) { showToast('Failed to stop engine', 'error'); }
+            loadAll();
+        }
+
+        // ─── Generate ───────────────────────────────────────────────
+        async function generateOne() {
+            const btn = document.getElementById('btnGenOne');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> Generating...';
+            const keyword = document.getElementById('genKeyword').value.trim();
+            const category = document.getElementById('genCategory').value;
+            try {
+                const res = await authFetch('/api/automation/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ keyword: keyword || undefined, category: category || undefined })
+                });
+                const data = await res.json();
+                if (data.generated?.length) {
+                    const a = data.generated[0];
+                    document.getElementById('genResult').innerHTML =
+                        `✓ Created: <a href="/post/${a.slug}" target="_blank" style="color:var(--a-accent)">${a.title}</a> (${a.wordCount} words, SEO: ${a.seoScore}%)`;
+                    showToast(`Article generated: ${a.title}`);
+                } else {
+                    showToast('No article generated', 'error');
+                }
+            } catch (e) { showToast('Generation failed: ' + e.message, 'error'); }
+            btn.disabled = false;
+            btn.innerHTML = '<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Generate 1 Article';
+            loadStatus();
+            loadLog();
+        }
+
+        async function generateBulk() {
+            const btn = document.getElementById('btnBulk');
+            const count = parseInt(document.getElementById('bulkCount').value) || 5;
+            btn.disabled = true;
+            btn.innerHTML = `<span class="spinner"></span> Generating ${count}...`;
+            try {
+                const category = document.getElementById('genCategory').value;
+                const res = await authFetch('/api/automation/generate-bulk', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ count, category: category || undefined })
+                });
+                const data = await res.json();
+                const genCount = data.generated?.length || 0;
+                document.getElementById('genResult').textContent = `✓ Generated ${genCount} articles`;
+                showToast(`${genCount} articles generated!`);
+            } catch (e) { showToast('Bulk generation failed', 'error'); }
+            btn.disabled = false;
+            btn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Bulk Generate';
+            loadStatus();
+            loadLog();
+        }
+
+        // ─── Templates ──────────────────────────────────────────────
+        async function loadTemplates() {
+            try {
+                const res = await authFetch('/api/automation/templates');
+                const templates = await res.json();
+                document.getElementById('templateCards').innerHTML = templates.map(t => `
+                    <div class="template-card ${selectedTemplate === t.id ? 'selected' : ''}" onclick="selectTemplate('${t.id}', this)">
+                        <div class="tc-name">${t.name}</div>
+                        <div class="tc-desc">${t.description}</div>
+                    </div>
+                `).join('');
+            } catch (e) { console.error('Templates error:', e); }
+        }
+
+        function selectTemplate(id, el) {
+            document.querySelectorAll('.template-card').forEach(c => c.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedTemplate = id;
+        }
+
+        async function generateFromTemplate() {
+            const btn = document.getElementById('btnTplGen');
+            const count = parseInt(document.getElementById('tplCount').value) || 10;
+            btn.disabled = true;
+            btn.innerHTML = `<span class="spinner"></span> Generating ${count}...`;
+            try {
+                const res = await authFetch('/api/automation/templates/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ template: selectedTemplate || undefined, count })
+                });
+                const data = await res.json();
+                const genCount = data.generated?.length || 0;
+                document.getElementById('tplResult').textContent = `✓ Generated ${genCount} pages from template`;
+                showToast(`${genCount} template pages generated!`);
+            } catch (e) { showToast('Template generation failed', 'error'); }
+            btn.disabled = false;
+            btn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Generate from Template';
+            loadStatus();
+            loadLog();
+        }
+
+        // ─── Keywords ───────────────────────────────────────────────
+        async function loadCategories() {
+            try {
+                const res = await authFetch('/api/categories');
+                const cats = await res.json();
+                const options = '<option value="">Any Category</option>' + cats.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+                document.getElementById('genCategory').innerHTML = options;
+                document.getElementById('kwCategory').innerHTML = '<option value="">All Categories</option>' + cats.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+            } catch (e) {}
+        }
+
+        async function discoverKeywords() {
+            const btn = document.getElementById('btnDiscover');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> Discovering...';
+            try {
+                const category = document.getElementById('kwCategory').value;
+                const url = `/api/automation/keywords?count=50${category ? '&category=' + encodeURIComponent(category) : ''}`;
+                const res = await fetch(url);
+                const data = await res.json();
+                const keywords = data.keywords || [];
+                document.getElementById('keywordList').innerHTML = keywords.length
+                    ? keywords.map(kw => `
+                        <div class="keyword-item">
+                            <span class="kw-text">${kw.keyword}</span>
+                            <span class="kw-cat">${kw.category || ''}</span>
+                            <span class="kw-score">${kw.score || 0}</span>
+                        </div>
+                    `).join('')
+                    : '<div style="text-align:center;padding:20px;color:var(--a-text-3)">No unused keywords found. Try broadening your search.</div>';
+                showToast(`Discovered ${keywords.length} keywords`);
+            } catch (e) { showToast('Keyword discovery failed', 'error'); }
+            btn.disabled = false;
+            btn.innerHTML = '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Discover Keywords';
+        }
+
+        // ─── Stale Content ──────────────────────────────────────────
+        async function loadStale() {
+            try {
+                const res = await authFetch('/api/automation/stale');
+                const stale = await res.json();
+                document.getElementById('staleList').innerHTML = stale.length
+                    ? stale.map(s => `
+                        <div class="stale-item">
+                            <span class="stale-title">${s.title}</span>
+                            <span class="stale-days">${s.daysSinceUpdate} days old</span>
+                            <button class="btn-auto btn-refresh" style="padding:4px 10px;font-size:.72rem" onclick="refreshSingle('${s.id}')">Refresh</button>
+                        </div>
+                    `).join('')
+                    : '<div style="text-align:center;padding:20px;color:var(--a-green);font-size:.85rem">✓ All content is fresh!</div>';
+            } catch (e) { console.error('Stale error:', e); }
+        }
+
+        async function refreshContent() {
+            const btn = document.getElementById('btnRefresh');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> Refreshing...';
+            try {
+                const res = await authFetch('/api/automation/refresh', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
+                const data = await res.json();
+                showToast(`Refreshed ${data.refreshed || 0} posts`);
+            } catch (e) { showToast('Refresh failed', 'error'); }
+            btn.disabled = false;
+            btn.innerHTML = '<svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10"/></svg> Refresh All Stale Content';
+            loadStale();
+            loadLog();
+        }
+
+        async function refreshSingle(postId) {
+            try {
+                await authFetch('/api/automation/refresh', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ postId })
+                });
+                showToast('Post refreshed!');
+                loadStale();
+            } catch (e) { showToast('Refresh failed', 'error'); }
+        }
+
+        async function relinkPosts() {
+            try {
+                const res = await authFetch('/api/automation/relink', { method: 'POST' });
+                const data = await res.json();
+                showToast(`Re-linked ${data.updatedCount || 0} posts`);
+            } catch (e) { showToast('Relink failed', 'error'); }
+        }
+
+        // ─── Log ────────────────────────────────────────────────────
+        async function loadLog() {
+            try {
+                const res = await authFetch('/api/automation/log?limit=30');
+                const log = await res.json();
+                document.getElementById('logList').innerHTML = log.length
+                    ? log.map(l => `
+                        <div class="log-item">
+                            <span class="log-time">${new Date(l.timestamp).toLocaleString()}</span>
+                            <span class="log-action ${l.action}">${l.action}</span>
+                            <span class="log-detail">${l.title || l.postTitle || l.keyword || l.reason || l.error || (l.refreshed !== undefined ? l.refreshed + ' refreshed' : '')}</span>
+                        </div>
+                    `).join('')
+                    : '<div style="text-align:center;padding:30px;color:var(--a-text-3);font-size:.85rem">No activity yet. Generate some articles to see the log.</div>';
+            } catch (e) { console.error('Log error:', e); }
+        }
+
+        // ─── Config ─────────────────────────────────────────────────
+        let currentConfig = {};
+        async function loadConfig() {
+            try {
+                const res = await authFetch('/api/automation/config');
+                currentConfig = await res.json();
+                document.getElementById('configGrid').innerHTML = `
+                    <div class="config-item">
+                        <label>Posts Per Day</label>
+                        <input type="number" id="cfgPostsPerDay" value="${currentConfig.postsPerDay || 3}" min="1" max="20">
+                    </div>
+                    <div class="config-item">
+                        <label>Publish Interval (hours)</label>
+                        <input type="number" id="cfgInterval" value="${currentConfig.publishIntervalHours || 8}" min="1" max="24">
+                    </div>
+                    <div class="config-item">
+                        <label>Min Word Count</label>
+                        <input type="number" id="cfgMinWords" value="${currentConfig.minWordCount || 1500}" min="500" max="5000">
+                    </div>
+                    <div class="config-item">
+                        <label>Max Word Count</label>
+                        <input type="number" id="cfgMaxWords" value="${currentConfig.maxWordCount || 3000}" min="1000" max="10000">
+                    </div>
+                    <div class="config-item">
+                        <label>Internal Links Per Post</label>
+                        <input type="number" id="cfgLinks" value="${currentConfig.internalLinksPerPost || 7}" min="0" max="20">
+                    </div>
+                    <div class="config-item">
+                        <label>Content Refresh Interval (days)</label>
+                        <input type="number" id="cfgRefreshDays" value="${currentConfig.refreshIntervalDays || 90}" min="30" max="365">
+                    </div>
+                `;
+            } catch (e) { console.error('Config error:', e); }
+        }
+
+        async function saveConfig() {
+            const config = {
+                ...currentConfig,
+                postsPerDay: parseInt(document.getElementById('cfgPostsPerDay').value),
+                publishIntervalHours: parseInt(document.getElementById('cfgInterval').value),
+                minWordCount: parseInt(document.getElementById('cfgMinWords').value),
+                maxWordCount: parseInt(document.getElementById('cfgMaxWords').value),
+                internalLinksPerPost: parseInt(document.getElementById('cfgLinks').value),
+                refreshIntervalDays: parseInt(document.getElementById('cfgRefreshDays').value)
+            };
+            try {
+                await authFetch('/api/automation/config', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(config)
+                });
+                showToast('Configuration saved!');
+                loadConfig();
+            } catch (e) { showToast('Failed to save config', 'error'); }
+        }
+
+        // Auto-refresh status every 30 seconds
+        setInterval(loadStatus, 30000);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="/favicon.png?v=1773767918">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login — HedwigPost</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="/admin/css/admin.css">
+</head>
+
+<body>
+    <div class="login-page">
+        <div class="login-card">
+            <img src="/img/logo.png" alt="HedwigPost" class="logo-icon" width="50" height="50">
+            <h1>HedwigPost Admin</h1>
+            <p>Enter your password to access the command center</p>
+            <div class="login-error" id="loginError">Invalid password. Please try again.</div>
+            <form onsubmit="return handleLogin(event)">
+                <input type="password" id="loginPassword" placeholder="Admin password" required autofocus>
+                <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4" />
+                    </svg>
+                    Sign In
+                </button>
+            </form>
+
+
+        </div>
+    </div>
+
+    <script>
+        // Only redirect if the stored token is actually valid on the server
+        (async function() {
+            const token = localStorage.getItem('HedwigPost-admin-token');
+            if (token) {
+                try {
+                    const res = await fetch('/api/auth/verify', {
+                        headers: { 'Authorization': 'Bearer ' + token }
+                    });
+                    if (res.ok) {
+                        window.location.href = '/admin/dashboard.html';
+                        return;
+                    }
+                } catch(e) {}
+                // Token is invalid or expired — clear it
+                localStorage.removeItem('HedwigPost-admin-token');
+            }
+        })();
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const password = document.getElementById('loginPassword').value;
+            try {
+                const res = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    localStorage.setItem('HedwigPost-admin-token', data.token);
+                    window.location.href = '/admin/dashboard.html';
+                } else {
+                    document.getElementById('loginError').style.display = 'block';
+                }
+            } catch (err) {
+                document.getElementById('loginError').textContent = 'Connection error. Please try again.';
+                document.getElementById('loginError').style.display = 'block';
+            }
+            return false;
+        }
+
+        const saved = localStorage.getItem('HedwigPost-theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', saved);
+    </script>
+</body>
+
+</html>
