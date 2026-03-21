@@ -20,6 +20,15 @@ const JsonFileSchema = new mongoose.Schema({
 });
 const JsonFile = mongoose.model('JsonFile', JsonFileSchema);
 
+// MongoDB Image Storage Schema
+const ImageSchema = new mongoose.Schema({
+    filename: { type: String, unique: true },
+    data: Buffer,
+    mimetype: String,
+    uploadedAt: { type: Date, default: Date.now }
+});
+const MongoImage = mongoose.model('MongoImage', ImageSchema);
+
 // ==================== SECURITY: Active Admin Tokens (in-memory store) ====================
 const activeTokens = new Map(); // token -> { createdAt, expiresAt }
 const TOKEN_EXPIRY_MS = 24 * 60 * 60 * 1000; // 24 hours
@@ -161,7 +170,20 @@ app.get(/^\/(?!admin|api|uploads).*\.html$/, (req, res, next) => {
 
 // Static files (CSS, JS, images, etc. — HTML handled above)
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// Dynamic GridFS-style image serving from MongoDB
+app.get('/uploads/:filename', async (req, res) => {
+    try {
+        const img = await MongoImage.findOne({ filename: req.params.filename });
+        if (!img) {
+            const localPath = path.join(__dirname, 'uploads', req.params.filename);
+            if (fs.existsSync(localPath)) return res.sendFile(localPath);
+            return res.status(404).send('Image not found');
+        }
+        res.set('Content-Type', img.mimetype);
+        res.set('Cache-Control', 'public, max-age=31536000');
+        res.send(img.data);
+    } catch(e) { res.status(500).send('Error'); }
+});
 
 // Ensure directories exist
 ['data', 'uploads'].forEach(dir => {
@@ -169,14 +191,8 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
     if (!fs.existsSync(dirPath)) fs.mkdirSync(dirPath, { recursive: true });
 });
 
-// Image upload config
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => cb(null, path.join(__dirname, 'uploads')),
-    filename: (req, file, cb) => {
-        const uniqueName = Date.now() + '-' + Math.round(Math.random() * 1E9) + path.extname(file.originalname);
-        cb(null, uniqueName);
-    }
-});
+// Image upload config (Memory Storage to support Vercel Serverless)
+const storage = multer.memoryStorage();
 const upload = multer({
     storage,
     limits: { fileSize: 5 * 1024 * 1024 },
@@ -362,13 +378,26 @@ app.put('/api/settings', requireAuth, (req, res) => {
 });
 
 // --- IMAGE UPLOAD ---
-app.post('/api/upload', requireAuth, upload.single('image'), (req, res) => {
+app.post('/api/upload', requireAuth, upload.single('image'), async (req, res) => {
     if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
-    res.json({ url: `/uploads/${req.file.filename}`, filename: req.file.filename });
+    try {
+        const uniqueName = Date.now() + '-' + Math.round(Math.random() * 1E9) + path.extname(req.file.originalname);
+        await MongoImage.create({
+            filename: uniqueName,
+            data: req.file.buffer,
+            mimetype: req.file.mimetype
+        });
+        res.json({ url: `/uploads/${uniqueName}`, filename: uniqueName });
+    } catch(err) {
+        console.error('Image Upload Error:', err);
+        res.status(500).json({ error: 'Failed to save image to cloud' });
+    }
 });
 
 // --- SITEMAP (enhanced: categories, tags, static pages) ---
-function updateSitemap() {
+function updateSitemap() {} // No-op for legacy calls
+
+app.get('/sitemap.xml', (req, res) => {
     const posts = readJSON('posts.json').filter(p => p.status === 'published');
     const cats = readJSON('categories.json');
     const settings = readSettings();
@@ -383,7 +412,7 @@ function updateSitemap() {
     cats.forEach(c => {
         xml += `  <url><loc>${baseUrl}/category/${c.slug}</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>\n`;
     });
-    // Tag pages (unique tags from posts)
+    // Tag pages
     const allTags = new Set();
     posts.forEach(p => (p.tags || []).forEach(t => allTags.add(t)));
     allTags.forEach(t => {
@@ -401,13 +430,13 @@ function updateSitemap() {
         xml += `  <url><loc>${baseUrl}/deals/${dc.slug}</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>\n`;
     });
     xml += '</urlset>';
-    fs.writeFileSync(path.join(__dirname, 'public', 'sitemap.xml'), xml);
-    // Also regenerate RSS
-    updateRSS();
-}
+    res.type('application/xml').send(xml);
+});
 
 // --- RSS FEED (auto-generated) ---
-function updateRSS() {
+function updateRSS() {}
+
+app.get('/rss.xml', (req, res) => {
     const posts = readJSON('posts.json').filter(p => p.status === 'published');
     const settings = readSettings();
     const baseUrl = settings.siteUrl || 'https://HedwigPost.com';
@@ -437,13 +466,7 @@ function updateRSS() {
     });
 
     rss += `</channel>\n</rss>`;
-    fs.writeFileSync(path.join(__dirname, 'public', 'rss.xml'), rss);
-}
-
-app.get('/rss.xml', (req, res) => {
-    const rssPath = path.join(__dirname, 'public', 'rss.xml');
-    if (!fs.existsSync(rssPath)) updateRSS();
-    res.type('application/rss+xml').sendFile(rssPath);
+    res.type('application/rss+xml').send(rss);
 });
 
 app.get('/feed', (req, res) => res.redirect(301, '/rss.xml'));
@@ -1077,51 +1100,64 @@ app.use((req, res) => {
 });
 
 // Boot Sequence with MongoDB Cloud Sync Restore
-async function initDatabaseAndStartServer() {
-    try {
-        console.log('Connecting to MongoDB Cloud Storage...');
-        await mongoose.connect(MONGODB_URI);
-        console.log('MongoDB Connected ✅');
+let isDBReady = false;
+let dbInitPromise = null;
 
-        // Restore all JSON files from Cloud to ephemeral disk
-        const dataDir = path.join(__dirname, 'data');
-        if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
-        
-        const allFiles = await JsonFile.find({});
-        for (let fileDoc of allFiles) {
-            fs.writeFileSync(path.join(dataDir, fileDoc.filename), JSON.stringify(fileDoc.data, null, 2));
-        }
-        if (allFiles.length > 0) console.log(`Restored ${allFiles.length} files from MongoDB ✅`);
+async function awaitDatabaseSync() {
+    if (isDBReady) return;
+    if (dbInitPromise) return dbInitPromise;
+    
+    dbInitPromise = (async () => {
+        try {
+            console.log('Connecting to MongoDB Cloud Storage...');
+            await mongoose.connect(MONGODB_URI);
+            console.log('MongoDB Connected ✅');
 
-        // Upload any local files that don't exist in Cloud yet (initial setup push)
-        const localFiles = fs.readdirSync(dataDir).filter(f => f.endsWith('.json'));
-        let uploaded = 0;
-        for (let file of localFiles) {
-            const exists = allFiles.find(f => f.filename === file);
-            if (!exists) {
-                const localData = JSON.parse(fs.readFileSync(path.join(dataDir, file), 'utf8'));
-                await JsonFile.updateOne({ filename: file }, { data: localData }, { upsert: true });
-                uploaded++;
+            // Restore all JSON files from Cloud to ephemeral disk
+            if (!fs.existsSync(global.dataDir)) fs.mkdirSync(global.dataDir, { recursive: true });
+            
+            const allFiles = await JsonFile.find({});
+            for (let fileDoc of allFiles) {
+                fs.writeFileSync(path.join(global.dataDir, fileDoc.filename), JSON.stringify(fileDoc.data, null, 2));
             }
-        }
-        if (uploaded > 0) console.log(`Uploaded ${uploaded} local files to MongoDB ✅`);
+            if (allFiles.length > 0) console.log(`Restored ${allFiles.length} files from MongoDB ✅`);
 
-        // Start Express
-        app.listen(PORT, () => {
-            console.log(`\n⚡ HedwigPost is running at http://localhost:${PORT}`);
-            console.log(`📝 Admin Panel: http://localhost:${PORT}/admin/`);
-            console.log(`📰 Blog: http://localhost:${PORT}`);
-            console.log(`🛒 Deals: http://localhost:${PORT}/deals\n`);
-            try { updateSitemap(); } catch (e) { console.log('Sitemap initial skip'); }
-        });
-    } catch (err) {
-        console.error('Failed to initialize MongoDB:', err);
-        // Fallback to local mode if mongo fails
-        app.listen(PORT, () => {
-            console.log(`\n⚠️ Running in Local Mode (MongoDB Failed: http://localhost:${PORT})`);
-        });
-    }
+            // Upload any local files that don't exist in Cloud yet (initial setup push)
+            const localFiles = fs.readdirSync(global.dataDir).filter(f => f.endsWith('.json'));
+            let uploaded = 0;
+            for (let file of localFiles) {
+                const exists = allFiles.find(f => f.filename === file);
+                if (!exists) {
+                    const localData = JSON.parse(fs.readFileSync(path.join(global.dataDir, file), 'utf8'));
+                    await JsonFile.updateOne({ filename: file }, { data: localData }, { upsert: true });
+                    uploaded++;
+                }
+            }
+            if (uploaded > 0) console.log(`Uploaded ${uploaded} local files to MongoDB ✅`);
+            
+            isDBReady = true;
+        } catch (err) {
+            console.error('Failed to initialize MongoDB:', err);
+            isDBReady = true; // Fallback to local mode if mongo fails
+        }
+    })();
+    return dbInitPromise;
 }
 
-initDatabaseAndStartServer();
+if (!IS_VERCEL) {
+    app.listen(PORT, async () => {
+        await awaitDatabaseSync();
+        console.log(`\n⚡ HedwigPost is running at http://localhost:${PORT}`);
+        console.log(`📝 Admin Panel: http://localhost:${PORT}/admin/`);
+        console.log(`📰 Blog: http://localhost:${PORT}`);
+        console.log(`🛒 Deals: http://localhost:${PORT}/deals\n`);
+        try { updateSitemap(); } catch (e) { console.log('Sitemap initial skip'); }
+    });
+}
+
+// Vercel Serverless Export Wrapper
+module.exports = async (req, res) => {
+    await awaitDatabaseSync();
+    return app(req, res);
+};
 
