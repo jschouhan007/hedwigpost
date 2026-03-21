@@ -1379,3 +1379,88 @@ document.addEventListener('DOMContentLoaded', () => {
         loadSitemapPage();
     }
 });
+
+// ==================== MOBILE IMAGE LONG PRESS PREVIEW ====================
+let longPressTimer;
+let previewOverlay = null;
+
+document.addEventListener('touchstart', (e) => {
+    if (e.target.tagName === 'IMG' && window.innerWidth <= 980) {
+        e.target.style.webkitTouchCallout = 'none'; // Prevent iOS default menu
+        
+        longPressTimer = setTimeout(() => {
+            showImagePreview(e.target.src);
+            e.target.dataset.preventClick = 'true';
+        }, 400);
+    }
+}, { passive: true });
+
+document.addEventListener('touchmove', () => {
+    clearTimeout(longPressTimer);
+});
+
+document.addEventListener('touchend', (e) => {
+    clearTimeout(longPressTimer);
+    if (previewOverlay) {
+        removeImagePreview();
+        // The subsequent click event will be blocked by the click listener below
+    }
+});
+
+document.addEventListener('touchcancel', () => {
+    clearTimeout(longPressTimer);
+    removeImagePreview();
+});
+
+// Block the click navigation if we just finished a long-press preview
+document.addEventListener('click', (e) => {
+    if (e.target.dataset && e.target.dataset.preventClick) {
+        e.preventDefault();
+        e.stopPropagation();
+        delete e.target.dataset.preventClick;
+    }
+}, true);
+
+// Block the default browser context menu globally for images we just previewed
+document.addEventListener('contextmenu', (e) => {
+    if (e.target.tagName === 'IMG' && e.target.dataset && e.target.dataset.preventClick) {
+        e.preventDefault();
+    }
+});
+
+function showImagePreview(src) {
+    if (previewOverlay) return;
+    previewOverlay = document.createElement('div');
+    previewOverlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:99999;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);transition:opacity 0.2s;opacity:0;';
+    
+    const img = document.createElement('img');
+    img.src = src;
+    img.style.cssText = 'max-width:96vw;max-height:92vh;object-fit:contain;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.6);transform:scale(0.95);transition:transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);';
+    
+    previewOverlay.appendChild(img);
+    document.body.appendChild(previewOverlay);
+    
+    requestAnimationFrame(() => {
+        previewOverlay.style.opacity = '1';
+        img.style.transform = 'scale(1)';
+    });
+    
+    if (navigator.vibrate) navigator.vibrate(50); // Haptic feedback
+}
+
+function removeImagePreview() {
+    if (previewOverlay) {
+        previewOverlay.style.opacity = '0';
+        const img = previewOverlay.querySelector('img');
+        if (img) img.style.transform = 'scale(0.95)';
+        
+        const overlayToRemove = previewOverlay;
+        previewOverlay = null;
+        
+        setTimeout(() => {
+            if (overlayToRemove.parentNode) {
+                overlayToRemove.parentNode.removeChild(overlayToRemove);
+            }
+        }, 200);
+    }
+}
