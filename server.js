@@ -31,8 +31,7 @@ const ImageSchema = new mongoose.Schema({
 });
 const MongoImage = mongoose.model('MongoImage', ImageSchema);
 
-// ==================== SECURITY: Active Admin Tokens (in-memory store) ====================
-const activeTokens = new Map(); // token -> { createdAt, expiresAt }
+// ==================== SECURITY: Active Admin Tokens (Persistent Store) ====================
 const TOKEN_EXPIRY_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 function generateSecureToken() {
@@ -40,10 +39,16 @@ function generateSecureToken() {
 }
 
 function isValidToken(token) {
-    if (!token || !activeTokens.has(token)) return false;
-    const session = activeTokens.get(token);
-    if (Date.now() > session.expiresAt) {
-        activeTokens.delete(token);
+    if (!token) return false;
+    let sessions = readJSON('sessions.json');
+    if (!Array.isArray(sessions)) sessions = [];
+    
+    const sessionIndex = sessions.findIndex(s => s.token === token);
+    if (sessionIndex === -1) return false;
+    
+    if (Date.now() > sessions[sessionIndex].expiresAt) {
+        sessions.splice(sessionIndex, 1);
+        writeJSON('sessions.json', sessions);
         return false;
     }
     return true;
@@ -699,9 +704,15 @@ app.post('/api/auth/login', loginLimiter, (req, res) => {
     const adminPass = settings.adminPassword || 'nb123';
     if (req.body.password === adminPass) {
         const token = generateSecureToken();
-        activeTokens.set(token, { createdAt: Date.now(), expiresAt: Date.now() + TOKEN_EXPIRY_MS });
+        
+        let sessions = readJSON('sessions.json');
+        if (!Array.isArray(sessions)) sessions = [];
+        sessions.push({ token, createdAt: Date.now(), expiresAt: Date.now() + TOKEN_EXPIRY_MS });
+        
         // Clean up expired tokens periodically
-        for (const [t, s] of activeTokens) { if (Date.now() > s.expiresAt) activeTokens.delete(t); }
+        sessions = sessions.filter(s => Date.now() <= s.expiresAt);
+        writeJSON('sessions.json', sessions);
+        
         res.json({ success: true, token });
     } else {
         // Generic error message — never reveal if username/password specifically is wrong
