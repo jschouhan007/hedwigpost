@@ -10,6 +10,8 @@ const mongoose = require('mongoose');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const IS_VERCEL = process.env.VERCEL || process.env.VERCEL_ENV;
+global.dataDir = IS_VERCEL ? path.join('/tmp', 'data') : path.join(__dirname, 'data');
 
 // MongoDB Cloud Sync Setup (Hybrid Storage)
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://admin:nb123@cluster0.heyciqo.mongodb.net/hedwigpost?retryWrites=true&w=majority&appName=Cluster0';
@@ -185,11 +187,13 @@ app.get('/uploads/:filename', async (req, res) => {
     } catch(e) { res.status(500).send('Error'); }
 });
 
-// Ensure directories exist
-['data', 'uploads'].forEach(dir => {
-    const dirPath = path.join(__dirname, dir);
-    if (!fs.existsSync(dirPath)) fs.mkdirSync(dirPath, { recursive: true });
-});
+// Ensure directories exist (Only locally, skip for Vercel)
+if (!IS_VERCEL) {
+    ['data', 'uploads'].forEach(dir => {
+        const dirPath = path.join(__dirname, dir);
+        if (!fs.existsSync(dirPath)) fs.mkdirSync(dirPath, { recursive: true });
+    });
+}
 
 // Image upload config (Memory Storage to support Vercel Serverless)
 const storage = multer.memoryStorage();
@@ -210,16 +214,16 @@ const upload = multer({
 
 // Helper: read/write JSON
 function readJSON(filename) {
-    const filePath = path.join(__dirname, 'data', filename);
+    const filePath = path.join(global.dataDir, filename);
     if (!fs.existsSync(filePath)) return [];
     return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 }
 function writeJSON(filename, data) {
-    fs.writeFileSync(path.join(__dirname, 'data', filename), JSON.stringify(data, null, 2));
+    fs.writeFileSync(path.join(global.dataDir, filename), JSON.stringify(data, null, 2));
     JsonFile.updateOne({ filename }, { $set: { data, updatedAt: new Date() } }, { upsert: true }).catch(err => console.error(`[Mongo Sync Failed] ${filename}:`, err));
 }
 function readSettings() {
-    const filePath = path.join(__dirname, 'data', 'settings.json');
+    const filePath = path.join(global.dataDir, 'settings.json');
     if (!fs.existsSync(filePath)) return {};
     return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 }
