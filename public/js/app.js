@@ -1422,8 +1422,8 @@ document.addEventListener('click', (e) => {
 }, true);
 // Block context menu ONLY on thumbnail images (not on the card text)
 document.addEventListener('contextmenu', (e) => {
-    if (window.innerWidth <= 980 && e.target && e.target.tagName === 'IMG') {
-        if (!e.target.closest('#custom-preview-overlay')) {
+    if (window.innerWidth <= 980) {
+        if (previewOverlay || (e.target && e.target.tagName === 'IMG')) {
             e.preventDefault();
         }
     }
