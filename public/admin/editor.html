@@ -70,6 +70,7 @@
                 <h1 id="editorTitle">✏️ New Post</h1>
                 <div style="display:flex;gap:10px;align-items:center;">
                     <span class="autosave-indicator" id="autosaveStatus"><span class="dot"></span> Auto-saved</span>
+                    <button class="btn btn-ghost" onclick="openImportDoc()" title="Import from document">📄 Import Doc</button>
                     <button class="btn btn-ghost" onclick="saveDraft()">💾 Save Draft</button>
                     <button class="btn btn-primary" onclick="publishPost()">🚀 Publish</button>
                     <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">🌙</button>
@@ -412,6 +413,33 @@
                 <button class="btn btn-primary" id="setFeaturedBtn" onclick="setFeaturedImage()"
                     style="display:none;">Set Featured Image</button>
                 <button class="btn btn-ghost" onclick="closeFeaturedImageModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import Document Modal -->
+    <div class="image-upload-modal" id="importDocModal">
+        <div class="image-upload-box" style="max-width:720px;width:90vw;">
+            <h3 style="margin-bottom:4px;">📄 Import Document</h3>
+            <p style="font-size:.78rem;color:var(--text-2);margin-bottom:14px;">Paste any document content below — plain text, Markdown, or HTML. We'll auto-extract the title, body, excerpt, tags, and meta description.</p>
+            <textarea id="importDocText" placeholder="Paste your full document content here...
+Supports:
+• Plain text (paragraphs separated by blank lines)
+• Markdown (# headings, **bold**, *italic*, - lists, ```code```)
+• HTML (directly pasted HTML markup)
+
+The first heading or first line becomes the post title.
+Everything else becomes the post body." style="width:100%;min-height:320px;padding:14px;border:1px solid var(--a-border);border-radius:10px;background:var(--a-bg-3);color:var(--a-text-0);font-size:.88rem;font-family:'JetBrains Mono',monospace;line-height:1.6;resize:vertical;outline:none;"></textarea>
+            <div style="display:flex;gap:10px;margin-top:14px;align-items:center;">
+                <select id="importDocFormat" style="padding:8px 12px;border:1px solid var(--a-border);border-radius:8px;background:var(--a-bg-3);color:var(--a-text-0);font-size:.82rem;">
+                    <option value="auto">Auto-detect format</option>
+                    <option value="markdown">Markdown</option>
+                    <option value="html">HTML</option>
+                    <option value="text">Plain Text</option>
+                </select>
+                <div style="flex:1;"></div>
+                <button class="btn btn-ghost" onclick="closeImportDoc()">Cancel</button>
+                <button class="btn btn-primary" onclick="importDocument()">🚀 Import & Create Post</button>
             </div>
         </div>
     </div>
@@ -1615,6 +1643,166 @@
             const el = document.getElementById('autosaveStatus');
             if (el) el.innerHTML = `<span class="dot"></span> Saved at ${new Date().toLocaleTimeString()}`;
         }
+        // ===================== IMPORT DOCUMENT =====================
+        function openImportDoc() {
+            document.getElementById('importDocModal').classList.add('active');
+            document.getElementById('importDocText').value = '';
+            document.getElementById('importDocText').focus();
+        }
+
+        function closeImportDoc() {
+            document.getElementById('importDocModal').classList.remove('active');
+        }
+
+        function detectFormat(text) {
+            if (/<(h[1-6]|p|div|ul|ol|table|blockquote|pre|img|a )\b/i.test(text)) return 'html';
+            if (/^#{1,6}\s|\*\*[^*]+\*\*|^[-*]\s|^\d+\.\s|^```/m.test(text)) return 'markdown';
+            return 'text';
+        }
+
+        function markdownToHtml(md) {
+            let html = md;
+            // Code blocks first (```)
+            html = html.replace(/```([\s\S]*?)```/g, (_, code) => '<pre><code>' + code.trim().replace(/</g,'&lt;') + '</code></pre>');
+            // Inline code
+            html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+            // Headings
+            html = html.replace(/^######\s+(.+)$/gm, '<h6>$1</h6>');
+            html = html.replace(/^#####\s+(.+)$/gm, '<h5>$1</h5>');
+            html = html.replace(/^####\s+(.+)$/gm, '<h4>$1</h4>');
+            html = html.replace(/^###\s+(.+)$/gm, '<h3>$1</h3>');
+            html = html.replace(/^##\s+(.+)$/gm, '<h2>$1</h2>');
+            html = html.replace(/^#\s+(.+)$/gm, '<h1>$1</h1>');
+            // Bold and italic
+            html = html.replace(/\*\*\*([^*]+)\*\*\*/g, '<strong><em>$1</em></strong>');
+            html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+            html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+            // Images
+            html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" style="max-width:100%;border-radius:8px;margin:12px 0;">');
+            // Links
+            html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+            // Blockquotes
+            html = html.replace(/^>\s+(.+)$/gm, '<blockquote>$1</blockquote>');
+            // Unordered lists
+            html = html.replace(/^[-*]\s+(.+)$/gm, '<li>$1</li>');
+            html = html.replace(/(<li>.*<\/li>\n?)+/g, (match) => '<ul>' + match + '</ul>');
+            // Ordered lists
+            html = html.replace(/^\d+\.\s+(.+)$/gm, '<li>$1</li>');
+            // Horizontal rules
+            html = html.replace(/^---+$/gm, '<hr>');
+            // Paragraphs: lines not already wrapped in tags
+            const lines = html.split('\n');
+            const result = [];
+            let inBlock = false;
+            for (let line of lines) {
+                const trimmed = line.trim();
+                if (!trimmed) { result.push(''); continue; }
+                if (/^<(h[1-6]|ul|ol|li|blockquote|pre|hr|div|table|img)/.test(trimmed) || /<\/(pre|ul|ol|table|blockquote)>$/.test(trimmed)) {
+                    result.push(line);
+                } else if (!/</.test(trimmed)) {
+                    result.push('<p>' + trimmed + '</p>');
+                } else {
+                    result.push(line);
+                }
+            }
+            return result.join('\n');
+        }
+
+        function plainTextToHtml(text) {
+            // Split by blank lines into paragraphs
+            return text.split(/\n\s*\n/).map(p => {
+                const trimmed = p.trim();
+                if (!trimmed) return '';
+                return '<p>' + trimmed.replace(/\n/g, '<br>') + '</p>';
+            }).filter(Boolean).join('\n');
+        }
+
+        function extractTitle(html) {
+            // Try to find first heading
+            const headingMatch = html.match(/<h[1-2][^>]*>([^<]+)<\/h[1-2]>/i);
+            if (headingMatch) {
+                // Remove the heading from content
+                const cleanHtml = html.replace(headingMatch[0], '').trim();
+                return { title: headingMatch[1].trim(), content: cleanHtml };
+            }
+            // Fallback: first line of text
+            const textMatch = html.match(/<p>([^<]+)<\/p>/);
+            if (textMatch && textMatch[1].length < 120) {
+                const cleanHtml = html.replace(textMatch[0], '').trim();
+                return { title: textMatch[1].trim(), content: cleanHtml };
+            }
+            return { title: 'Untitled Post', content: html };
+        }
+
+        function autoExtractTags(text) {
+            const lc = text.toLowerCase();
+            const techKeywords = [
+                'javascript', 'python', 'react', 'node', 'ai', 'machine learning',
+                'chatgpt', 'cybersecurity', 'career', 'resume', 'interview',
+                'web development', 'api', 'css', 'html', 'docker', 'cloud',
+                'devops', 'data science', 'blockchain', 'freelancing', 'remote work',
+                'github', 'linux', 'typescript', 'nextjs', 'database', 'sql',
+                'security', 'privacy', 'vpn', 'hacking', 'salary', 'job',
+                'tutorial', 'guide', 'review', 'comparison', 'tips'
+            ];
+            return techKeywords.filter(kw => lc.includes(kw)).slice(0, 8);
+        }
+
+        function importDocument() {
+            const raw = document.getElementById('importDocText').value.trim();
+            if (!raw) { showToast('Please paste document content first', 'error'); return; }
+
+            let format = document.getElementById('importDocFormat').value;
+            if (format === 'auto') format = detectFormat(raw);
+
+            // Convert to HTML
+            let html;
+            if (format === 'html') html = raw;
+            else if (format === 'markdown') html = markdownToHtml(raw);
+            else html = plainTextToHtml(raw);
+
+            // Extract title and body
+            const { title, content } = extractTitle(html);
+
+            // Populate editor fields
+            document.getElementById('postTitle').value = title;
+            document.getElementById('editorContent').innerHTML = content;
+            document.getElementById('postSlug').value = slugify(title);
+
+            // Auto-generate excerpt (first 160 chars of plain text)
+            const plainText = content.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+            const excerpt = plainText.substring(0, 160).trim() + (plainText.length > 160 ? '...' : '');
+            document.getElementById('postExcerpt').value = excerpt;
+
+            // Auto-generate meta title and description
+            document.getElementById('metaTitle').value = title + ' | HedwigPost';
+            document.getElementById('metaDescription').value = excerpt;
+
+            // Auto-extract tags
+            const autoTags = autoExtractTags(plainText);
+            if (autoTags.length) {
+                tags = [...new Set([...tags, ...autoTags])];
+                renderTags();
+            }
+
+            // Auto-detect category
+            const catSelect = document.getElementById('postCategory');
+            const lc = plainText.toLowerCase();
+            if (/\b(career|job|resume|interview|salary|hiring|freelanc)\b/.test(lc)) catSelect.value = 'Career & Jobs';
+            else if (/\b(security|hack|privacy|vpn|malware|phishing)\b/.test(lc)) catSelect.value = 'Cybersecurity';
+            else if (/\b(react|javascript|python|css|html|api|frontend|backend|framework)\b/.test(lc)) catSelect.value = 'Web Development';
+            else if (/\b(review|comparison|vs |best |top \d)\b/.test(lc)) catSelect.value = 'Tech Reviews';
+            else if (/\b(how to|guide|tutorial|step)\b/.test(lc)) catSelect.value = 'How-To Guides';
+            else if (/\b(ai|artificial|machine learning|chatgpt|llm|gpt)\b/.test(lc)) catSelect.value = 'AI & Machine Learning';
+
+            // Trigger SEO update
+            onTitleChange();
+            onContentChange();
+            closeImportDoc();
+
+            showToast(`Document imported! Title: "${title}" — ${autoTags.length} tags auto-detected 🚀`);
+        }
+
     </script>
 </body>
 
