@@ -24,7 +24,7 @@ const DEFAULT_CONFIG = {
     enabled: false,
     postsPerDay: 3,
     publishIntervalHours: 8,
-    categories: ['AI & Machine Learning', 'Programming', 'Cybersecurity', 'How-To Guides', 'Reviews', 'Tips & Tricks', 'Social Media'],
+    categories: ['AI & Machine Learning', 'Career & Jobs', 'Web Development', 'Cybersecurity', 'Tech Reviews', 'How-To Guides'],
     enableKeywordDiscovery: true,
     enableContentRefresh: true,
     refreshIntervalDays: 90,

@@ -2,4 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /api/
-Sitemap: https://hedwigpost.page//sitemap.xml
+Disallow: /*.json$
+
+Sitemap: https://hedwigpost.page/sitemap.xml

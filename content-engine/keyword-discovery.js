@@ -82,13 +82,16 @@ const SEED_KEYWORDS = {
         'social media tips', 'youtube tips', 'instagram tips', 'linkedin tips',
         'remote work tips', 'work from home tips', 'tech life hacks'
     ],
-    'Social Media': [
-        'social media marketing', 'instagram growth', 'youtube seo', 'tiktok marketing',
-        'twitter marketing', 'linkedin marketing', 'facebook marketing',
-        'social media tools', 'content calendar', 'social media analytics',
-        'influencer marketing', 'viral content', 'social media trends',
-        'social media algorithm', 'hashtag strategy', 'reels tips', 'shorts tips',
-        'social media automation', 'community building', 'personal branding'
+    'Career & Jobs': [
+        'tech career', 'software developer career', 'remote work', 'job interview tips',
+        'resume tips', 'linkedin optimization', 'salary negotiation', 'tech certifications',
+        'coding bootcamp', 'career change to tech', 'freelancing tips', 'portfolio building',
+        'tech job market', 'work life balance', 'side projects', 'networking tips',
+        'tech internship', 'entry level developer', 'senior developer tips',
+        'tech leadership', 'coding interview prep', 'system design interview',
+        'tech salary guide', 'remote jobs', 'hybrid work', 'developer productivity',
+        'tech resume', 'github portfolio', 'personal branding for developers',
+        'upskilling', 'tech layoffs', 'job search strategy', 'cover letter tips'
     ]
 };
 
@@ -209,7 +212,7 @@ async function fetchGoogleTrends() {
 
 // ─── Fetch Reddit Trending Topics ───────────────────────────────────
 async function fetchRedditTopics() {
-    const subreddits = ['technology', 'programming', 'artificial', 'MachineLearning', 'webdev', 'cybersecurity'];
+    const subreddits = ['technology', 'programming', 'artificial', 'MachineLearning', 'webdev', 'cybersecurity', 'cscareerquestions', 'learnprogramming', 'experienceddevs'];
     const keywords = [];
     for (const sub of subreddits) {
         try {
@@ -371,14 +374,13 @@ function categorizeKeyword(keyword) {
         }
     }
     // Fallback heuristics
+    if (/\b(career|job|resume|interview|salary|freelanc|remote work|hiring|internship)\b/i.test(kw)) return 'Career & Jobs';
     if (/\b(ai|artificial|machine learning|chatgpt|gemini|llm|gpt)\b/i.test(kw)) return 'AI & Machine Learning';
-    if (/\b(code|coding|programming|python|javascript|react|developer|api)\b/i.test(kw)) return 'Programming';
+    if (/\b(code|coding|programming|python|javascript|react|developer|api|web dev|frontend|backend)\b/i.test(kw)) return 'Web Development';
     if (/\b(security|hack|privacy|vpn|malware|phishing|encryption)\b/i.test(kw)) return 'Cybersecurity';
     if (/\b(how to|guide|tutorial|step by step)\b/i.test(kw)) return 'How-To Guides';
-    if (/\b(review|comparison|vs|best|top)\b/i.test(kw)) return 'Reviews';
-    if (/\b(tips|tricks|hacks|shortcuts)\b/i.test(kw)) return 'Tips & Tricks';
-    if (/\b(social media|instagram|youtube|tiktok|twitter)\b/i.test(kw)) return 'Social Media';
-    return 'AI & Machine Learning'; // default
+    if (/\b(review|comparison|vs|best|top)\b/i.test(kw)) return 'Tech Reviews';
+    return 'AI & Machine Learning'; // default for tech blog
 }
 
 // ─── Filter unused high-potential keywords ──────────────────────────

@@ -1,37 +1,44 @@
 [
   {
-    "id": "cat_tech",
-    "name": "Tech",
-    "slug": "tech",
-    "description": "Technology innovations, software, and gadgets",
+    "id": "cat_ai",
+    "name": "AI & Machine Learning",
+    "slug": "ai-machine-learning",
+    "description": "Artificial intelligence, LLMs, generative AI, machine learning trends and tools",
     "postCount": 0
   },
   {
-    "id": "cat_news",
-    "name": "News",
-    "slug": "news",
-    "description": "Latest news and current events",
+    "id": "cat_career",
+    "name": "Career & Jobs",
+    "slug": "career-jobs",
+    "description": "Tech career advice, job market insights, interview prep, resume tips, and remote work",
     "postCount": 0
   },
   {
-    "id": "cat_ent",
-    "name": "Entertainment",
-    "slug": "entertainment",
-    "description": "Movies, music, gaming, and pop culture",
+    "id": "cat_webdev",
+    "name": "Web Development",
+    "slug": "web-development",
+    "description": "Frontend, backend, DevOps, frameworks, and modern web technologies",
+    "postCount": 0
+  },
+  {
+    "id": "cat_cyber",
+    "name": "Cybersecurity",
+    "slug": "cybersecurity",
+    "description": "Network security, ethical hacking, data privacy, and security best practices",
+    "postCount": 0
+  },
+  {
+    "id": "cat_reviews",
+    "name": "Tech Reviews",
+    "slug": "tech-reviews",
+    "description": "In-depth reviews and comparisons of gadgets, software, and developer tools",
     "postCount": 0
   },
   {
     "id": "cat_howto",
     "name": "How-To Guides",
     "slug": "how-to-guides",
-    "description": "Step-by-step tutorials and practical guides",
-    "postCount": 0
-  },
-  {
-    "id": "cat_reviews",
-    "name": "Product Reviews",
-    "slug": "product-reviews",
-    "description": "In-depth reviews of gadgets, software, and tech products",
+    "description": "Step-by-step tutorials and practical technical guides",
     "postCount": 0
   }
 ]

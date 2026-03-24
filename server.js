@@ -177,7 +177,22 @@ app.get(/^\/(?!admin|api|uploads).*\.html$/, (req, res, next) => {
 });
 
 // Static files (CSS, JS, images, etc. — HTML handled above)
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'), {
+    maxAge: '7d',
+    setHeaders: (res, filePath) => {
+        if (filePath.endsWith('.css') || filePath.endsWith('.js')) {
+            res.setHeader('Cache-Control', 'public, max-age=604800');
+        } else if (/\.(png|jpg|jpeg|gif|webp|ico|svg)$/.test(filePath)) {
+            res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        }
+    }
+}));
+
+// Prevent search engines from indexing API responses
+app.use('/api', (req, res, next) => {
+    res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+    next();
+});
 // Dynamic GridFS-style image serving from MongoDB
 app.get('/uploads/:filename', async (req, res) => {
     try {
@@ -411,16 +426,17 @@ app.get('/sitemap.xml', (req, res) => {
     const posts = readJSON('posts.json').filter(p => p.status === 'published');
     const cats = readJSON('categories.json');
     const settings = readSettings();
-    const baseUrl = settings.siteUrl || 'https://HedwigPost.com';
+    const baseUrl = (settings.siteUrl || 'https://hedwigpost.page').replace(/\/+$/, '');
+    const today = new Date().toISOString().split('T')[0];
     let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
-    xml += `  <url><loc>${baseUrl}/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>\n`;
-    // Static pages
-    ['about', 'contact', 'privacy', 'terms', 'disclaimer', 'archive', 'search', 'advertise'].forEach(pg => {
-        xml += `  <url><loc>${baseUrl}/${pg}</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>\n`;
+    xml += `  <url><loc>${baseUrl}/</loc><lastmod>${today}</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>\n`;
+    // Static pages with lastmod
+    ['about', 'contact', 'blogs', 'privacy', 'terms', 'disclaimer', 'archive', 'advertise', 'deals'].forEach(pg => {
+        xml += `  <url><loc>${baseUrl}/${pg}</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>\n`;
     });
     // Category pages
     cats.forEach(c => {
-        xml += `  <url><loc>${baseUrl}/category/${c.slug}</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>\n`;
+        xml += `  <url><loc>${baseUrl}/category/${c.slug}</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>\n`;
     });
     // Tag pages
     const allTags = new Set();
@@ -430,17 +446,19 @@ app.get('/sitemap.xml', (req, res) => {
     });
     // Post pages + AMP
     posts.forEach(p => {
-        xml += `  <url><loc>${baseUrl}/post/${p.slug}</loc><lastmod>${p.updatedDate || p.publishDate}</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>\n`;
-        xml += `  <url><loc>${baseUrl}/blog/${p.slug}/amp</loc><lastmod>${p.updatedDate || p.publishDate}</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>\n`;
+        const lastmod = (p.updatedDate || p.publishDate || '').split('T')[0] || today;
+        xml += `  <url><loc>${baseUrl}/post/${p.slug}</loc><lastmod>${lastmod}</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>\n`;
+        xml += `  <url><loc>${baseUrl}/blog/${p.slug}/amp</loc><lastmod>${lastmod}</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>\n`;
     });
-    // Deals pages
+    // Deals/Tech Tools pages
     const dealCats = readJSON('deal-categories.json');
-    xml += `  <url><loc>${baseUrl}/deals</loc><changefreq>weekly</changefreq><priority>0.85</priority></url>\n`;
     dealCats.forEach(dc => {
-        xml += `  <url><loc>${baseUrl}/deals/${dc.slug}</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>\n`;
+        xml += `  <url><loc>${baseUrl}/deals/${dc.slug}</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>\n`;
     });
     xml += '</urlset>';
-    res.type('application/xml').send(xml);
+    res.set('Cache-Control', 'public, max-age=3600, s-maxage=3600');
+    res.set('Content-Type', 'application/xml; charset=utf-8');
+    res.send(xml);
 });
 
 // --- RSS FEED (auto-generated) ---
@@ -484,8 +502,8 @@ app.get('/feed', (req, res) => res.redirect(301, '/rss.xml'));
 // --- ROBOTS.TXT ---
 app.get('/robots.txt', (req, res) => {
     const settings = readSettings();
-    const baseUrl = settings.siteUrl || 'https://HedwigPost.com';
-    res.type('text/plain').send(`User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /api/\nSitemap: ${baseUrl}/sitemap.xml`);
+    const baseUrl = (settings.siteUrl || 'https://hedwigpost.page').replace(/\/+$/, '');
+    res.type('text/plain').send(`User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /api/\nDisallow: /*.json$\n\nSitemap: ${baseUrl}/sitemap.xml`);
 });
 
 // --- NEWSLETTER SUBSCRIBERS ---

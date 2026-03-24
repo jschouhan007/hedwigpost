@@ -1,11 +1,11 @@
 {
     "name": "HedwigPost",
     "short_name": "HedwigPost",
-    "description": "Latest tech news, AI coverage, gadget reviews and digital trends — updated daily.",
+    "description": "Technology insights, AI trends, career advice, and expert how-to guides for developers and tech professionals.",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#0a0a0f",
-    "theme_color": "#8b5cf6",
+    "theme_color": "#e3262d",
     "orientation": "any",
     "scope": "/",
     "icons": [
@@ -26,6 +26,6 @@
             "purpose": "maskable"
         }
     ],
-    "categories": ["news", "technology", "education"],
+    "categories": ["technology", "education", "career"],
     "lang": "en-US"
 }
