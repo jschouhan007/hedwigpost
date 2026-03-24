@@ -444,7 +444,7 @@ Everything else becomes the post body." style="width:100%;min-height:320px;paddi
         </div>
     </div>
 
-    <script src="/admin/js/admin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script src="/admin/js/admin.js"></script>
     <script src="/admin/js/ai-seo.js"></script>
     <script>
         // ===================== STATE =====================
@@ -1661,51 +1661,8 @@ Everything else becomes the post body." style="width:100%;min-height:320px;paddi
         }
 
         function markdownToHtml(md) {
-            let html = md;
-            // Code blocks first (```)
-            html = html.replace(/```([\s\S]*?)```/g, (_, code) => '<pre><code>' + code.trim().replace(/</g,'&lt;') + '</code></pre>');
-            // Inline code
-            html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
-            // Headings
-            html = html.replace(/^######\s+(.+)$/gm, '<h6>$1</h6>');
-            html = html.replace(/^#####\s+(.+)$/gm, '<h5>$1</h5>');
-            html = html.replace(/^####\s+(.+)$/gm, '<h4>$1</h4>');
-            html = html.replace(/^###\s+(.+)$/gm, '<h3>$1</h3>');
-            html = html.replace(/^##\s+(.+)$/gm, '<h2>$1</h2>');
-            html = html.replace(/^#\s+(.+)$/gm, '<h1>$1</h1>');
-            // Bold and italic
-            html = html.replace(/\*\*\*([^*]+)\*\*\*/g, '<strong><em>$1</em></strong>');
-            html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-            html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
-            // Images
-            html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" style="max-width:100%;border-radius:8px;margin:12px 0;">');
-            // Links
-            html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
-            // Blockquotes
-            html = html.replace(/^>\s+(.+)$/gm, '<blockquote>$1</blockquote>');
-            // Unordered lists
-            html = html.replace(/^[-*]\s+(.+)$/gm, '<li>$1</li>');
-            html = html.replace(/(<li>.*<\/li>\n?)+/g, (match) => '<ul>' + match + '</ul>');
-            // Ordered lists
-            html = html.replace(/^\d+\.\s+(.+)$/gm, '<li>$1</li>');
-            // Horizontal rules
-            html = html.replace(/^---+$/gm, '<hr>');
-            // Paragraphs: lines not already wrapped in tags
-            const lines = html.split('\n');
-            const result = [];
-            let inBlock = false;
-            for (let line of lines) {
-                const trimmed = line.trim();
-                if (!trimmed) { result.push(''); continue; }
-                if (/^<(h[1-6]|ul|ol|li|blockquote|pre|hr|div|table|img)/.test(trimmed) || /<\/(pre|ul|ol|table|blockquote)>$/.test(trimmed)) {
-                    result.push(line);
-                } else if (!/</.test(trimmed)) {
-                    result.push('<p>' + trimmed + '</p>');
-                } else {
-                    result.push(line);
-                }
-            }
-            return result.join('\n');
+            // Using marked.js for robust markdown parsing
+            return window.marked ? window.marked.parse(md) : plainTextToHtml(md);
         }
 
         function plainTextToHtml(text) {
